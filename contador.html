@@ -70,13 +70,13 @@
       const palabras = contenido === '' ? 0 : contenido.split(/\s+/).filter(Boolean).length;
       const caracteres = txt.value.length;
       
-      // Estimación Páginas Word (Arial 12, interlineado 1.5 son ~500 palabras por página)
+      // Estimación Páginas Word (Arial 12)
       const paginas = (palabras / 500).toFixed(1);
       
-      // Tiempo de lectura silenciosa (~200 palabras por minuto)
-      const minLectura = Math.ceil(palabras / 200);
+      // Tiempo de lectura (~200 palabras por min)
+      const minLectura = palabras === 0 ? 0 : Math.ceil(palabras / 200);
       
-      // Tiempo de Exposición / Hablar en público (~130 palabras por minuto)
+      // Tiempo de Exposición (~130 palabras por min)
       const segOratoriaTotal = Math.round((palabras / 130) * 60);
       const minOratoria = Math.floor(segOratoriaTotal / 60);
       const segOratoria = segOratoriaTotal % 60;
@@ -85,7 +85,6 @@
       document.getElementById('cant-palabras').innerText = palabras;
       document.getElementById('cant-caracteres').innerText = caracteres;
       document.getElementById('cant-paginas').innerText = palabras === 0 ? '0 págs' : `${paginas} págs`;
-      document.getElementById('cant-lectura').innerText = `${minLectura} min`;
       document.getElementById('tiempo-lectura').innerText = `${minLectura} min`;
       document.getElementById('tiempo-oratoria').innerText = `${minOratoria}m ${segOratoria}s`;
     });

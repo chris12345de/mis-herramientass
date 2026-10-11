@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convertidor WebP a JPG/PNG</title>
+<style>
+body{margin:0;background:#0f0f0f;color:white;font-family:Arial;text-align:center;padding:20px}
+.drop{border:2px dashed #666;border-radius:20px;padding:60px 20px;max-width:500px;margin:20px auto;cursor:pointer}
+.btn{background:white;color:black;padding:13px 26px;border-radius:30px;border:none;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block}
+select{background:#222;color:white;padding:10px;border-radius:10px;border:1px solid #444;margin-bottom:15px;font-size:16px}
+</style>
+</head>
+<body>
+<br><a href="index.html" style="background:#222; color:white; padding:10px 20px; border-radius:20px; text-decoration:none; display:inline-block; font-size:14px;">← Volver al Menú Principal</a><br><br>
+
+<h1>Convertidor de Formatos</h1>
+<p style="color:#aaa">Transforma tus imágenes WebP a JPG o PNG al instante</p>
+
+<div class="drop" id="zona">
+<div style="font-size:50px">🔄</div>
+<b>Arrastra tu imagen WebP aquí</b><br><br>
+<select id="formato">
+  <option value="image/jpeg">Convertir a JPG</option>
+  <option value="image/png">Convertir a PNG</option>
+</select><br>
+<button class="btn" id="boton">Seleccionar Archivo</button>
+<input type="file" id="input" accept="image/webp" hidden>
+</div>
+
+<div id="res" style="display:none">
+<h3>¡Conversión Exitosa!</h3>
+<br>
+<a id="down" class="btn">Descargar Imagen Convertida</a>
+<br><br>
+<button class="btn" onclick="location.reload()" style="background:#333;color:white">Convertir otra</button>
+</div>
+
+<script>
+const input = document.getElementById('input');
+const formato = document.getElementById('formato');
+const res = document.getElementById('res');
+const down = document.getElementById('down');
+
+document.getElementById('boton').onclick = () => input.click();
+document.getElementById('zona').onclick = (e) => { if(e.target !== formato) input.click(); };
+
+input.onchange = () => {
+  const file = input.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = (event) => {
+    const img = new Image();
+    img.src = event.target.result;
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      canvas.getContext('2d').drawImage(img, 0, 0);
+      
+      const tipo = formato.value;
+      const ext = tipo === 'image/jpeg' ? 'jpg' : 'png';
+      
+      canvas.toBlob((blob) => {
+        down.href = URL.createObjectURL(blob);
+        down.download = file.name.replace(/\.[^/.]+|\$/, `.${ext}`);
+        document.getElementById('zona').style.display = 'none';
+        res.style.display = 'block';
+      }, tipo, 0.9);
+    };
+  };
+};
+</script>
+</body>
+</html>

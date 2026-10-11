@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quita Fondo Gratis</title>
+<style>
+body{margin:0;background:#0f0f0f;color:white;font-family:Arial;text-align:center;padding:20px}
+.drop{border:2px dashed #666;border-radius:20px;padding:60px 20px;max-width:500px;margin:20px auto;cursor:pointer}
+.btn{background:white;color:black;padding:13px 26px;border-radius:30px;border:none;font-weight:bold;cursor:pointer}
+img{max-width:90%;border-radius:15px;background:white}
+</style>
+</head>
+<body>
+<br><a href="index.html" style="background:#222; color:white; padding:10px 20px; border-radius:20px; text-decoration:none; display:inline-block; font-size:14px;">← Volver al Menú Principal</a><br><br>
+
+<h1>Quita Fondo Gratis</h1>
+<p style="color:#aaa">100% Gratis - Funciona en el celular</p>
+
+<div class="drop" id="zona">
+<div style="font-size:50px">📁</div>
+<b>Arrastra tu imagen aquí</b><br><br>
+<button class="btn" id="boton">Seleccionar Imagen</button>
+<input type="file" id="input" accept="image/*" hidden>
+<p id="msg" style="color:#aaa; margin-top:20px; font-weight:bold;"></p>
+</div>
+
+<div id="res" style="display:none">
+<h3>¡Listo! Fondo quitado</h3>
+<img id="foto">
+<br><br>
+<a id="down" class="btn" download="sin-fondo.png" style="text-decoration:none;display:inline-block">Descargar PNG</a>
+<br><br>
+<button class="btn" onclick="location.reload()" style="background:#333;color:white">Subir otra</button>
+</div>
+
+<script>
+const boton = document.getElementById('boton');
+const input = document.getElementById('input');
+const zona = document.getElementById('zona');
+const msg = document.getElementById('msg');
+const foto = document.getElementById('foto');
+const res = document.getElementById('res');
+const down = document.getElementById('down');
+
+boton.onclick = (e) => { e.stopPropagation(); input.click(); };
+zona.onclick = () => input.click();
+zona.ondragover = (e) => { e.preventDefault(); zona.style.borderColor='white'; };
+zona.ondragleave = () => { zona.style.borderColor='#666'; };
+zona.ondrop = (e) => { e.preventDefault(); zona.style.borderColor='#666'; handle(e.dataTransfer.files); };
+input.onchange = () => handle(input.files);
+
+async function handle(files){
+  if(!files || files.length === 0) return;
+  const file = files[0];
+  
+  msg.innerText = '⏳ Quitando fondo... procesando de forma segura...';
+  
+  // ==========================================
+  // PEGA TU API KEY DE REMOVE.BG AQUÍ ABAJO:
+  const API_KEY = 'qbvjFobASHaP7Dp5H4dZVjbd'; 
+  // ==========================================
+
+  const formData = new FormData();
+  formData.append('image_file', file);
+  formData.append('size', 'auto');
+
+  try {
+      
+    const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+      method: 'POST',
+      headers: { 'X-Api-Key': API_KEY },
+      body: formData
+    });
+    
+    if (!response.ok) throw new Error('Error en el servidor');
+    
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    foto.src = url;
+    down.href = url;
+    zona.style.display = 'none';
+    res.style.display = 'block';
+    msg.innerText = '';
+  } catch (err) {
+    console.error(err);
+    msg.innerText = 'Hubo un problema. Por favor intenta con otra foto.';
+  }
+}
+</script>
+</body>
+</html>

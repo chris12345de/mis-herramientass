@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de QR Gratis</title>
+<style>
+body{margin:0;background:#0f0f0f;color:white;font-family:Arial;text-align:center;padding:20px}
+.box{background:#1a1a1a;border-radius:20px;padding:30px;max-width:400px;margin:20px auto;border:1px solid #333}
+.btn{background:white;color:black;padding:13px 26px;border-radius:30px;border:none;font-weight:bold;cursor:pointer;width:100%;text-decoration:none;display:inline-block;box-sizing:border-box}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #444;background:#222;color:white;margin-bottom:15px;text-align:center;box-sizing:border-box}
+#qr-container{background:white;padding:15px;display:inline-block;border-radius:10px;margin-top:20px}
+</style>
+</head>
+<body>
+<br><a href="index.html" style="background:#222; color:white; padding:10px 20px; border-radius:20px; text-decoration:none; display:inline-block; font-size:14px;">← Volver al Menú Principal</a><br><br>
+
+<h1>Generador de Códigos QR</h1>
+<p style="color:#aaa">Crea tu código QR personalizado al instante</p>
+
+<div class="box">
+<input type="text" id="texto" placeholder="Pega tu enlace aquí (ej: https://...)">
+<button class="btn" id="generar">Generar QR</button>
+
+<div id="resultado" style="display:none">
+<div id="qr-container">
+<img id="qr-img" style="display:block; max-width:100%">
+</div>
+<br><br>
+<a id="down" class="btn" download="codigo-qr.png">Descargar QR PNG</a>
+</div>
+</div>
+
+<script>
+const texto = document.getElementById('texto');
+const generar = document.getElementById('generar');
+const resultado = document.getElementById('resultado');
+const qrImg = document.getElementById('qr-img');
+const down = document.getElementById('down');
+
+generar.onclick = () => {
+    const valor = texto.value.trim();
+    if(!valor) return;
+
+    const urlApi = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(valor)}`;
+
+    qrImg.src = urlApi;
+    down.href = urlApi;
+    resultado.style.display = 'block';
+};
+
+</script>
+</body>
+</html>

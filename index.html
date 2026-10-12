@@ -1,88 +1,261 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MultiHerramientas Gratis - Utilidades Online</title>
-<style>
-body{margin:0;background:#0f0f0f;color:white;font-family:Arial;text-align:center;padding:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:20px;max-width:800px;margin:30px auto;padding:10px}
-.card{background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:30px 20px;text-decoration:none;color:white;transition:0.2s;cursor:pointer;box-sizing:border-box}
-.card:hover{transform:scale(1.03);border-color:#666}
-.icon{font-size:45px;margin-bottom:10px}
-.btn-nav{background:white;color:black;padding:10px 20px;border-radius:20px;font-weight:bold;display:inline-block;margin-top:15px;font-size:14px}
-.ads-space{background:#151515;border:1px dashed #444;padding:15px;max-width:728px;margin:20px auto;color:#666;font-size:12px;border-radius:10px}
-</style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5464078310590974"
-     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Materiales para la Construcción y Remodelación Gratis</title>
+    <style>
+        body { margin:0; background:#0f0f0f; color:white; font-family:Arial, sans-serif; padding:15px; }
+        .box { background:#1a1a1a; border:1px solid #333; border-radius:12px; padding:15px; margin-bottom:20px; }
+        h2 { color:#4da6ff; font-size:18px; margin-top:0; }
+        label { display:block; margin:10px 0 5px; font-size:14px; color:#ccc; }
+        input { width:100%; padding:10px; background:#000; border:1px solid #444; color:#fff; border-radius:6px; box-sizing:border-box; }
+        button { width:100%; padding:12px; background:#fff; color:#000; font-weight:bold; border:none; border-radius:6px; margin-top:15px; font-size:16px; cursor:pointer; }
+        
+        /* AVISO LEGAL GENERAL (BANNER) */
+        .general-notice { background:#161b22; border-left:4px solid #3081d0; padding:12px; border-radius:6px; font-size:13px; color:#c9d1d9; margin-bottom:20px; font-style:italic; }
+        
+        /* GUÍA CORTA DENTRO DE CADA CAJA */
+        .box-guide { font-size:12px; color:#aaa; background:#111; padding:8px 10px; border-radius:6px; margin-bottom:12px; border-left:3px solid #666; }
+        
+        .disclaimer-sub { font-size:12px; color:#888; margin-top:8px; font-style:italic; text-align:center; }
+        
+        .result { margin-top:15px; padding:12px; background:#222; border-left:4px solid #4da6ff; font-weight:bold; color:#00ffcc; display:none; border-radius:0 6px 6px 0; }
+        
+        /* CUADRO INFORMATIVO / EXPLICATIVO */
+        .info-card { display:none; background:#252312; border:1px solid #736214; border-radius:8px; padding:12px; margin-top:12px; font-size:13px; color:#e6d385; line-height:1.5; }
+        .info-card strong { color:#fff; }
+
+        /* MINI GUÍA GENERAL Y BLOQUE SEO */
+        .guide-box { background:#111; border:1px dashed #444; border-radius:10px; padding:15px; font-size:13px; color:#ccc; line-height:1.6; margin-bottom:20px; }
+        .guide-box h3 { color:#fff; margin-top:0; font-size:15px; }
+        .guide-box ul { padding-left:18px; margin:5px 0 0; }
+        .guide-box li { margin-bottom:8px; }
+
+        .seo-box { background:#161616; border:1px solid #2a2a2a; border-radius:10px; padding:18px; font-size:13px; color:#bbb; line-height:1.6; }
+        .seo-box h2 { color:#fff; font-size:16px; margin-top:0; }
+        .seo-box p { margin-bottom:12px; }
+        .seo-box p:last-child { margin-bottom:0; }
+    </style>
 </head>
 <body>
 
-<!-- ESPACIO PARA TU ANUNCIO SUPERIOR -->
-<div class="ads-space"></div>
+    <h1 style="text-align:center; font-size:22px;">🛠️ Calculadoras del Hogar</h1>
 
-<h1>MultiHerramientas Gratis</h1>
-<p style="color:#aaa">Soluciones rápidas, sin registros y optimizadas para el celular</p>
+    <!-- AVISO GENERAL BANNER -->
+    <div class="general-notice">
+        <strong>Aviso:</strong> Todas las calculadoras de este sitio son herramientas de referencia con fines orientativos.
+    </div>
 
-<div class="grid">
-  <!-- Tarjeta 1: Quitar Fondo -->
-  <a href="quitar-fondo.html" class="card">
-    <div class="icon">🖼️</div>
-    <h3>Quitar Fondo Gratis</h3>
-    <p style="color:#aaa;font-size:14px">Remueve el fondo de tus imágenes con IA al instante de forma segura.</p>
-    <span class="btn-nav">Abrir herramienta</span>
-  </a>
+    <!-- 1. CERÁMICA -->
+    <div class="box">
+        <h2>🧱 Calculadora de Cerámica / Piso Gratis</h2>
+        <div class="box-guide">📐 <strong>Cómo medir:</strong> Mide de pared a pared el ancho y el largo de la habitación.</div>
+        
+        <label>Ancho de la habitación (metros):</label>
+        <input type="number" id="anchoPiso" placeholder="Ej: 4">
 
-  <!-- Tarjeta 2: Compresor -->
-  <a href="compresor.html" class="card">
-    <div class="icon">📉</div>
-    <h3>Compresor de Fotos Gratis</h3>
-    <p style="color:#aaa;font-size:14px">Reduce el peso de tus imágenes JPG y PNG sin perder calidad.</p>
-    <span class="btn-nav">Abrir herramienta</span>
-  </a>
+        <label>Largo de la habitación (metros):</label>
+        <input type="number" id="largoPiso" placeholder="Ej: 5">
 
-  <!-- Tarjeta 3: Generador QR -->
-  <a href="generar-qr.html" class="card">
-    <div class="icon">🔗</div>
-    <h3>Generador de QR Gratis</h3>
-    <p style="color:#aaa;font-size:14px">Crea códigos QR personalizados para tus enlaces o menús digitales.</p>
-    <span class="btn-nav">Abrir herramienta</span>
-  </a>
+        <button onclick="calcularCeramica()">Calcular Metros</button>
+        <div class="disclaimer-sub">* Incluye 10% extra recomendado para cortes y zócalos.</div>
 
-  <!-- Tarjeta 4: Convertidor WebP -->
-  <a href="convertidor.html" class="card">
-    <div class="icon">🔄</div>
-    <h3>Convertidor WebP Gratis</h3>
-    <p style="color:#aaa;font-size:14px">Transforma imágenes WebP a formatos estándar JPG o PNG fácilmente.</p>
-    <span class="btn-nav">Abrir herramienta</span>
-  </a>
-  
-      <!-- Tarjeta 5: Generador WhatsApp -->
-    <a href="generar-wa.html" class="card">
-      <div class="icon">📲</div>
-      <h3>Generador Link WhatsApp Gratis</h3>
-      <p style="color:#aaa;font-size:14px">Crea tu enlace directo con mensaje personalizado gratis.</p>
-      <span class="btn-nav">Abrir herramienta</span>
-    </a>
-  
-      <!-- Tarjeta 6: Contador de Palabras -->
-    <a href="contador.html" class="card">
-      <div class="icon">📝</div>
-      <h3>Contador de Palabras y Páginas Gratis</h3>
-      <p style="color:#aaa;font-size:14px">Calcula hojas de Word, tiempo de exposición y lectura gratis.</p>
-      <span class="btn-nav">Abrir herramienta</span>
-    </a>
-</div>
+        <div id="resPiso" class="result"></div>
 
-<!-- ESPACIO PARA TU ANUNCIO INFERIOR -->
-<div class="ads-space"></div>
+        <div id="infoPiso" class="info-card">
+            💡 <strong>Sugerencia práctica de cálculo:</strong><br>
+            • Incluye un <strong>10% adicional de margen de seguridad</strong> por recortes, esquinas y posibles roturas.<br><br>
+            • <em>Nota:</em> Herramienta orientativa para particulares. Para obras grandes o colocación en diagonal (requiere 15%), consulte con su ferretería.
+        </div>
+    </div>
 
-<br>
-  
-<footer style="text-align: center; margin-top: 40px; padding: 20px; font-size: 14px; border-top: 1px solid #eee;">
-    <a href="privacidad.html" style="margin-right: 15px; color: #aaa; text-decoration: none;">Política de Privacidad</a> | 
-    <a href="contacto.html" style="margin-left: 15px; color: #aaa; text-decoration: none;">Contacto</a>
-</footer>
-  
+    <!-- 2. PINTURA -->
+    <div class="box">
+        <h2>🎨 Calculadora de Pintura Gratis</h2>
+        <div class="box-guide">📐 <strong>Cómo medir:</strong> Mide el ancho de la pared por su alto (del suelo al techo) y réstale las puertas/ventanas.</div>
+
+        <label>Metros cuadrados totales de pared (m²):</label>
+        <input type="number" id="m2Pared" placeholder="Ej: 30">
+
+        <button onclick="calcularPintura()">Calcular Galones</button>
+        <div class="disclaimer-sub">* Cálculo estimado para 2 manos de pintura estándar.</div>
+
+        <div id="resPintura" class="result"></div>
+
+        <div id="infoPintura" class="info-card">
+            💡 <strong>Sugerencia práctica para pintar:</strong><br>
+            • Estimado para <strong>2 manos de pintura</strong> en paredes normales. El rendimiento varía según la porosidad de la superficie.<br><br>
+            • <em>Nota:</em> Revise la etiqueta del fabricante para rendimientos específicos de cada marca.
+        </div>
+    </div>
+
+    <!-- 3. BLOQUES / LADRILLOS -->
+    <div class="box">
+        <h2>🧱 Calculadora de Bloques / Ladrillos Gratis</h2>
+        <div class="box-guide">📐 <strong>Cómo medir:</strong> Mide el largo total de la línea de la pared y su altura vertical desde el piso.</div>
+
+        <label>Largo de la pared (metros):</label>
+        <input type="number" id="largoPared" placeholder="Ej: 6">
+
+        <label>Alto de la pared (metros):</label>
+        <input type="number" id="altoPared" placeholder="Ej: 2.5">
+
+        <button onclick="calcularBloques()">Calcular Bloques</button>
+        <div class="disclaimer-sub">* Basado en bloque estándar (20x40 cm, 12.5 un/m²) + 10% de desperdicio.</div>
+
+        <div id="resBloques" class="result"></div>
+
+        <div id="infoBloques" class="info-card">
+            💡 <strong>Sugerencia práctica para mampostería:</strong><br>
+            • Cálculo basado en bloque de hormigón estándar de 20x40 cm (12.5 piezas por m² con junta de mortero) + <strong>10% de margen</strong> por roturas.<br><br>
+            • <em>Nota importante:</em> Si va a utilizar ladrillo macizo, moche o mambrón, requerirá entre 30 y 40 unidades por metro cuadrado debido a su menor dimensión.
+        </div>
+    </div>
+
+    <!-- 4. CEMENTO Y ARENA -->
+    <div class="box">
+        <h2>🏗️ Calculadora de Cemento y Arena (Contrapiso) Gratis</h2>
+        <div class="box-guide">📐 <strong>Cómo medir:</strong> Mide el área total del suelo (ancho x largo) y define cuántos centímetros de grosor tendrá la mezcla.</div>
+
+        <label>Área a cubrir (m²):</label>
+        <input type="number" id="areaPiso" placeholder="Ej: 20">
+
+        <label>Grosor o espesor (centímetros):</label>
+        <input type="number" id="grosorPiso" placeholder="Ej: 5">
+
+        <button onclick="calcularMezcla()">Calcular Materiales</button>
+        <div class="disclaimer-sub">* Proporción estándar 1:4 para contrapisos/revoque fino.</div>
+
+        <div id="resMezcla" class="result"></div>
+
+        <div id="infoMezcla" class="info-card">
+            💡 <strong>Sugerencia práctica para mezcla:</strong><br>
+            • Basado en dosificación estándar de mortero (1 parte de cemento por 4 de arena), rindiendo aprox. 7.5 a 8 sacos de cemento (50kg) por metro cúbico real de mortero seco.<br><br>
+            • <em>Nota:</em> Fines orientativos para pequeños trabajos caseros. Ajuste según la resistencia requerida.
+        </div>
+    </div>
+
+    <!-- 5. AGUA / CISTERNA -->
+    <div class="box">
+        <h2>💧 Calculadora de Agua (Tanques / Cisternas) Gratis</h2>
+        <div class="box-guide">📐 <strong>Cómo medir:</strong> Mide por dentro las dimensiones útiles del tanque: largo, ancho y la profundidad del agua.</div>
+
+        <label>Largo del tanque (metros):</label>
+        <input type="number" id="largoTanque" placeholder="Ej: 2">
+
+        <label>Ancho del tanque (metros):</label>
+        <input type="number" id="anchoTanque" placeholder="Ej: 1.5">
+
+        <label>Profundidad / Alto (metros):</label>
+        <input type="number" id="altoTanque" placeholder="Ej: 1.8">
+
+        <button onclick="calcularAgua()">Calcular Litros y Galones</button>
+        <div class="disclaimer-sub">* Medidas internas útiles del tanque o reserva de agua.</div>
+
+        <div id="resAgua" class="result"></div>
+
+        <div id="infoAgua" class="info-card">
+            💡 <strong>Sugerencia práctica de almacenamiento:</strong><br>
+            • Cálculo basado en el volumen teórico (1 m³ = 1,000 Litros). Considere variaciones por el espacio del flotador.<br><br>
+            • <em>Nota:</em> Herramienta de referencia para reservas domiciliarias.
+        </div>
+    </div>
+
+    <!-- MINI GUÍA GENERAL AL FINAL -->
+    <div class="guide-box">
+        <h3>📐 Guía rápida general</h3>
+        <ul>
+            <li><strong>Para Piso:</strong> Mide de izquierda a derecha (ancho) y de la entrada al fondo (largo).</li>
+            <li><strong>Para Paredes:</strong> Mide el ancho de la pared por el alto (del suelo al techo).</li>
+            <li><strong>Puertas y Ventanas:</strong> Mide su ancho por su alto y réstaselo a la pared. Si no quieres medir el marco, réstale 2 m² al ojo por cada puerta o ventana grande para no comprar pintura de más.</li>
+        </ul>
+    </div>
+
+    <!-- BLOQUE SEO PARA ADSENSE -->
+    <div class="seo-box">
+        <h2>¿Cómo calcular materiales para una remodelación sin perder dinero?</h2>
+        <p>Planificar una remodelación o pequeña obra en el hogar requiere precisión para optimizar el presupuesto. Uno de los errores más comunes al comprar insumos de construcción es calcular únicamente el área exacta a cubrir, ignorando los factores de desperdicio por recortes, esquinas o posibles roturas durante el transporte y la instalación.</p>
+        <p>Al utilizar herramientas digitales de cálculo, es fundamental considerar márgenes de seguridad recomendados (habitualmente entre un 5% y un 10% adicional). Esto garantiza que los trabajos no se detengan a mitad del proceso por falta de insumos, lo cual suele generar costos de envío adicionales y demoras en los tiempos de entrega.</p>
+        <p>Recuerde siempre verificar las especificaciones del fabricante, ya que factores como la porosidad del bloque, el método de aplicación de la pintura o las dimensiones exactas de las piezas de cerámica pueden modificar ligeramente los rendimientos estándar de la materia prima.</p>
+    </div>
+
+    <script>
+        function calcularCeramica() {
+            let ancho = parseFloat(document.getElementById('anchoPiso').value);
+            let largo = parseFloat(document.getElementById('largoPiso').value);
+            if (!ancho || !largo) return;
+
+            let areaReal = ancho * largo;
+            let areaConDesperdicio = areaReal * 1.10;
+
+            let divRes = document.getElementById('resPiso');
+            let divInfo = document.getElementById('infoPiso');
+            divRes.style.display = 'block';
+            divInfo.style.display = 'block';
+            divRes.innerHTML = `Necesitas comprar: <strong>${areaConDesperdicio.toFixed(2)} m²</strong> de cerámica.<br><small style="color:#aaa;">(Área real: ${areaReal} m² + 10% extra)</small>`;
+        }
+
+        function calcularPintura() {
+            let m2 = parseFloat(document.getElementById('m2Pared').value);
+            if (!m2) return;
+
+            let galones = m2 / 10;
+
+            let divRes = document.getElementById('resPintura');
+            let divInfo = document.getElementById('infoPintura');
+            divRes.style.display = 'block';
+            divInfo.style.display = 'block';
+            divRes.innerHTML = `Necesitas aprox: <strong>${galones.toFixed(1)} Galones</strong> de pintura (2 manos).`;
+        }
+
+        function calcularBloques() {
+            let largo = parseFloat(document.getElementById('largoPared').value);
+            let alto = parseFloat(document.getElementById('altoPared').value);
+            if (!largo || !alto) return;
+
+            let m2 = largo * alto;
+            let bloques = Math.ceil((m2 * 12.5) * 1.10);
+
+            let divRes = document.getElementById('resBloques');
+            let divInfo = document.getElementById('infoBloques');
+            divRes.style.display = 'block';
+            divInfo.style.display = 'block';
+            divRes.innerHTML = `Necesitas aprox: <strong>${bloques} Bloques</strong> (20x40 cm).<br><small style="color:#aaa;">(Área total: ${m2.toFixed(2)} m² con 10% extra por recortes)</small>`;
+        }
+
+        function calcularMezcla() {
+            let area = parseFloat(document.getElementById('areaPiso').value);
+            let grosorCm = parseFloat(document.getElementById('grosorPiso').value);
+            if (!area || !grosorCm) return;
+
+            let volumenM3 = area * (grosorCm / 100);
+            let sacosCemento = Math.ceil(volumenM3 * 7.5);
+            let arenaM3 = (volumenM3 * 1.05).toFixed(2);
+
+            let divRes = document.getElementById('resMezcla');
+            let divInfo = document.getElementById('infoMezcla');
+            divRes.style.display = 'block';
+            divInfo.style.display = 'block';
+            divRes.innerHTML = `Para ${volumenM3.toFixed(2)} m³ de mezcla necesitas aprox:<br>• <strong>${sacosCemento} Sacos de cemento</strong> (50kg).<br>• <strong>${arenaM3} m³ de arena</strong>.`;
+        }
+
+        function calcularAgua() {
+            let largo = parseFloat(document.getElementById('largoTanque').value);
+            let ancho = parseFloat(document.getElementById('anchoTanque').value);
+            let alto = parseFloat(document.getElementById('altoTanque').value);
+            if (!largo || !ancho || !alto) return;
+
+            let volumenM3 = largo * ancho * alto;
+            let litros = Math.round(volumenM3 * 1000);
+            let galones = Math.round(litros / 3.785);
+
+            let divRes = document.getElementById('resAgua');
+            let divInfo = document.getElementById('infoAgua');
+            divRes.style.display = 'block';
+            divInfo.style.display = 'block';
+            divRes.innerHTML = `Capacidad del tanque:<br>• <strong>${litros.toLocaleString()} Litros</strong><br>• <strong>${galones.toLocaleString()} Galones aprox.</strong>`;
+        }
+    </script>
 </body>
 </html>

@@ -264,5 +264,83 @@
             divRes.innerHTML = `Capacidad del tanque:<br>• <strong>${litros.toLocaleString()} Litros</strong><br>• <strong>${galones.toLocaleString()} Galones aprox.</strong>`;
         }
     </script>
+    <!-- ======================================================= -->
+<!-- SECCIÓN NUEVA: SOLUCIONES PARA EL HOGAR (Pega esto al final) -->
+<!-- ======================================================= -->
+<style>
+  .seccion-guias {
+    max-width: 900px;
+    margin: 40px auto 20px auto;
+    padding: 0 15px;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  .titulo-guias {
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3b82f6;
+    padding-bottom: 8px;
+  }
+  .grid-guias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+  }
+  .card-guia {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 18px;
+    color: #f8fafc;
+    text-decoration: none;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card-guia:hover {
+    transform: translateY(-3px);
+    border-color: #3b82f6;
+  }
+  .card-guia h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: #60a5fa;
+  }
+  .card-guia p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+  .footer-legal {
+    text-align: center;
+    padding: 20px 15px;
+    font-size: 0.8rem;
+    color: #64748b;
+    border-top: 1px solid #334155;
+    margin-top: 40px;
+  }
+</style>
+
+<div class="seccion-guias">
+  <h2 class="titulo-guias">🛠️ Soluciones y Guías para el Hogar</h2>
+  
+  <div class="grid-guias">
+    <!-- Tarjeta 1: Inodoro -->
+    <a href="destapar-bano.html" class="card-guia">
+      <h3>🪠 Destapar el Baño</h3>
+      <p>Aprende a destapar el inodoro o lavamanos fácil con vinagre y bicarbonato sin químicos.</p>
+    </a>
+
+    <!-- Próximas tarjetas (irán entrando poco a poco) -->
+    <a href="#" class="card-guia" style="opacity: 0.6;">
+      <h3>🧰 Cambiar Silicona</h3>
+      <p>Próximamente: Elimina el pegamento viejo del baño y pon capa nueva sin moho.</p>
+    </a>
+  </div>
+</div>
+
+<footer class="footer-legal">
+  <p><strong>Aviso importante:</strong> El contenido de este sitio web es puramente informativo y está basado en experiencias domésticas. No somos electricistas ni plomeros certificados. Si no te sientes seguro realizando alguna reparación, te recomendamos consultar con un profesional. No nos hacemos responsables por daños materiales o accidentes.</p>
+</footer>
+<!-- ======================================================= -->
 </body>
 </html>

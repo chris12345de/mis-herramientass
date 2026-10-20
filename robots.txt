@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chris12345de.github.io/mis-herramientass/sitemap.xml

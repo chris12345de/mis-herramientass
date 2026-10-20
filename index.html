@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="TU_CODIGO_AQUI" />
+  <title>Calculadoras del Hogar - Portal Profesional de Materiales</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background-color: #121519;
+      color: #e0e6ed;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .tab-btn {
+      background-color: #1a1f26;
+      border: 1px solid #2d3540;
+      color: #9aa8ba;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .tab-btn.active {
+      background-color: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+    .card {
+      background-color: #1a1f26;
+      border: 1px solid #2d3540;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #4a9eff;
+      margin-bottom: 15px;
+    }
+    .info-box {
+      background-color: #14181f;
+      border-left: 3px solid #4a9eff;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 0.9rem;
+      color: #9aa8ba;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #d0d7de;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 1rem;
+      outline: none;
+    }
+    input[type="number"]:focus {
+      border-color: #4a9eff;
+    }
+    .btn-calc {
+      width: 100%;
+      padding: 14px;
+      background-color: #ffffff;
+      color: #0d1117;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .subtext {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #768390;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .resultado-box {
+      display: none;
+      background-color: #0f231d;
+      border-left: 4px solid #00d26a;
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 15px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+    .resultado-box strong {
+      color: #00f078;
+    }
+    .sugerencias-box {
+      display: none;
+      margin-top: 20px;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #f1c40f;
+      margin-bottom: 12px;
+    }
+    .guias-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-guia-item {
+      width: 100%;
+      padding: 14px;
+      background-color: #212936;
+      border: 1px solid #3a4a63;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+    }
+    .guia-seccion {
+      display: none;
+      background-color: #182232;
+      border: 1px solid #283850;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 50vh;
+    }
+    .btn-volver {
+      width: 100%;
+      padding: 12px;
+      background-color: #2d3b50;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 15px;
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+    }
+    .guia-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #4a9eff;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .guia-meta {
+      font-size: 0.85rem;
+      color: #a0aec0;
+      margin-bottom: 15px;
+    }
+    .guia-sub {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 15px 0 8px 0;
+    }
+    .guia-p {
+      font-size: 1rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .guia-lista {
+      list-style: none;
+      margin-bottom: 15px;
+    }
+    .guia-lista li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+    .guia-lista li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #4a9eff;
+      font-weight: bold;
+    }
+    .callout-alert {
+      background-color: #8b0000;
+      border-left: 4px solid #ff4d4d;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #ffffff !important;
+      line-height: 1.4;
+    }
+    .callout-expert {
+      background-color: #1c2d42;
+      border-left: 4px solid #3b82f6;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: #bfdbfe;
+      line-height: 1.4;
+    }
+
+    /* --- ESTILOS DE LA TRIVIA --- */
+    .trivia-box {
+      margin-top: 20px;
+      background-color: #141922;
+      border: 1px solid #2d3a4f;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .trivia-pregunta-card {
+      margin-bottom: 15px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #1f2937;
+    }
+    .trivia-pregunta-card:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .trivia-pregunta {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #f1c40f;
+      margin-bottom: 8px;
+    }
+    .trivia-opcion {
+      width: 100%;
+      background-color: #1f2937;
+      border: 1px solid #374151;
+      color: #e5e7eb;
+      padding: 9px 11px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      text-align: left;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+    .trivia-opcion:hover {
+      background-color: #374151;
+    }
+    .trivia-opcion.correcta {
+      background-color: #065f46 !important;
+      border-color: #059669 !important;
+      color: #d1fae5 !important;
+      font-weight: bold;
+    }
+    .trivia-opcion.incorrecta {
+      background-color: #7f1d1d !important;
+      border-color: #dc2626 !important;
+      color: #fee2e2 !important;
+    }
+    .trivia-feedback {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: none;
+    }
+    .trivia-resultado-final {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      background-color: #1a2332;
+      border: 1px solid #3b82f6;
+      font-size: 0.9rem;
+      text-align: center;
+      display: none;
+    }
+    .btn-reiniciar-trivia {
+      display: none;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #3b82f6;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    /* --- ESTILOS DEL PIE DE PÁGINA --- */
+    .site-footer {
+        margin-top: 40px;
+        padding: 30px 20px;
+        border-top: 1px solid #2d3540;
+        text-align: center;
+        background-color: #121519;
+    }
+    .footer-links {
+        margin-bottom: 20px;
+    }
+    .footer-links a {
+        color: #4a9eff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        display: inline-block;
+        padding: 5px 10px;
+    }
+    .footer-links a:hover {
+        text-decoration: underline;
+    }
+    .footer-separator {
+        color: #2d3540;
+        user-select: none;
+    }
+    .footer-disclaimer {
+        font-size: 0.82rem;
+        color: #707e94;
+        max-width: 700px;
+        margin: 0 auto 15px auto;
+        line-height: 1.5;
+    }
+    .footer-copyright {
+        font-size: 0.8rem;
+        color: #4a5568;
+        margin: 0;
+    }
+    @media (max-width: 480px) {
+        .footer-links a {
+            display: block;
+            margin: 5px 0;
+        }
+        .footer-separator {
+            display: none;
+        }
+    }
+
+    .seccion-calculadora {
+      display: none;
+    }
+    .seccion-calculadora.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="header-title" id="page-h1">🛠️ Calculadoras del Hogar</h1>
+    <div class="nav-tabs">
+      <a href="#pintura" class="tab-btn active" id="tab-pintura" onclick="navegarA('pintura')">🎨 Pintura</a>
+      <a href="#cemento" class="tab-btn" id="tab-cemento" onclick="navegarA('cemento')">🧱 Cemento/Solera</a>
+      <a href="#bloques" class="tab-btn" id="tab-bloques" onclick="navegarA('bloques')">🏗️ Bloques</a>
+      <a href="#ceramica" class="tab-btn" id="tab-ceramica" onclick="navegarA('ceramica')">🔲 Cerámica</a>
+      <a href="#agua" class="tab-btn" id="tab-agua" onclick="navegarA('agua')">💧 Agua/Tanques</a>
+    </div>
+    
+        <!-- 1. PINTURA -->
+    <div id="seccion-pintura" class="seccion-calculadora active">
+      <div id="card-pintura" class="card">
+        <div class="card-title">🎨 Calculadora de Pintura Profesional</div>
+        <div class="info-box">📐 <strong>Cómo medir:</strong> Ingresa el ancho y alto de la pared. Incluye factor de absorción y estimación para 2 manos.</div>
+        <div class="form-group">
+          <label for="p-ancho">Ancho de la pared (m):</label>
+          <input type="number" id="p-ancho" placeholder="Ej: 6" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="p-alto">Alto de la pared (m):</label>
+          <input type="number" id="p-alto" placeholder="Ej: 2.5" step="0.1">
+        </div>
+        <button class="btn-calc" onclick="calcularPintura()">Calcular Galones</button>
+        <div class="subtext">* Estimado comercial con redondeo a envases reales.</div>
+        <div id="res-pintura" class="resultado-box"><div id="det-pintura"></div></div>
+        <div id="sug-pintura" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas y Soluciones:</div>
+          <div class="guias-grid">
+            <a href="#g-pintura-1" class="btn-guia-item" onclick="mostrarGuia('g-pintura-1', 'card-pintura')">🎨 Cubrir paredes oscuras con color claro <span>›</span></a>
+            <a href="#g-pintura-2" class="btn-guia-item" onclick="mostrarGuia('g-pintura-2', 'card-pintura')">⚠️ Diagnóstico y reparación de grietas <span>›</span></a>
+            <a href="#g-pintura-3" class="btn-guia-item" onclick="mostrarGuia('g-pintura-3', 'card-pintura')">💧 Humedad, moho y manchas activas <span>›</span></a>
+            <a href="#g-pintura-4" class="btn-guia-item" onclick="mostrarGuia('g-pintura-4', 'card-pintura')">🖌️ Elección de rodillos y evitar marcas <span>›</span></a>
+            <a href="#g-pintura-5" class="btn-guia-item" onclick="mostrarGuia('g-pintura-5', 'card-pintura')">🏠 Cómo pintar techos sin sombras <span>›</span></a>
+            <a href="#g-pintura-6" class="btn-guia-item" onclick="mostrarGuia('g-pintura-6', 'card-pintura')">🛡️ Seguridad, lijado y polvo tóxico <span>›</span></a>
+          </div>
+
+          <!-- TRIVIA PINTURA -->
+          <div class="trivia-box" id="trivia-grupo-pintura">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Pintura:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Qué capa previa es ideal para cubrir una pared oscura sin gastar tantas manos?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-1', 'pintura')">A) Pintar directo con blanco puro 4 veces.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tp-1', 'pintura')">B) Aplicar imprimación o selladora gris neutro.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-1', 'pintura')">C) Echar agua y jabón antes de pintar.</button>
+              <div id="tp-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Cómo se debe abrir una grieta antes de aplicar masilla?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tp-2', 'pintura')">A) En forma de "V" con una espátula.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-2', 'pintura')">B) Pegando cinta adhesiva encima.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-2', 'pintura')">C) Solo pasando un trapo húmedo.</button>
+              <div id="tp-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué tipo de rodillo se recomienda para superficies lisas de pladur?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-3', 'pintura')">A) Pelo largo (20 mm).</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tp-3', 'pintura')">B) Pelo corto (5-8 mm).</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-3', 'pintura')">C) Un cepillo de cerdas de alambre.</button>
+              <div id="tp-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-pintura" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-pintura" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('pintura')">🔄 Reintentar Trivia</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guías Pintura Completas -->
+      <div id="g-pintura-1" class="guia-seccion">
+        <a href="#pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Cómo cubrir paredes oscuras sin capas infinitas</h2>
+        <div class="guia-meta">Nivel: Principiante | Opacidad y Rendimiento</div>
+        <p class="guia-p">Pintar sobre tonos saturados o muy oscuros (rojos, marrones o grises oscuros) utilizando únicamente pintura blanca estándar suele resultar en una pérdida considerable de dinero y tiempo. Sin el tratamiento adecuado, el pigmento antiguo se trasluce continuamente, requiriendo hasta 4 o 5 manos para lograr un acabado aceptable.</p>
+        <div class="guia-sub">🛠️ Materiales Necesarios y Preparación:</div>
+        <ul class="guia-lista">
+          <li>Imprimación pigmentada multiusos o selladora sintética de base blanca/gris.</li>
+          <li>Lija de grano fino (P180 o P240) para matizar la superficie brillante previa.</li>
+          <li>Pintura plástica lavable de alta cubrición en acabado mate o satinado.</li>
+        </ul>
+        <div class="guia-sub">📝 Paso a Paso Recomendado:</div>
+        <p class="guia-p">Primero, limpia la pared de grasa o polvo acumulado. Aplica una capa uniforme de imprimación gris neutro. Este tono gris intermedio bloquea los pigmentos fuertes de forma más eficiente que el blanco puro, permitiendo que la capa posterior de pintura de acabado alcance su máximo rendimiento en solo dos aplicaciones.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Ahorras hasta un 40% de material aplicando 1 capa de selladora técnica en lugar de 3 capas extra de pintura de acabado.</div>
+      </div>
+
+      <div id="g-pintura-2" class="guia-seccion">
+        <a href="#pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Reparar Grietas y Fisuras Antes de Pintar</h2>
+        <div class="guia-meta">Nivel: Intermedio | Estabilidad del Soporte</div>
+        <p class="guia-p">Aplicar masilla o pintura directamente sobre una grieta abierta es una solución temporal que fallará en pocas semanas. Las contracciones térmicas y los pequeños asentamientos estructurales harán que la pintura seca se agriete nuevamente si no se trata el fondo de la brecha correctamente.</p>
+        <div class="guia-sub">🛠️ Herramientas y Preparación:</div>
+        <ul class="guia-lista">
+          <li>Espátula rígida, rascador en ángulo y masilla elástica o pasta de agarre.</li>
+          <li>Fijador acrílico o imprimación profunda para soportes porosos.</li>
+          <li>Malla de fibra de vidrio para fisuras dinámicas o de asentamiento.</li>
+        </ul>
+        <div class="guia-sub">📝 Procedimiento Correcto:</div>
+        <p class="guia-p">Usa la esquina de la espátula para abrir la grieta en forma de "V", eliminando partes sueltas. Elimina el polvo y aplica imprimación fijadora dentro de la fisura. Llena a presión con masilla en capas finas y coloca una banda de fibra si hay movimiento activo. Una vez seco, lija suavemente hasta dejar el plano uniforme con la pared.</p>
+        <div class="callout-alert">⚠️ <strong>Seguridad Estructural:</strong> Si la grieta supera los 2 mm de ancho o transcurre en diagonal a 45°, detente. Podría indicar un fallo estructural que requiere la inspección de un arquitecto o técnico.</div>
+      </div>
+
+      <div id="g-pintura-3" class="guia-seccion">
+        <a href="#pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-3')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Humedad, Moho y Manchas Activas</h2>
+        <div class="guia-meta">Nivel: Avanzado | Patologías Constructivas</div>
+        <p class="guia-p">La aparición de manchas negras o eflorescencias salinas indica la presencia permanente de agua o falta de ventilación. Aplicar pintura estándar o incluso barniz antihumedad encima del hongo vivo únicamente atrapará la humedad dentro del muro, pudriendo el revoque interno.</p>
+        <div class="guia-sub">🛡️ Protocolo Técnico de Saneamiento:</div>
+        <ul class="guia-lista">
+          <li>Eliminar la causa raíz (fugas internas, puentes térmicos o filtraciones exteriores).</li>
+          <li>Limpiador biocida o agua lavandina diluida para erradicar las esporas vivas.</li>
+          <li>Imprimación bloqueadora de manchas al disolvente para sellar nicotina o eflorescencias.</li>
+        </ul>
+        <div class="guia-sub">📝 Proceso de Recuperación:</div>
+        <p class="guia-p">Aplica el tratamiento fungicida sobre la superficie sin lijar en seco (para evitar dispersar esporas por el aire). Deja actuar durante 24 horas y retira con trapo húmedo. Aplica sellador bloqueador sintético y finaliza con una pintura acrílica permeante al vapor de agua que permita "respirar" al muro.</p>
+        <div class="callout-alert">⚠️ <strong>Límite Profesional:</strong> Si la mancha de moho supera 1 m² continuo o hay filtraciones directas de tuberías, requiere intervención urgente de fontanería antes de cualquier trabajo cosmético.</div>
+      </div>
+
+      <div id="g-pintura-4" class="guia-seccion">
+        <a href="#pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-4')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Elección de Rodillos y Técnicas de Recorte</h2>
+        <div class="guia-meta">Nivel: Principiante | Acabado Estético</div>
+        <p class="guia-p">Uno de los errores más comunes en bricolaje es el efecto "marca de empalme" o la diferencia de textura entre las esquinas pintadas a brocha y los paños grandes a rodillo. Elegir la densidad del pelo correcta según la textura de la pared garantiza un reparto homogéneo de la micra de pintura.</p>
+        <div class="guia-sub">🖌️ Selección según la Superficie:</div>
+        <ul class="guia-lista">
+          <li><strong>Pelo corto (5-8 mm):</strong> Recomendado para pladur, placas de yeso liso y acabados finos.</li>
+          <li><strong>Pelo medio (9-12 mm):</strong> Uso estándar en paredes interiores de yeso tradicional.</li>
+          <li><strong>Pelo largo (15-20 mm):</strong> Imprescindible para gotelé, bloques rugosos o fachadas exteriores.</li>
+        </ul>
+        <div class="guia-sub">📝 Técnica de Aplicación:</div>
+        <p class="guia-p">Recorta primero las esquinas con brocha biselada y pasa inmediatamente un rodillo pequeño de porosidad fina antes de que se seque. Para los paños grandes, carga el rodillo sin saturarlo y distribuye la masa dibujando una "W" imaginaria antes de peinar en vertical.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Mantén siempre la herramienta con carga uniforme y trabaja "borde sobre borde húmedo" para evitar cortes visibles.</div>
+      </div>
+
+      <div id="g-pintura-5" class="guia-seccion">
+        <a href="#pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-5')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Cómo Pintar Techos sin Sombras ni Rayas</h2>
+        <div class="guia-meta">Nivel: Intermedio | Ergonomía y Luz Rasante</div>
+        <p class="guia-p">Pintar el techo es la tarea más exigente debido a la entrada de luz rasante desde las ventanas, la cual resalta cualquier imperfección, falta de cubrición o pasada desigual. Se requiere una pintura formulada con alto contenido en sólidos y tiempo de secado abierto prolongado.</p>
+        <div class="guia-sub">📝 Pasos Clave de Ejecución:</div>
+        <ul class="guia-lista">
+          <li>Utiliza pinturas ultra-mate específicas para techos que eviten los destellos de luz.</li>
+          <li>Traba la superficie utilizando una alargadera rígida desde el suelo para mantener la perspectiva visual.</li>
+          <li>Dirige la pasada final en la misma dirección de la fuente de luz natural principal.</li>
+        </ul>
+        <p class="guia-p">No intentes retocar áreas que hayan comenzado a morder o secarse. Si notas una falla, espera a que la superficie planche por completo y aplica una segunda mano ligera sobre todo el plano.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Trabaja con las ventanas cerradas durante la aplicación para retrasar el secado acelerado del aire y evitar ráfagas de polvo.</div>
+      </div>
+
+      <div id="g-pintura-6" class="guia-seccion">
+        <a href="#pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-6')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía de Seguridad: Lijado, Polvo y Ventilación</h2>
+        <div class="guia-meta">Nivel: Transversal | Salud y Prevención</div>
+        <p class="guia-p">El lijado de paredes preparadas con masillas de temple, yeso o pladur genera una suspensión de partículas microscópicas que flotan en el ambiente durante horas. Inhalar estas partículas de sílice causa irritación severa en las vías respiratorias y acumulación pulmonar.</p>
+        <div class="guia-sub">🛡️ Equipamiento Obligatorio:</div>
+        <ul class="guia-lista">
+          <li>Mascarillas de protección con certificación FFP2 o FFP3 bien ajustadas.</li>
+          <li>Gafas panorámicas cerradas para evitar arañazos en la córnea por partículas en vuelo.</li>
+          <li>Protección de suelos y sellado de puertas con plástico o cinta de carrocero.</li>
+        </ul>
+        <p class="guia-p">Tras completar el lijado, utiliza un aspirador provisto de filtro HEPA para limpiar la estancia antes de destapar botes de pintura. No utilices escobas tradicionales, ya que reintroducen el polvo en el aire.</p>
+        <div class="callout-alert">⚠️ <strong>Precaución Antigua:</strong> En construcciones previas a 1980, las capas profundas pueden contener plomo. Evita el lijado mecánico agresivo sin equipos de aspiración activa al vacío.</div>
+      </div>
+    </div>
+
+    <!-- 2. CEMENTO Y SOLERAS -->
+    <div id="seccion-cemento" class="seccion-calculadora">
+      <div id="card-cemento" class="card">
+        <div class="card-title">🧱 Calculadora de Cemento y Soleras</div>
+        <div class="info-box">📐 <strong>Dimensiones:</strong> Materiales para soleras de hormigón o contrapisos no estructurales.</div>
+        <div class="form-group">
+          <label for="c-largo">Largo del suelo (m):</label>
+          <input type="number" id="c-largo" placeholder="Ej: 4" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="c-ancho">Ancho del suelo (m):</label>
+          <input type="number" id="c-ancho" placeholder="Ej: 3" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="c-espesor">Espesor / Grosor (cm):</label>
+          <input type="number" id="c-espesor" placeholder="Ej: 8" step="1">
+        </div>
+        <button class="btn-calc" onclick="calcularCemento()">Calcular Sacos y Áridos</button>
+        <div class="subtext">* Incluye coeficiente de aporte y 10% de merma técnica.</div>
+        <div id="res-cemento" class="resultado-box"><div id="det-cemento"></div></div>
+        <div id="sug-cemento" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas de Cemento:</div>
+          <div class="guias-grid">
+            <a href="#g-cem-1" class="btn-guia-item" onclick="mostrarGuia('g-cem-1', 'card-cemento')">🧱 Mortero vs Hormigón vs Solera <span>›</span></a>
+            <a href="#g-cem-2" class="btn-guia-item" onclick="mostrarGuia('g-cem-2', 'card-cemento')">💧 La relación agua/cemento y el curado <span>›</span></a>
+          </div>
+
+          <!-- TRIVIA CEMENTO -->
+          <div class="trivia-box" id="trivia-grupo-cemento">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Cemento:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Cómo se debe tratar una solera de hormigón recién colocada?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-1', 'cemento')">A) Dejarla secar al sol directo rápidamente.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tc-1', 'cemento')">B) Mantenerla húmeda con riegos durante los primeros 7 días.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-1', 'cemento')">C) Echarle más agua líquida a la mezcla mientras fragua.</button>
+              <div id="tc-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Qué diferencia principal tiene el hormigón frente al mortero?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tc-2', 'cemento')">A) El hormigón incluye grava para dar resistencia estructural.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-2', 'cemento')">B) El mortero es más duro y lleva barras de acero.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-2', 'cemento')">C) No hay ninguna diferencia.</button>
+              <div id="tc-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué pasa si agregas agua extra a la hormigonera para hacer la masa muy fluida?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-3', 'cemento')">A) Se vuelve indestructible.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tc-3', 'cemento')">B) Destruyes la resistencia final y genera polvo superficial.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-3', 'cemento')">C) Seca más rápido.</button>
+              <div id="tc-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-cemento" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-cemento" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('cemento')">🔄 Reintentar Trivia</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="g-cem-1" class="guia-seccion">
+        <a href="#cemento" class="btn-volver" onclick="ocultarGuia('card-cemento', 'g-cem-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Mortero, Hormigón y Soleras</h2>
+        <div class="guia-meta">Nivel: Principiante | Conceptos</div>
+        <p class="guia-p">Confundir la mezcla adecuada para una solera o contrapiso es el motivo principal de desprendimientos o agrietamientos prematuros. El mortero es una mezcla de aglomerante (cemento) y árido fino (arena) pensada para unirse y regularizar. El hormigón suma árido grueso (grava) para aportar volumen, rigidez y soporte estructural a compresión.</p>
+        <div class="guia-sub">🧱 Tipos de Mezcla según Aplicación:</div>
+        <ul class="guia-lista">
+          <li><strong>Mortero Seco/Bastardo:</strong> Para nivelaciones finas, colocación de baldosas o enfoscados (espesores de 1 a 4 cm).</li>
+          <li><strong>Hormigón Estructural (H-200/H-250):</strong> Para soleras de garajes, patios o losas de cimentación (espesores mayores a 7 cm).</li>
+        </ul>
+        <p class="guia-p">Nunca utilices mortero puro para rellenar espesores grandes mayores a 5 cm. Al carecer de grava que frene la retracción del cemento, la masa se contraerá rápidamente al secarse, generando grietas de lado a lado.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Coloca juntas de dilatación perimetrales de poliestireno de 5 mm para absorber los movimientos de dilatación térmica.</div>
+      </div>
+
+      <div id="g-cem-2" class="guia-seccion">
+        <a href="#cemento" class="btn-volver" onclick="ocultarGuia('card-cemento', 'g-cem-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Curado del Hormigón y Relación Agua/Cemento</h2>
+        <div class="guia-meta">Nivel: Intermedio | Ejecución</div>
+        <p class="guia-p">Existe la falsa creencia de que el cemento debe "secarse al sol" para endurecer. Químicamente ocurre lo contrario: el cemento reacciona mediante un proceso de hidratación cristalina continua. Si el sol o el viento evaporan el agua de la mezcla antes de tiempo, la reacción se interrumpe y la solera pierde hasta un 50% de su resistencia mecánica proyectada.</p>
+        <div class="guia-sub">📝 Protocolo de Curado Húmedo:</div>
+        <ul class="guia-lista">
+          <li>Riega suavemente la masa en cuanto haya alcanzado el fraguado inicial (unas 4 a 6 horas tras el vertido).</li>
+          <li>Mantén la superficie húmeda mediante riegos periódicos o mallas geotextiles durante los primeros 7 días.</li>
+          <li>Cubre con plásticos impermeables si hay exposición directa al viento seco o al sol de mediodía.</li>
+        </ul>
+        <div class="callout-alert">⚠️ <strong>Precaución:</strong> Agregar agua extra a la hormigonera para hacer la masa "más fluida" facilita el trabajo pero destruye la resistencia final y multiplica el polvo superficial.</div>
+      </div>
+    </div>
+    
+        <!-- 3. BLOQUES Y LADRILLOS -->
+    <div id="seccion-bloques" class="seccion-calculadora">
+      <div id="card-bloques" class="card">
+        <div class="card-title">🏗️ Calculadora de Bloques y Ladrillos</div>
+        <div class="info-box">📐 <strong>Tabiquería:</strong> Estima piezas cerámicas o de hormigón y mortero de pega.</div>
+        <div class="form-group">
+          <label for="b-largo">Largo de la pared (m):</label>
+          <input type="number" id="b-largo" placeholder="Ej: 5" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="b-alto">Alto de la pared (m):</label>
+          <input type="number" id="b-alto" placeholder="Ej: 2.6" step="0.1">
+        </div>
+        <button class="btn-calc" onclick="calcularBloques()">Calcular Piezas</button>
+        <div class="subtext">* Incluye deducción de módulo de junta y 10% de merma.</div>
+        <div id="res-bloques" class="resultado-box"><div id="det-bloques"></div></div>
+        <div id="sug-bloques" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas de Bloques:</div>
+          <div class="guias-grid">
+            <a href="#g-blo-1" class="btn-guia-item" onclick="mostrarGuia('g-blo-1', 'card-bloques')">🏗️ ¿Soportará el suelo una pared de ladrillo? <span>›</span></a>
+            <a href="#g-blo-2" class="btn-guia-item" onclick="mostrarGuia('g-blo-2', 'card-bloques')">⚓ Taladrar y fijar en ladrillo hueco <span>›</span></a>
+          </div>
+
+          <!-- TRIVIA BLOQUES -->
+          <div class="trivia-box" id="trivia-grupo-bloques">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Bloques:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Cómo se debe perforar un tabique de ladrillo hueco?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tb-1', 'bloques')">A) Con taladro sin percusión y broca de widia.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-1', 'bloques')">B) Usando el martillo percutor al máximo.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-1', 'bloques')">C) Rompiendo el ladrillo con un cincel.</button>
+              <div id="tb-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Qué material de tabiquería ofrece una opción muy ligera (~60 kg/m²) con gran aislamiento?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-2', 'bloques')">A) Ladrillo macizo pesado.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tb-2', 'bloques')">B) HCCA (Hormigón Celular Autoclavado).</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-2', 'bloques')">C) Bloque de hormigón pesado.</button>
+              <div id="tb-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué fijación es recomendada para cargas pesadas mayores a 30 kg en huecos?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-3', 'bloques')">A) Un clavo de acero común.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tb-3', 'bloques')">B) Resina de anclaje químico con tamiz.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-3', 'bloques')">C) Pegamento escolar.</button>
+              <div id="tb-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-bloques" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-bloques" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('bloques')">🔄 Reintentar Trivia</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="g-blo-1" class="guia-seccion">
+        <a href="#bloques" class="btn-volver" onclick="ocultarGuia('card-bloques', 'g-blo-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: ¿Puede mi piso soportar una pared de ladrillo?</h2>
+        <div class="guia-meta">Nivel: Intermedio | Estructural</div>
+        <p class="guia-p">Levantar una partición o tabique interior de ladrillo macizo o bloque de hormigón introduce una carga puntual muy elevada en la estructura del suelo (forjado). En viviendas viejas o reformadas con vigas de madera o viguetas pretensadas, añadir cientos de kilos por metro lineal genera flechas y fisuras en las plantas inferiores.</p>
+        <div class="guia-sub">🧱 Alternativas y Evaluación de Carga:</div>
+        <ul class="guia-lista">
+          <li><strong>Ladrillo Macizo/Bloque Hormigón:</strong> Peso elevado (~150-250 kg/m²). Solo sobre forjados calculados.</li>
+          <li><strong>HCCA (Hormigón Celular Autoclavado):</strong> Muy ligero (~60 kg/m²) con alto aislamiento térmico.</li>
+          <li><strong>Tabiquería de Entramado Ligero (Pladur):</strong> Carga mínima (~25 kg/m²), ideal para reformas en pisos altos.</li>
+        </ul>
+        <div class="callout-alert">⚠️ <strong>Precaución:</strong> Nunca levantes mampostería pesada sobre forjados antiguos sin verificar la sobrecarga admisible con un especialista o arquitecto técnico.</div>
+      </div>
+
+      <div id="g-blo-2" class="guia-seccion">
+        <a href="#bloques" class="btn-volver" onclick="ocultarGuia('card-bloques', 'g-blo-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Tacos y Anclajes en Ladrillo Hueco</h2>
+        <div class="guia-meta">Nivel: Principiante | Bricolaje</div>
+        <p class="guia-p">Colgar muebles de cocina, soportes de televisión o elementos pesados en tabiques de ladrillo hueco requiere utilizar fijaciones diseñadas específicamente para transmitir la fuerza dentro de las celdas interiores, ya que la pared externa del ladrillo suele medir menos de 10 mm de espesor.</p>
+        <div class="guia-sub">🛠️ Herramientas y Materiales Recomendados:</div>
+        <ul class="guia-lista">
+          <li>Taladro sin percusión (para no romper las paredes internas del ladrillo).</li>
+          <li>Tacos de expansión de nudo (tipo Fischer UX/Duopower) para cargas medias.</li>
+          <li>Resina de anclaje químico con tamiz de plástico red para cargas pesadas de más de 30 kg.</li>
+        </ul>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Desactiva siempre el martillo percutor del taladro; utiliza broca de widia a revoluciones medias para obtener un orificio cilíndrico perfecto.</div>
+      </div>
+    </div>
+
+    <!-- 4. CERÁMICA Y BALDOSAS -->
+    <div id="seccion-ceramica" class="seccion-calculadora">
+      <div id="card-ceramica" class="card">
+        <div class="card-title">🔲 Calculadora de Cerámica y Pisos</div>
+        <div class="info-box">📐 <strong>Superficie:</strong> Calcula metros cuadrados, cajas de baldosas y cemento cola.</div>
+        <div class="form-group">
+          <label for="ce-largo">Largo de la estancia (m):</label>
+          <input type="number" id="ce-largo" placeholder="Ej: 5" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="ce-ancho">Ancho de la estancia (m):</label>
+          <input type="number" id="ce-ancho" placeholder="Ej: 4" step="0.1">
+        </div>
+        <button class="btn-calc" onclick="calcularCeramica()">Calcular Material</button>
+        <div class="subtext">* Incluye 10% de merma estándar y consumo de adhesivo C2.</div>
+        <div id="res-ceramica" class="resultado-box"><div id="det-ceramica"></div></div>
+        <div id="sug-ceramica" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas de Cerámica:</div>
+          <div class="guias-grid">
+            <a href="#g-cer-1" class="btn-guia-item" onclick="mostrarGuia('g-cer-1', 'card-ceramica')">🔲 Elección de Adhesivos C1/C2 y llana <span>›</span></a>
+            <a href="#g-cer-2" class="btn-guia-item" onclick="mostrarGuia('g-cer-2', 'card-ceramica')">📏 Replanteo para evitar cortes finos <span>›</span></a>
+          </div>
+
+          <!-- TRIVIA CERÁMICA -->
+          <div class="trivia-box" id="trivia-grupo-ceramica">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Cerámica:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Qué adhesivo se requiere obligatoriamente para gres porcelánico?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-1', 'ceramica')">A) Cemento cola básico Clase C1.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tce-1', 'ceramica')">B) Adhesivo mejorado con polímeros Clase C2.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-1', 'ceramica')">C) Yeso rápido.</button>
+              <div id="tce-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Dónde se recomienda iniciar la colocación de la primera baldosa?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-2', 'ceramica')">A) En una esquina al azar.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tce-2', 'ceramica')">B) Desde el centro exacto de la estancia para equilibrar recortes.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-2', 'ceramica')">C) Afuera de la casa.</button>
+              <div id="tce-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué técnica se debe aplicar en baldosas de gran formato (>30x30 cm)?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tce-3', 'ceramica')">A) Doble encolado (soporte y reverso de la pieza).</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-3', 'ceramica')">B) Poner una sola gota en el centro.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-3', 'ceramica')">C) Pegarlas sin adhesivo.</button>
+              <div id="tce-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-ceramica" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-ceramica" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('ceramica')">🔄 Reintentar Trivia</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="g-cer-1" class="guia-seccion">
+        <a href="#ceramica" class="btn-volver" onclick="ocultarGuia('card-ceramica', 'g-cer-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Elección de Adhesivos (C1/C2) y Llanas</h2>
+        <div class="guia-meta">Nivel: Intermedio | Adherencia</div>
+        <p class="guia-p">Instalar azulejos o gres porcelánico utilizando un cemento cola inadecuado provocará que las baldosas se suelten o "suenen a hueco" tras el primer cambio de estación. El gres porcelánico moderno posee un grado de absorción de agua casi nulo (&lt; 0.5%), lo que impide el agarre mecánico del mortero tradicional.</p>
+        <div class="guia-sub">🔲 Clasificación Normativa de Adhesivos:</div>
+        <ul class="guia-lista">
+          <li><strong>Clase C1:</strong> Adhesivo cementoso estándar. Exclusivo para azulejos porosos de pasta roja en interiores secos.</li>
+          <li><strong>Clase C2 (Obligatorio para Porcelánico):</strong> Adhesivo mejorado con polímeros y resinas para baja absorción.</li>
+          <li><strong>Esteris Flexibles (S1/S2):</strong> Imprescindibles para suelo radiante o formatos grandes (>60x60 cm).</li>
+        </ul>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> En baldosas de más de 30x30 cm, aplica siempre la técnica del doble encolado (adhesivo en el soporte y en el reverso de la pieza).</div>
+      </div>
+
+      <div id="g-cer-2" class="guia-seccion">
+        <a href="#ceramica" class="btn-volver" onclick="ocultarGuia('card-ceramica', 'g-cer-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía de Replanteo Cerámico</h2>
+        <div class="guia-meta">Nivel: Principiante | Estética</div>
+        <p class="guia-p">Colocar la primera baldosa en una esquina al azar casi siempre termina en desastre visual: tiras estrechas de azulejo roto de apenas 2 cm en el lado más visible de la habitación o desalineación de las juntas respecto a las paredes o puertas principales.</p>
+        <div class="guia-sub">📏 Pasos para un Replanteo Profesional:</div>
+        <ul class="guia-lista">
+          <li>Calcula el centro exacto de la estancia cruzando dos líneas con tiralíneas.</li>
+          <li>Haz una simulación "en seco" colocando una fila de baldosas con crucetas de junta hacia ambas paredes.</li>
+          <li>Si el espacio restante en la pared es menor a la mitad de una baldosa, desplaza el centro de inicio para equilibrar las piezas de remate en ambos lados.</li>
+        </ul>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Utiliza cuñas o sistemas de nivelación por rosca/brida para evitar los temidos "dientes" o desniveles entre piezas.</div>
+      </div>
+    </div>
+
+    <!-- 5. AGUA Y TANQUES -->
+    <div id="seccion-agua" class="seccion-calculadora">
+      <div id="card-agua" class="card">
+        <div class="card-title">💧 Calculadora de Tanques y Autonomía</div>
+        <div class="info-box">📐 <strong>Depósitos:</strong> Capacidad útil real de un tanque cilíndrico y autonomía.</div>
+        <div class="form-group">
+          <label for="a-diametro">Diámetro del tanque (m):</label>
+          <input type="number" id="a-diametro" placeholder="Ej: 1.2" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="a-altura">Altura total del tanque (m):</label>
+          <input type="number" id="a-altura" placeholder="Ej: 1.5" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="a-habitantes">Número de habitantes en casa:</label>
+          <input type="number" id="a-habitantes" placeholder="Ej: 4">
+        </div>
+        <button class="btn-calc" onclick="calcularAgua()">Calcular Autonomía</button>
+        <div class="subtext">* Considera 120 litros por habitante/día y 15% de volumen muerto.</div>
+        <div id="res-agua" class="resultado-box"><div id="det-agua"></div></div>
+        <div id="sug-agua" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas de Fontanería:</div>
+          <div class="guias-grid">
+            <a href="#g-agu-1" class="btn-guia-item" onclick="mostrarGuia('g-agu-1', 'card-agua')">💧 Reparar fugas en cisterna de inodoro <span>›</span></a>
+            <a href="#g-agu-2" class="btn-guia-item" onclick="mostrarGuia('g-agu-2', 'card-agua')">🔍 Detectar fugas ocultas con contador <span>›</span></a>
+          </div>
+
+          <!-- TRIVIA AGUA -->
+          <div class="trivia-box" id="trivia-grupo-agua">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Fontanería:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Cómo detectas una fuga oculta usando el contador?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'ta-1', 'agua')">A) Abriendo todas las llaves de la casa.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'ta-1', 'agua')">B) Cerrando todo y revisando si gira tras horas sin usar agua.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'ta-1', 'agua')">C) Mide la temperatura del agua.</button>
+              <div id="ta-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Qué causa común hace que el agua de una cisterna corra de forma continua?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'ta-2', 'agua')">A) Falla en la boya o junta de goma calcificada.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'ta-2', 'agua')">B) Que hace mucho frío afuera.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'ta-2', 'agua')">C) Falta de electricidad.</button>
+              <div id="ta-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué porcentaje aproximado de volumen muerto se suele descontar en un tanque de agua?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'ta-3', 'agua')">A) El 50%.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'ta-3', 'agua')">B) El 15%.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'ta-3', 'agua')">C) Ninguno.</button>
+              <div id="ta-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-agua" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-agua" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('agua')">🔄 Reintentar Trivia</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="g-agu-1" class="guia-seccion">
+        <a href="#agua" class="btn-volver" onclick="ocultarGuia('card-agua', 'g-agu-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Reparar Fugas en la Cisterna del Inodoro</h2>
+        <div class="guia-meta">Nivel: Principiante | Fontanería</div>
+        <p class="guia-p">Un hilillo continuo de agua corriendo por la taza del inodoro puede parecer insignificante, pero desperdicia entre 100 y 500 litros de agua limpia diariamente. Esto se traduce en un incremento considerable en la factura de agua y en el desgaste acelerado del grupo de presión o bomba de la vivienda.</p>
+        <div class="guia-sub">💧 Diagnóstico y Componentes:</div>
+        <ul class="guia-lista">
+          <li><strong>Válvula de Llenado / Boya:</strong> Si el agua rebosa por el tubo central de seguridad, la boya no cierra el paso de entrada.</li>
+          <li><strong>Junta de Descarga / Sello de Goma:</strong> Si el agua pasa directamente al inodoro sin llenar del todo la cisterna, la goma de la base está calcificada o deformada.</li>
+        </ul>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Limpia periódicamente la cal de las juntas con vinagre blanco en lugar de sustituir los mecanismos completos. Cierra la llave de escuadra antes de trabajar.</div>
+      </div>
+
+      <div id="g-agu-2" class="guia-seccion">
+        <a href="#agua" class="btn-volver" onclick="ocultarGuia('card-agua', 'g-agu-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Detección de Fugas Ocultas con el Contador</h2>
+        <div class="guia-meta">Nivel: Principiante | Diagnóstico</div>
+        <p class="guia-p">Las fugas silenciosas bajo soleras, dentro de tabiques o en el tramo de acometida entre el contador general y la vivienda generan daños estructurales por humedad antes de que aparezcan manchas visibles en las paredes.</p>
+        <div class="guia-sub">🔍 Método de Comprobación Nocturna:</div>
+        <ul class="guia-lista">
+          <li>Cierra todos los grifos, duchas, electrodomésticos y llenados automáticos de cisternas o piscinas.</li>
+          <li>Anota los números exactos del contador de agua o toma una foto del dial de la rueda de estrella.</li>
+          <li>No utilices agua durante al menos 4 a 6 horas (por ejemplo, durante la noche).</li>
+        </ul>
+        <p class="guia-p">Si el marcador final no coincide con el inicial o la rueda testigo roja ha registrado giro, existe una fuga activa en la red interior de la vivienda.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Revisa primero los aliviaderos de calentadores de agua y grupos de presión antes de picar suelos o paredes.</div>
+      </div>
+    </div>
+    
+        <!-- PIE DE PÁGINA -->
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="privacidad.html">Política de Privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="terminos.html">Términos y Condiciones</a>
+            <span class="footer-separator">|</span>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p class="footer-disclaimer">
+            <strong>Aviso importante:</strong> El contenido, cálculos y guías técnicas de este sitio web son puramente orientativos y basados en coeficientes estándar de rendimiento de materiales. No nos hacemos responsables por variaciones en el gasto real de materiales de obra, compras incorrectas o incidentes en reparaciones.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Calculadoras del Hogar. Todos los derechos reservados.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    function navegarA(nombreSeccion) {
+      document.querySelectorAll('.seccion-calculadora').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      const seccionTarget = document.getElementById('seccion-' + nombreSeccion);
+      const tabTarget = document.getElementById('tab-' + nombreSeccion);
+      if (seccionTarget) seccionTarget.classList.add('active');
+      if (tabTarget) tabTarget.classList.add('active');
+      document.querySelectorAll('.guia-seccion').forEach(g => g.style.display = 'none');
+      document.querySelectorAll('.card').forEach(c => c.style.display = 'block');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function mostrarGuia(idGuia, cardId) {
+      document.getElementById(cardId).style.display = 'none';
+      document.getElementById(idGuia).style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function ocultarGuia(cardId, idGuia) {
+      document.getElementById(idGuia).style.display = 'none';
+      document.getElementById(cardId).style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const estadoTrivias = {
+      pintura: { respondidas: 0, correctas: 0, total: 3 },
+      cemento: { respondidas: 0, correctas: 0, total: 3 },
+      bloques: { respondidas: 0, correctas: 0, total: 3 },
+      ceramica: { respondidas: 0, correctas: 0, total: 3 },
+      agua: { respondidas: 0, correctas: 0, total: 3 }
+    };
+
+    function verificarTrivia(boton, esCorrecta, idFeedback, seccion) {
+      const tarjetaPregunta = boton.closest('.trivia-pregunta-card');
+      const opciones = tarjetaPregunta.querySelectorAll('.trivia-opcion');
+      const feedback = document.getElementById(idFeedback);
+
+      opciones.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+      if (esCorrecta) {
+        boton.classList.add('correcta');
+        feedback.innerHTML = "✅ ¡Exacto! ¡Le atinaste maestro!";
+        feedback.style.color = "#00f078";
+        estadoTrivias[seccion].correctas++;
+      } else {
+        boton.classList.add('incorrecta');
+        feedback.innerHTML = "❌ ¡Nel, revisa bien la guía técnica!";
+        feedback.style.color = "#ff4d4d";
+        opciones.forEach(opt => {
+          if (opt.getAttribute('onclick').includes('true')) {
+            opt.classList.add('correcta');
+          }
+        });
+      }
+      feedback.style.display = 'block';
+
+      estadoTrivias[seccion].respondidas++;
+
+      if (estadoTrivias[seccion].respondidas === estadoTrivias[seccion].total) {
+        mostrarResultadoFinal(seccion);
+      }
+    }
+
+    function mostrarResultadoFinal(seccion) {
+      const puntaje = estadoTrivias[seccion].correctas;
+      const total = estadoTrivias[seccion].total;
+      const resBox = document.getElementById(`resultado-final-${seccion}`);
+      const btnReinicio = document.getElementById(`btn-reinicio-${seccion}`);
+      
+      let mensajeBroma = "";
+      let colorBroma = "#ffffff";
+
+      if (puntaje === total) {
+        mensajeBroma = "🏆 ¡Perfecto (3/3)! ¡Ya estás listo para cobrar como maestro constructor profesional... o al menos para no romper las paredes de tu casa! 😎🔥";
+        colorBroma = "#00f078";
+      } else if (puntaje === 2) {
+        mensajeBroma = "⚠️ ¡Hiciste 2/3! Casi lo logras bro, por poquito y te salvas de que el maestro albañil te regañe. ¡Repasa la guía que te faltó una! 🛠️";
+        colorBroma = "#f1c40f";
+      } else if (puntaje === 1) {
+        mensajeBroma = "😅 ¡Apenas 1/3! Bro... ¿seguro que leíste las guías o nomás estabas picando botones por diversión? ¡A repasar se ha dicho! 📚🔨";
+        colorBroma = "#ff9800";
+      } else {
+        mensajeBroma = "💀 ¡0/3! ¡Pff, cero patatero! Si vas a construir así mejor contrata a alguien antes de que se te caiga el techo encima jajaja. ¡Dale a reintentar! 🚧💥";
+        colorBroma = "#ff4d4d";
+      }
+
+      resBox.innerHTML = `<strong>Puntaje: ${puntaje} / ${total}</strong><br><br>${mensajeBroma}`;
+      resBox.style.color = colorBroma;
+      resBox.style.display = 'block';
+      btnReinicio.style.display = 'block';
+    }
+
+    function reiniciarTrivia(seccion) {
+      estadoTrivias[seccion].respondidas = 0;
+      estadoTrivias[seccion].correctas = 0;
+
+      const contenedorGrupo = document.getElementById(`trivia-grupo-${seccion}`);
+      const opciones = contenedorGrupo.querySelectorAll('.trivia-opcion');
+      const feedbacks = contenedorGrupo.querySelectorAll('.trivia-feedback');
+      
+      opciones.forEach(opt => {
+        opt.style.pointerEvents = 'auto';
+        opt.classList.remove('correcta', 'incorrecta');
+      });
+
+      feedbacks.forEach(fb => {
+        fb.style.display = 'none';
+        fb.innerHTML = '';
+      });
+
+      document.getElementById(`resultado-final-${seccion}`).style.display = 'none';
+      document.getElementById(`btn-reinicio-${seccion}`).style.display = 'none';
+    }
+
+    window.addEventListener('hashchange', function() {
+      const hash = window.location.hash.replace('#', '');
+      if (['pintura', 'cemento', 'bloques', 'ceramica', 'agua'].includes(hash)) {
+        navegarA(hash);
+      }
+    });
+
+    window.addEventListener('load', function() {
+      const hash = window.location.hash.replace('#', '');
+      if (['pintura', 'cemento', 'bloques', 'ceramica', 'agua'].includes(hash)) {
+        navegarA(hash);
+      }
+    });
+
+    function calcularPintura() {
+      const ancho = parseFloat(document.getElementById('p-ancho').value);
+      const alto = parseFloat(document.getElementById('p-alto').value);
+      if (!ancho || !alto || ancho <= 0 || alto <= 0) {
+        alert("Por favor, ingresa un ancho y alto válidos.");
+        return;
+      }
+      const m2 = ancho * alto;
+      const galonesExactos = (m2 / 28) * 2;
+      let rec = "";
+      if (galonesExactos <= 0.3) rec = "<strong>1 Cuarto de Galón (1/4 gal)</strong>";
+      else if (galonesExactos <= 1.2) rec = "<strong>1 Galón estándar</strong>";
+      else if (galonesExactos <= 2.3) rec = "<strong>2 Galones independientes</strong>";
+      else if (galonesExactos <= 3.3) rec = "<strong>3 Galones</strong> (o 1 Caneca si rinde más)";
+      else {
+        const canecas = Math.floor(galonesExactos / 5);
+        const sueltos = Math.ceil(galonesExactos % 5);
+        rec = canecas > 0 ? `<strong>${canecas} Caneca(s) de 5 gal + ${sueltos} Galón(es)</strong>` : `<strong>${Math.ceil(galonesExactos)} Galones</strong>`;
+      }
+      document.getElementById('det-pintura').innerHTML = `
+        📐 Área neta: <strong>${m2.toFixed(1)} m²</strong><br>
+        💧 Teórico (2 manos): <strong>${galonesExactos.toFixed(1)} Galones</strong><br><br>
+        🛒 <strong>Compra recomendada:</strong> ${rec}
+      `;
+      document.getElementById('res-pintura').style.display = 'block';
+      document.getElementById('sug-pintura').style.display = 'block';
+    }
+
+    function calcularCemento() {
+      const largo = parseFloat(document.getElementById('c-largo').value);
+      const ancho = parseFloat(document.getElementById('c-ancho').value);
+      const espesorCm = parseFloat(document.getElementById('c-espesor').value);
+      if (!largo || !ancho || !espesorCm || largo <= 0 || ancho <= 0 || espesorCm <= 0) {
+        alert("Ingresa dimensiones válidas para el contrapiso.");
+        return;
+      }
+      const m3 = (largo * ancho * (espesorCm / 100)) * 1.10;
+      const sacosCemento = Math.ceil((m3 * 350) / 25);
+      const arenaM3 = (m3 * 0.55).toFixed(2);
+      const gravaM3 = (m3 * 0.55).toFixed(2);
+      document.getElementById('det-cemento').innerHTML = `
+        📦 Volumen total con merma: <strong>${m3.toFixed(2)} m³</strong><br>
+        🏭 <strong>Sacos de Cemento (25kg):</strong> Aprox. <strong>${sacosCemento} sacos</strong><br>
+        🏖️ Arena necesaria: <strong>${arenaM3} m³</strong><br>
+        🪨 Grava necesaria: <strong>${gravaM3} m³</strong>
+      `;
+      document.getElementById('res-cemento').style.display = 'block';
+      document.getElementById('sug-cemento').style.display = 'block';
+    }
+
+    function calcularBloques() {
+      const largo = parseFloat(document.getElementById('b-largo').value);
+      const alto = parseFloat(document.getElementById('b-alto').value);
+      if (!largo || !alto || largo <= 0 || alto <= 0) {
+        alert("Ingresa un largo y alto válidos para la pared.");
+        return;
+      }
+      const m2 = largo * alto;
+      const piezas = Math.ceil(m2 * 12.5 * 1.10);
+      document.getElementById('det-bloques').innerHTML = `
+        📐 Superficie de pared: <strong>${m2.toFixed(1)} m²</strong><br>
+        🛒 <strong>Piezas recomendadas (con 10% merma):</strong> <strong>${piezas} unidades</strong>
+      `;
+      document.getElementById('res-bloques').style.display = 'block';
+      document.getElementById('sug-bloques').style.display = 'block';
+    }
+
+    function calcularCeramica() {
+      const largo = parseFloat(document.getElementById('ce-largo').value);
+      const ancho = parseFloat(document.getElementById('ce-ancho').value);
+      if (!largo || !ancho || largo <= 0 || ancho <= 0) {
+        alert("Ingresa medidas válidas para la estancia.");
+        return;
+      }
+      const m2Netos = largo * ancho;
+      const m2Compra = m2Netos * 1.10;
+      const sacosAdhesivo = Math.ceil((m2Compra * 4.5) / 25);
+      document.getElementById('det-ceramica').innerHTML = `
+        📐 Superficie neta: <strong>${m2Netos.toFixed(1)} m²</strong><br>
+        📦 Superficie con 10% merma: <strong>${m2Compra.toFixed(1)} m²</strong><br>
+        🛒 Adhesivo (Cemento cola C2): Aprox. <strong>${sacosAdhesivo} saco(s) de 25 kg</strong>
+      `;
+      document.getElementById('res-ceramica').style.display = 'block';
+      document.getElementById('sug-ceramica').style.display = 'block';
+    }
+
+    function calcularAgua() {
+      const diametro = parseFloat(document.getElementById('a-diametro').value);
+      const altura = parseFloat(document.getElementById('a-altura').value);
+      const habitantes = parseInt(document.getElementById('a-habitantes').value);
+      if (!diametro || !altura || !habitantes || diametro <= 0 || altura <= 0 || habitantes <= 0) {
+        alert("Ingresa datos válidos para el tanque y habitantes.");
+        return;
+      }
+      const radio = diametro / 2;
+      const volumenBrutoLitros = Math.PI * Math.pow(radio, 2) * altura * 1000;
+      const volumenUtilLitros = volumenBrutoLitros * 0.85;
+      const consumoTotalDia = habitantes * 120;
+      const autonomiaDias = (volumenUtilLitros / consumoTotalDia).toFixed(1);
+
+      document.getElementById('det-agua').innerHTML = `
+        🛢️ Capacidad bruta geométrica: <strong>${volumenBrutoLitros.toFixed(0)} Litros</strong><br>
+        💧 Capacidad útil real (85%): <strong>${volumenUtilLitros.toFixed(0)} Litros</strong><br>
+        ⏳ <strong>Autonomía estimada:</strong> <strong>${autonomiaDias} días</strong> (para ${habitantes} personas)
+      `;
+      document.getElementById('res-agua').style.display = 'block';
+      document.getElementById('sug-agua').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

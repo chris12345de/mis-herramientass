@@ -1,0 +1,7 @@
+# Calculadoras del Hogar (GitHub Pages, sitio de proyecto)
+# Los buscadores solo leen robots.txt en la RAIZ del dominio (https://chris12345de.github.io/robots.txt).
+# Dentro de /mis-herramientass/ este archivo no se aplica; se conserva por si se copia a la raiz.
+User-agent: *
+Allow: /
+
+Sitemap: https://chris12345de.github.io/mis-herramientass/sitemap.xml

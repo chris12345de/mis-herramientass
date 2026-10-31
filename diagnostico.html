@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Diagnóstico de carga (solo para pruebas)</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #ffffff; color: #111111; max-width: 640px; margin: 0 auto; padding: 16px; line-height: 1.45; }
+    h1 { font-size: 1.3rem; } h2 { font-size: 1.05rem; margin-top: 22px; }
+    #veredicto { padding: 12px; border-radius: 8px; border: 2px solid #999; background: #f3f3f3; font-weight: 600; }
+    #veredicto.ok { border-color: #1a7f37; background: #e6f6ea; } #veredicto.mal { border-color: #b42318; background: #fdecea; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.85rem; margin-top: 12px; }
+    th, td { border: 1px solid #bbb; padding: 6px; text-align: left; word-break: break-word; } td.ok { color: #1a7f37; } td.mal { color: #b42318; font-weight: 700; }
+    code { background: #eee; padding: 1px 4px; }
+  </style>
+</head>
+<body>
+  <h1>Diagnóstico de carga</h1>
+  <p>Esta página comprueba si el servidor de la vista previa entrega bien los archivos del proyecto. Debe estar en la misma carpeta que <code>index.html</code>. <strong>No la subas a GitHub.</strong></p>
+  <p><strong>Dirección actual:</strong> <span id="dir"></span></p>
+  <div id="veredicto" role="status">Comprobando…</div>
+  <table><thead><tr><th>Archivo</th><th>Estado</th><th>Tipo</th><th>Resultado</th></tr></thead><tbody id="filas"></tbody></table>
+  <h2>Prueba de toque (la que usan las trivias)</h2>
+  <p>Toca el botón: debe ponerse verde y decir «Funciona». Si no pasa nada, tu navegador no ejecuta los botones de la página.</p>
+  <button type="button" id="btn-toque" onclick="pruebaToque(this)" style="font-size:1rem;padding:12px 18px;min-height:44px;">Tócame</button>
+  <div id="res-toque" role="status" style="margin-top:8px;"></div>
+  <h2>Capacidades de este navegador</h2>
+  <ul id="capacidades"></ul>
+  <h2>Qué hacer según el resultado</h2>
+  <ul>
+    <li><strong>404 en estilos.css o app.js:</strong> la vista previa no está sirviendo toda la carpeta del proyecto. <em>Las páginas de la raíz y las de <code>autonomo</code> llevan su CSS y su JavaScript dentro y funcionan igualmente</em>; solo la carpeta <code>compartido</code> necesita esos archivos. Para usar <code>compartido</code>, en Acode usa «Abrir carpeta» (no «Abrir archivo») con la carpeta descomprimida.</li>
+    <li><strong>Tipo incorrecto:</strong> el servidor entrega el CSS o el JS con un tipo que el navegador ignora. Las páginas de la raíz y de <code>autonomo</code> no se ven afectadas.</li>
+    <li><strong>Sin respuesta:</strong> la página se abrió con <code>file://</code> o el servidor bloquea la lectura. Ábrela con la dirección <code>http://localhost:…</code> de la vista previa.</li>
+  </ul>
+  <script>
+    (function () {
+      var ARCHIVOS = [['estilos.css', 'css', 'background-color'], ['app.js', 'javascript', 'const Calc'], ['favicon.svg', 'svg', '<svg'],
+        ['index.html', 'html', '<!DOCTYPE'], ['pintura.html', 'html', '<!DOCTYPE'], ['cemento.html', 'html', '<!DOCTYPE'], ['bloques.html', 'html', '<!DOCTYPE'],
+        ['ceramica.html', 'html', '<!DOCTYPE'], ['agua.html', 'html', '<!DOCTYPE'], ['privacidad.html', 'html', '<!DOCTYPE'], ['terminos.html', 'html', '<!DOCTYPE'], ['contacto.html', 'html', '<!DOCTYPE']];
+      document.getElementById('dir').textContent = window.location.href;
+      var cuerpo = document.getElementById('filas');
+      function fila(nombre, estado, tipo, texto, ok) {
+        var tr = document.createElement('tr'), v = [nombre, estado, tipo, texto];
+        v.forEach(function (t, i) { var td = document.createElement('td'); td.textContent = t; if (i === 3) td.className = ok ? 'ok' : 'mal'; tr.appendChild(td); });
+        cuerpo.appendChild(tr);
+      }
+      function probar(item) {
+        return fetch(item[0], { cache: 'no-store' }).then(function (r) {
+          var tipo = r.headers.get('content-type') || '(sin tipo)';
+          return r.text().then(function (t) {
+            return { n: item[0], estado: r.status, tipo: tipo, existe: r.status === 200, tipoOk: tipo.toLowerCase().indexOf(item[1]) !== -1, contenidoOk: t.indexOf(item[2]) !== -1 };
+          });
+        }).catch(function () { return { n: item[0], estado: 'sin respuesta', tipo: '-', error: true }; });
+      }
+      function hoja() {
+        return new Promise(function (res) {
+          var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'estilos.css?d=' + Date.now();
+          l.onload = function () { var ok = false; try { ok = !!(l.sheet && l.sheet.cssRules.length > 0); } catch (e) { ok = false; } if (l.parentNode) l.parentNode.removeChild(l); res(ok); };
+          l.onerror = function () { if (l.parentNode) l.parentNode.removeChild(l); res(false); };
+          document.head.appendChild(l);
+        });
+      }
+      function codigo() {
+        return new Promise(function (res) {
+          var s = document.createElement('script'); s.src = 'app.js?d=' + Date.now();
+          s.onload = function () { res(typeof Calc === 'object'); }; s.onerror = function () { res(false); }; document.head.appendChild(s);
+        });
+      }
+      Promise.all(ARCHIVOS.map(probar)).then(function (rs) {
+        var hayError = false, hay404 = false, hayTipo = false, hayContenido = false;
+        rs.forEach(function (r) {
+          var ok = r.existe && r.tipoOk && r.contenidoOk, txt = 'OK';
+          if (r.error) { hayError = true; txt = 'No se pudo leer'; }
+          else if (!r.existe) { hay404 = true; txt = 'NO se encuentra'; }
+          else if (!r.tipoOk) { hayTipo = true; txt = 'Tipo incorrecto'; }
+          else if (!r.contenidoOk) { hayContenido = true; txt = 'Contenido inesperado'; }
+          fila(r.n, r.estado, r.tipo, txt, ok);
+        });
+        return Promise.all([hoja(), codigo()]).then(function (x) {
+          fila('(prueba) aplicar estilos.css', '-', '-', x[0] ? 'OK: se aplica' : 'NO se aplica', x[0]);
+          fila('(prueba) ejecutar app.js', '-', '-', x[1] ? 'OK: se ejecuta' : 'NO se ejecuta', x[1]);
+          var v = document.getElementById('veredicto'), bien = !hayError && !hay404 && !hayTipo && !hayContenido && x[0] && x[1];
+          v.className = bien ? 'ok' : 'mal';
+          if (bien) v.textContent = '✅ El servidor entrega bien todos los archivos. Si una página se ve sin estilo, recárgala sin caché y ábrela desde esta misma dirección.';
+          else if (hayError) v.textContent = '⚠️ No se pudieron leer los archivos: la página se abrió con file:// o el servidor bloquea la lectura. Ábrela con la dirección http://localhost de la vista previa.';
+          else if (hay404) v.textContent = '⚠️ El servidor NO encuentra archivos del proyecto en esta carpeta (por ejemplo estilos.css). Las páginas de la raíz y de «autonomo» llevan su CSS y su JavaScript dentro y funcionan igualmente; solo la carpeta «compartido» los necesita.';
+          else if (hayTipo || hayContenido || !x[0] || !x[1]) v.textContent = '⚠️ El servidor entrega los archivos con un tipo o contenido que el navegador no acepta (el CSS se ignora aunque exista). Las páginas de la raíz y de «autonomo» no se ven afectadas; solo «compartido».';
+        });
+      });
+    })();
+  </script>
+  <script>
+    function pruebaToque(b) {
+      var r = document.getElementById('res-toque');
+      try { var caja = b.closest('body'); b.dataset.tocado = '1'; b.classList.add('tocado'); b.style.background = '#1a7f37'; b.style.color = '#fff';
+        r.textContent = '✅ Funciona: onclick, closest, dataset y classList responden en este navegador.'; }
+      catch (e) { r.textContent = '❌ Falló: ' + e.message; }
+    }
+    (function () {
+      var ul = document.getElementById('capacidades');
+      function li(t, ok) { var e = document.createElement('li'); e.textContent = (ok ? '✅ ' : '❌ ') + t; ul.appendChild(e); }
+      li('JavaScript dentro de la página', true);
+      li('Element.closest', typeof Element.prototype.closest === 'function');
+      li('dataset', 'dataset' in document.documentElement);
+      li('classList', 'classList' in document.documentElement);
+      li('String.includes', typeof ''.includes === 'function');
+      li('Number.isInteger y Number.EPSILON', typeof Number.isInteger === 'function' && typeof Number.EPSILON === 'number');
+      li('sintaxis ES2015 (const, flechas, plantillas)', (function () { try { new Function('const a = () => `x`; return a();'); return true; } catch (e) { return false; } })());
+      li('pantalla táctil', ('ontouchstart' in window) || navigator.maxTouchPoints > 0);
+      var u = document.createElement('li'); u.textContent = 'Navegador: ' + navigator.userAgent; ul.appendChild(u);
+    })();
+  </script>
+</body>
+</html>

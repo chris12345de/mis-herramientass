@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <title>Calculadora de Cemento, Arena y Grava | Calculadoras del Hogar</title>
+  <meta name="description" content="Calcula los sacos de cemento, la arena y la grava para una solera o contrapiso según largo, ancho y espesor, con 10% de merma. Incluye guías.">
+  <link rel="canonical" href="https://chris12345de.github.io/mis-herramientass/cemento.html">
+  <link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header-title" id="page-h1"><a href="index.html">🛠️ Calculadoras del Hogar</a></div>
+    <div class="nav-tabs">
+      <a href="pintura.html" class="tab-btn" id="tab-pintura">🎨 Pintura</a>
+      <a href="cemento.html" class="tab-btn active" id="tab-cemento">🧱 Cemento/Solera</a>
+      <a href="bloques.html" class="tab-btn" id="tab-bloques">🏗️ Bloques</a>
+      <a href="ceramica.html" class="tab-btn" id="tab-ceramica">🔲 Cerámica</a>
+      <a href="agua.html" class="tab-btn" id="tab-agua">💧 Agua/Tanques</a>
+    </div>
+
+    <div id="seccion-cemento" class="seccion-calculadora active">
+      <div id="card-cemento" class="card">
+        <h1 class="card-title">🧱 Calculadora de Cemento y Soleras</h1>
+        <div class="info-box">📐 <strong>Hormigón:</strong> estima cemento, arena y grava para una solera o un contrapiso. Es una estimación orientativa de materiales, no un diseño estructural. Para mortero de pega o revoque (sin grava) no sirve.</div>
+        <form id="form-cemento" onsubmit="return false;" novalidate>
+          <div class="form-fila"><div class="form-group"><label for="c-largo">Largo (m)</label><input type="text" id="c-largo" inputmode="decimal" placeholder="Ej: 4" autocomplete="off"></div><div class="form-group"><label for="c-ancho">Ancho (m)</label><input type="text" id="c-ancho" inputmode="decimal" placeholder="Ej: 3" autocomplete="off"></div></div><div class="form-group"><label for="c-espesor">Espesor (cm)</label><input type="text" id="c-espesor" inputmode="decimal" placeholder="Ej: 8" aria-describedby="c-espesor-ay" autocomplete="off"><small class="ayuda" id="c-espesor-ay">Se escribe en centímetros: 8 cm = 0,08 m.</small></div><div class="form-group"><label for="c-dosif">Dosificación del hormigón</label><select id="c-dosif" onchange="cambiarDosif()" aria-describedby="c-dosif-ay"><option value="d123" selected>≈350 kg/m³ («1:2:3»)</option><option value="d124">≈300 kg/m³ («1:2:4»)</option><option value="d133">≈250 kg/m³ (pobre)</option><option value="custom">Personalizada</option></select><small class="ayuda" id="c-dosif-ay">Valores orientativos de tablas de referencia; no garantizan una resistencia. Si tu maestro o el fabricante indican otra mezcla, elige «Personalizada».</small></div><div id="c-personal" hidden><div class="form-group"><label for="c-cem">Cemento por m³ de hormigón (kg)</label><input type="text" id="c-cem" inputmode="decimal" placeholder="Ej: 350" autocomplete="off"></div><div class="form-fila"><div class="form-group"><label for="c-arena">Arena por m³ (m³)</label><input type="text" id="c-arena" inputmode="decimal" placeholder="Ej: 0,5" autocomplete="off"></div><div class="form-group"><label for="c-grava">Grava por m³ (m³)</label><input type="text" id="c-grava" inputmode="decimal" placeholder="Ej: 0,75" autocomplete="off"></div></div></div><details class="opciones"><summary>⚙️ Saco y desperdicio (opcional)</summary><div class="form-group"><label for="c-saco">Peso del saco de cemento</label><select id="c-saco"><option value="25" selected>25 kg</option><option value="40">40 kg</option><option value="42.5">42,5 kg</option><option value="50">50 kg</option></select></div><div class="form-group"><label for="c-desp">Desperdicio (%)</label><input type="text" id="c-desp" inputmode="decimal" placeholder="Ej: 10" value="10" aria-describedby="c-desp-ay" autocomplete="off"><small class="ayuda" id="c-desp-ay">Cubre derrames y irregularidades del terreno. En obras pequeñas suele ir de 5% a 10%.</small></div></details>
+          <div class="form-botones">
+            <button type="submit" class="btn-calc" onclick="if (typeof calcularCemento === 'function') { calcularCemento(); } else { avisoFallo('cemento'); }">Calcular materiales</button>
+            <button type="button" class="btn-limpiar" onclick="limpiarCalculadora('cemento')">🧹 Limpiar campos</button>
+          </div>
+        </form>
+        <div class="subtext">* Estimación orientativa. El consumo real varía con los materiales, la humedad, la granulometría, la compactación y el diseño de mezcla.</div>
+        <div id="res-cemento" class="resultado-box" aria-live="polite"><div id="det-cemento"></div></div>
+        <details class="opciones"><summary>📖 Cómo se calcula y ejemplo</summary><p><strong>Fórmula:</strong> volumen = largo × ancho × espesor ÷ 100 (espesor en cm), más el desperdicio. Cemento (kg) = volumen × kg por m³; sacos = kg ÷ peso del saco, redondeado hacia arriba. Arena y grava (m³) = volumen × m³ por m³.</p><p><strong>Valores de referencia por m³ de hormigón</strong> (de tablas de dosificación publicadas; otras fuentes dan cifras algo distintas para la misma proporción): «1:2:3» ≈ 350 kg de cemento, 0,50 m³ de arena y 0,75 m³ de grava; «1:2:4» ≈ 300 kg, 0,50 m³ y 0,80 m³; mezcla pobre para contrapisos livianos ≈ 250 kg, 0,55 m³ y 0,55 m³. Si tu maestro o el fabricante usan otra mezcla, elige «Personalizada». No uses estos números para mortero, que no lleva grava.</p><p><strong>Importante:</strong> es una estimación orientativa de materiales, no un diseño estructural. Una proporción de mezcla no garantiza por sí sola una resistencia: el consumo y el resultado reales dependen de la calidad del cemento y de los áridos, la humedad de la arena, la granulometría, la cantidad de agua, la compactación y el curado. Para zapatas, losas, vigas o cualquier elemento que soporte carga, el diseño debe hacerlo un profesional.</p><p><strong>¿Por qué no hay una cifra única para «1:3:3»?</strong> Una proporción nominal en volumen (1 parte de cemento, 3 de arena, 3 de grava) no equivale por sí sola a unos kg de cemento por m³: depende de cuánto se compacta la mezcla al amasarla (el volumen real es menor que la suma de los volúmenes sueltos) y del tipo y la humedad de los áridos. Un apunte universitario que lo calcula así obtiene unos 310 kg/m³ para 1:3:3, y otra página indica que 1 saco de 50 kg con 3 baldes de arena y 3 de piedra rinde unos 0,14 m³ (unos 350 kg/m³). La fila de 250 kg usada aquí corresponde a una mezcla pobre para contrapisos, no a la proporción nominal. Si tu maestro te indica «1:3:3» en volumen, elige «Personalizada» y usa sus valores (por ejemplo, ≈310 kg, 0,67 m³ de arena y 0,67 m³ de grava, según ese apunte).</p><p><strong>Ejemplo:</strong> solera de 4 m × 3 m × 8 cm con 1:2:3: 0,96 m³; con 10% de desperdicio, 1,056 m³. Cemento: 1,056 × 350 = 369,6 kg, es decir 15 sacos de 25 kg. Arena: 0,53 m³. Grava: 0,79 m³.</p></details>
+        <details class="opciones"><summary>❓ Preguntas frecuentes</summary><p><strong>¿Qué dosificación elijo?</strong><br>No hay una única respuesta: depende del uso, de los materiales y de la exigencia de la pieza. Las mezclas con más cemento por m³ se usan en piezas más exigidas. Si la obra soporta carga o es estructural, la mezcla debe definirla un ingeniero; esta calculadora no la diseña.</p><p><strong>¿Cuántos sacos de cemento lleva 1 m³ de hormigón?</strong><br>Depende de la mezcla. Con el valor de referencia de 350 kg por m³ serían 14 sacos de 25 kg o 7 sacos de 50 kg; con otra dosificación cambia.</p><p><strong>¿Por qué la arena y la grava salen en m³?</strong><br>Porque normalmente se compran por volumen. El volumen suelto de la arena cambia con su humedad (se «esponja»), así que la cantidad real puede variar: confírmala con tu proveedor.</p><p><strong>¿Me dice qué resistencia tendrá el hormigón?</strong><br>No. Solo estima cantidades de materiales. La resistencia depende de muchos factores (materiales, agua, compactación, curado) y la verifica un profesional con un diseño de mezcla y ensayos.</p></details>
+        <div id="sug-cemento" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas de Cemento:</div>
+          <div class="guias-grid">
+            <a href="#g-cem-1" class="btn-guia-item" onclick="mostrarGuia('g-cem-1', 'card-cemento')">🧱 Mortero vs Hormigón vs Solera <span>›</span></a>
+            <a href="#g-cem-2" class="btn-guia-item" onclick="mostrarGuia('g-cem-2', 'card-cemento')">💧 La relación agua/cemento y el curado <span>›</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div id="g-cem-1" class="guia-seccion">
+        <a href="#card-cemento" class="btn-volver" onclick="ocultarGuia('card-cemento', 'g-cem-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Mortero, Hormigón y Soleras</h2>
+        <div class="guia-meta">Nivel: Principiante | Conceptos</div>
+        <p class="guia-p">Confundir la mezcla adecuada para una solera o contrapiso puede provocar desprendimientos o agrietamientos prematuros. El mortero es una mezcla de aglomerante (cemento) y árido fino (arena) pensada para unirse y regularizar. El hormigón suma árido grueso (grava) para aportar volumen, rigidez y soporte estructural a compresión.</p>
+        <div class="guia-sub">🧱 Tipos de Mezcla según Aplicación:</div>
+        <ul class="guia-lista">
+          <li><strong>Mortero Seco/Bastardo:</strong> Para nivelaciones finas, colocación de baldosas o enfoscados (capas delgadas).</li>
+          <li><strong>Hormigón:</strong> Para soleras de garajes o patios y otras piezas de mayor espesor. Las losas de cimentación y los elementos estructurales requieren el diseño de un profesional.</li>
+        </ul>
+        <p class="guia-p">Evita usar mortero puro para rellenar espesores grandes. Al carecer de grava que frene la retracción del cemento, la masa se contrae más al secarse y puede agrietarse de lado a lado.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Separa la solera de paredes y pilares con una junta perimetral de material compresible (por ejemplo, poliestireno) y haz juntas de control (cortes) cada 24 a 36 veces el espesor, unos 3 m en una solera de 10 cm, con una profundidad de al menos ¼ del espesor.</div>
+      </div>
+
+      <div id="g-cem-2" class="guia-seccion">
+        <a href="#card-cemento" class="btn-volver" onclick="ocultarGuia('card-cemento', 'g-cem-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Curado del Hormigón y Relación Agua/Cemento</h2>
+        <div class="guia-meta">Nivel: Intermedio | Ejecución</div>
+        <p class="guia-p">Existe la falsa creencia de que el cemento debe "secarse al sol" para endurecer. Químicamente ocurre lo contrario: el cemento reacciona mediante un proceso de hidratación cristalina continua. Si el sol o el viento evaporan el agua de la mezcla antes de tiempo, la reacción se interrumpe y la solera puede perder una parte importante de su resistencia (algunas referencias hablan de un 30% o más).</p>
+        <div class="guia-sub">📝 Protocolo de Curado Húmedo:</div>
+        <ul class="guia-lista">
+          <li>Empieza el curado en cuanto la superficie esté terminada y haya empezado a fraguar, regando suavemente para no lavarla.</li>
+          <li>Mantén la superficie húmeda mediante riegos periódicos o mallas geotextiles durante al menos los primeros 7 días.</li>
+          <li>Cubre con plásticos impermeables si hay exposición directa al viento seco o al sol de mediodía.</li>
+          <li>Usa solo el agua necesaria: en las tablas de referencia la relación agua/cemento ronda 0,5 (unos 175-180 litros de agua por m³ con 350 kg de cemento) y la humedad de la arena aporta agua que hay que descontar. Más agua facilita el trabajo pero reduce la resistencia.</li>
+        </ul>
+        <div class="callout-alert">⚠️ <strong>Precaución:</strong> Agregar agua extra a la hormigonera para hacer la masa "más fluida" facilita el trabajo pero reduce la resistencia final y puede dejar polvo superficial.</div>
+      </div>
+        <div class="card trivia-card" id="trivia-card-cemento">
+          <!-- TRIVIA CEMENTO -->
+          <div class="trivia-box" id="trivia-grupo-cemento">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Cemento:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Cómo se debe tratar una solera de hormigón recién colocada?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-1', 'cemento')">A) Dejarla secar al sol directo rápidamente.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tc-1', 'cemento')">B) Mantenerla húmeda con riegos durante al menos los primeros 7 días.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-1', 'cemento')">C) Echarle más agua líquida a la mezcla mientras fragua.</button>
+              <div id="tc-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Qué diferencia principal tiene el hormigón frente al mortero?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tc-2', 'cemento')">A) El hormigón incluye grava para dar resistencia estructural.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-2', 'cemento')">B) El mortero es más duro y lleva barras de acero.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-2', 'cemento')">C) No hay ninguna diferencia.</button>
+              <div id="tc-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué pasa si agregas agua extra a la hormigonera para hacer la masa muy fluida?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-3', 'cemento')">A) Se vuelve indestructible.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tc-3', 'cemento')">B) Reduces la resistencia final y puedes dejar polvo superficial.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tc-3', 'cemento')">C) Seca más rápido.</button>
+              <div id="tc-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-cemento" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-cemento" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('cemento')">🔄 Reintentar Trivia</button>
+          </div>
+    </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="privacidad.html">Política de Privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="terminos.html">Términos y Condiciones</a>
+            <span class="footer-separator">|</span>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p class="footer-disclaimer">
+            <strong>Aviso importante:</strong> El contenido, cálculos y guías técnicas de este sitio web son puramente orientativos y basados en coeficientes estándar de rendimiento de materiales. No nos hacemos responsables por variaciones en el gasto real de materiales de obra, compras incorrectas o incidentes en reparaciones.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Calculadoras del Hogar. Todos los derechos reservados.</p>
+    </footer>
+
+  </div>
+
+  <script>
+/* Trivia de esta página (código idéntico en las 5 calculadoras). */
+const estadoTrivias = {
+  pintura: { respondidas: 0, correctas: 0, total: 3 },
+  cemento: { respondidas: 0, correctas: 0, total: 3 },
+  bloques: { respondidas: 0, correctas: 0, total: 3 },
+  ceramica: { respondidas: 0, correctas: 0, total: 3 },
+  agua: { respondidas: 0, correctas: 0, total: 3 }
+};
+
+function verificarTrivia(boton, esCorrecta, idFeedback, seccion) {
+  const tarjetaPregunta = boton.closest('.trivia-pregunta-card');
+  if (tarjetaPregunta.dataset.respondida === '1') return;
+  tarjetaPregunta.dataset.respondida = '1';
+  const opciones = tarjetaPregunta.querySelectorAll('.trivia-opcion');
+  const feedback = document.getElementById(idFeedback);
+
+  opciones.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+  if (esCorrecta) {
+    boton.classList.add('correcta');
+    feedback.innerHTML = "✅ ¡Exacto! ¡Le atinaste maestro!";
+    feedback.style.color = "#00f078";
+    estadoTrivias[seccion].correctas++;
+  } else {
+    boton.classList.add('incorrecta');
+    feedback.innerHTML = "❌ ¡Nel, revisa bien la guía técnica!";
+    feedback.style.color = "#ff4d4d";
+    opciones.forEach(opt => {
+      if (opt.getAttribute('onclick').includes('true')) {
+        opt.classList.add('correcta');
+      }
+    });
+  }
+  feedback.style.display = 'block';
+
+  estadoTrivias[seccion].respondidas++;
+
+  if (estadoTrivias[seccion].respondidas === estadoTrivias[seccion].total) {
+    mostrarResultadoFinal(seccion);
+  }
+}
+
+function mostrarResultadoFinal(seccion) {
+  const puntaje = estadoTrivias[seccion].correctas;
+  const total = estadoTrivias[seccion].total;
+  const resBox = document.getElementById(`resultado-final-${seccion}`);
+  const btnReinicio = document.getElementById(`btn-reinicio-${seccion}`);
+  
+  let mensajeBroma = "";
+  let colorBroma = "#ffffff";
+
+  if (puntaje === total) {
+    mensajeBroma = "🏆 ¡Perfecto (3/3)! ¡Ya estás listo para cobrar como maestro constructor profesional... o al menos para no romper las paredes de tu casa! 😎🔥";
+    colorBroma = "#00f078";
+  } else if (puntaje === 2) {
+    mensajeBroma = "⚠️ ¡Hiciste 2/3! Casi lo logras bro, por poquito y te salvas de que el maestro albañil te regañe. ¡Repasa la guía que te faltó una! 🛠️";
+    colorBroma = "#f1c40f";
+  } else if (puntaje === 1) {
+    mensajeBroma = "😅 ¡Apenas 1/3! Bro... ¿seguro que leíste las guías o nomás estabas picando botones por diversión? ¡A repasar se ha dicho! 📚🔨";
+    colorBroma = "#ff9800";
+  } else {
+    mensajeBroma = "💀 ¡0/3! ¡Pff, cero patatero! Si vas a construir así mejor contrata a alguien antes de que se te caiga el techo encima jajaja. ¡Dale a reintentar! 🚧💥";
+    colorBroma = "#ff4d4d";
+  }
+
+  resBox.innerHTML = `<strong>Puntaje: ${puntaje} / ${total}</strong><br><br>${mensajeBroma}`;
+  resBox.style.color = colorBroma;
+  resBox.style.display = 'block';
+  btnReinicio.style.display = 'block';
+}
+
+function reiniciarTrivia(seccion) {
+  estadoTrivias[seccion].respondidas = 0;
+  estadoTrivias[seccion].correctas = 0;
+
+  const contenedorGrupo = document.getElementById(`trivia-grupo-${seccion}`);
+  const opciones = contenedorGrupo.querySelectorAll('.trivia-opcion');
+  const feedbacks = contenedorGrupo.querySelectorAll('.trivia-feedback');
+
+  contenedorGrupo.querySelectorAll('.trivia-pregunta-card').forEach(c => {
+    delete c.dataset.respondida;
+  });
+  
+  opciones.forEach(opt => {
+    opt.style.pointerEvents = 'auto';
+    opt.classList.remove('correcta', 'incorrecta');
+  });
+
+  feedbacks.forEach(fb => {
+    fb.style.display = 'none';
+    fb.innerHTML = '';
+  });
+
+  document.getElementById(`resultado-final-${seccion}`).style.display = 'none';
+  document.getElementById(`btn-reinicio-${seccion}`).style.display = 'none';
+}
+  </script>
+  <script>
+/* Formulario de esta página (código idéntico en las 5 calculadoras): evita recargas y permite limpiar los campos. */
+function avisoFallo(id) {
+  var caja = document.getElementById('res-' + id), det = document.getElementById('det-' + id);
+  if (!caja || !det) return;
+  det.textContent = '⚠️ No se pudo calcular: no se cargó el archivo app.js. Usa la versión de la carpeta «autonomo» o abre la carpeta completa del proyecto. Tus datos siguen escritos en los campos.';
+  caja.className = caja.className.replace(/\berror\b/g, '') + ' error';
+  caja.style.display = 'block';
+}
+function limpiarCalculadora(id) {
+  var f = document.getElementById('form-' + id), caja = document.getElementById('res-' + id), det = document.getElementById('det-' + id);
+  if (f) f.reset();
+  if (det) det.innerHTML = '';
+  if (caja) { caja.style.display = 'none'; caja.classList.remove('error'); }
+  var p = document.getElementById('c-personal'), d = document.getElementById('c-dosif');
+  if (p && d) p.hidden = d.value !== 'custom';
+}
+  </script>
+  <script src="../app.js"></script>
+</body>
+</html>

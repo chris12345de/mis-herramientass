@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta name="google-site-verification" content="google8073d05ea058c196" />
+  <title>Calculadoras del Hogar - Portal Profesional de Materiales</title>
+  <meta name="description" content="Calculadoras gratis para obra y hogar: pintura, cemento, bloques, cerámica y tanques de agua, con guías técnicas y trivia para estimar tus materiales.">
+  <link rel="canonical" href="https://chris12345de.github.io/mis-herramientass/">
+  <link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="header-title" id="page-h1">🛠️ Calculadoras del Hogar</h1>
+    <div class="nav-tabs">
+      <a href="pintura.html" class="tab-btn" id="tab-pintura">🎨 Pintura</a>
+      <a href="cemento.html" class="tab-btn" id="tab-cemento">🧱 Cemento/Solera</a>
+      <a href="bloques.html" class="tab-btn" id="tab-bloques">🏗️ Bloques</a>
+      <a href="ceramica.html" class="tab-btn" id="tab-ceramica">🔲 Cerámica</a>
+      <a href="agua.html" class="tab-btn" id="tab-agua">💧 Agua/Tanques</a>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Elige tu calculadora</h2>
+      <div class="info-box">📐 Calculadoras gratuitas para estimar materiales de obra y hogar: pintura, cemento, bloques, cerámica y tanques de agua. Cada una incluye guías técnicas y una trivia.</div>
+      <div class="guias-grid">
+          <a href="pintura.html" class="btn-guia-item">🎨 Calculadora de Pintura <span>›</span></a>
+          <a href="cemento.html" class="btn-guia-item">🧱 Calculadora de Cemento y Solera <span>›</span></a>
+          <a href="bloques.html" class="btn-guia-item">🏗️ Calculadora de Bloques y Ladrillos <span>›</span></a>
+          <a href="ceramica.html" class="btn-guia-item">🔲 Calculadora de Cerámica y Pisos <span>›</span></a>
+          <a href="agua.html" class="btn-guia-item">💧 Calculadora de Tanques y Autonomía <span>›</span></a>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="privacidad.html">Política de Privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="terminos.html">Términos y Condiciones</a>
+            <span class="footer-separator">|</span>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p class="footer-disclaimer">
+            <strong>Aviso importante:</strong> El contenido, cálculos y guías técnicas de este sitio web son puramente orientativos y basados en coeficientes estándar de rendimiento de materiales. No nos hacemos responsables por variaciones en el gasto real de materiales de obra, compras incorrectas o incidentes en reparaciones.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Calculadoras del Hogar. Todos los derechos reservados.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var h = window.location.hash.replace('#', '');
+      if (!h) return;
+      var secciones = ['pintura', 'cemento', 'bloques', 'ceramica', 'agua'];
+      var prefijos = { 'g-pintura': 'pintura', 'g-cem': 'cemento', 'g-blo': 'bloques', 'g-cer': 'ceramica', 'g-agu': 'agua' };
+      if (secciones.indexOf(h) !== -1) {
+        window.location.replace(h + '.html');
+      } else if (prefijos[h.replace(/-\d+$/, '')]) {
+        window.location.replace(prefijos[h.replace(/-\d+$/, '')] + '.html#' + h);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <title>Calculadora de Pintura: galones por pared | Calculadoras del Hogar</title>
+  <meta name="description" content="Calcula cuántos galones de pintura necesitas según el ancho y alto de la pared, con estimación para 2 manos. Incluye guías técnicas y trivia.">
+  <link rel="canonical" href="https://chris12345de.github.io/mis-herramientass/pintura.html">
+  <link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header-title" id="page-h1"><a href="index.html">🛠️ Calculadoras del Hogar</a></div>
+    <div class="nav-tabs">
+      <a href="pintura.html" class="tab-btn active" id="tab-pintura">🎨 Pintura</a>
+      <a href="cemento.html" class="tab-btn" id="tab-cemento">🧱 Cemento/Solera</a>
+      <a href="bloques.html" class="tab-btn" id="tab-bloques">🏗️ Bloques</a>
+      <a href="ceramica.html" class="tab-btn" id="tab-ceramica">🔲 Cerámica</a>
+      <a href="agua.html" class="tab-btn" id="tab-agua">💧 Agua/Tanques</a>
+    </div>
+
+    <div id="seccion-pintura" class="seccion-calculadora active">
+      <div id="card-pintura" class="card">
+        <h1 class="card-title">🎨 Calculadora de Pintura Profesional</h1>
+        <div class="info-box">📐 <strong>Cómo medir:</strong> mide el ancho y el alto de la pared. Si tienes varias paredes iguales, indica cuántas, y descuenta puertas y ventanas para no comprar pintura de más.</div>
+        <form id="form-pintura" onsubmit="return false;" novalidate>
+          <div class="form-fila"><div class="form-group"><label for="p-ancho">Ancho de la pared (m)</label><input type="text" id="p-ancho" inputmode="decimal" placeholder="Ej: 4" autocomplete="off"></div><div class="form-group"><label for="p-alto">Alto de la pared (m)</label><input type="text" id="p-alto" inputmode="decimal" placeholder="Ej: 2,5" autocomplete="off"></div></div><div class="form-group"><label for="p-paredes">Paredes iguales (cantidad)</label><input type="text" id="p-paredes" inputmode="numeric" placeholder="Ej: 4" value="1" aria-describedby="p-paredes-ay" autocomplete="off"><small class="ayuda" id="p-paredes-ay">Si tienes 4 paredes del mismo tamaño, escribe 4. Si son distintas, calcula cada una y suma los resultados.</small></div><div class="form-group"><label for="p-descuento">Puertas y ventanas a descontar (m²)</label><input type="text" id="p-descuento" inputmode="decimal" placeholder="Ej: 1,9" value="0" aria-describedby="p-descuento-ay" autocomplete="off"><small class="ayuda" id="p-descuento-ay">Suma todas. Una puerta típica mide unos 1,9 m² (0,9 × 2,1 m) y una ventana pequeña, entre 1 y 1,5 m².</small></div><details class="opciones"><summary>⚙️ Ajustes (opcional)</summary><div class="form-group"><label for="p-manos">Manos de pintura</label><select id="p-manos"><option value="1">1 mano</option><option value="2" selected>2 manos (lo habitual)</option><option value="3">3 manos</option><option value="4">4 manos</option></select></div><div class="form-group"><label for="p-rend">Rendimiento de tu pintura (m² por galón y por mano)</label><input type="text" id="p-rend" inputmode="decimal" placeholder="Ej: 28" value="28" aria-describedby="p-rend-ay" autocomplete="off"><small class="ayuda" id="p-rend-ay">Búscalo en la etiqueta o la ficha técnica. Si no lo sabes, deja 28 (valor prudente).</small></div><div class="form-group"><label for="p-margen">Margen de seguridad (%)</label><input type="text" id="p-margen" inputmode="decimal" placeholder="Ej: 5" value="5" aria-describedby="p-margen-ay" autocomplete="off"><small class="ayuda" id="p-margen-ay">Para retoques y pérdidas. No lo sumes dos veces: si usas un rendimiento muy bajo, puedes bajar este margen.</small></div></details>
+          <div class="form-botones">
+            <button type="submit" class="btn-calc" onclick="if (typeof calcularPintura === 'function') { calcularPintura(); } else { avisoFallo('pintura'); }">Calcular galones</button>
+            <button type="button" class="btn-limpiar" onclick="limpiarCalculadora('pintura')">🧹 Limpiar campos</button>
+          </div>
+        </form>
+        <div class="subtext">* Resultado estimado. Se redondea hacia arriba a envases reales para que no falte pintura.</div>
+        <div id="res-pintura" class="resultado-box" aria-live="polite"><div id="det-pintura"></div></div>
+        <details class="opciones"><summary>📖 Cómo se calcula y ejemplo</summary><p><strong>Fórmula:</strong> área = ancho × alto × paredes − puertas y ventanas. Galones = área × manos ÷ rendimiento. Después se suma el margen y se redondea hacia arriba.</p><p><strong>Supuestos:</strong> 28 m² por galón y por mano es un valor prudente, no una regla. El rendimiento real va de unos 20 a 40 m² según la pintura, lo que absorbe la pared, el color anterior y cómo apliques. Si tu etiqueta dice otro número, úsalo. Un galón son unos 3,785 litros.</p><p><strong>Ejemplo:</strong> 4 paredes de 4 m × 2,5 m con una puerta de 1,9 m²: 40 − 1,9 = 38,1 m². Con 2 manos y 28 m²/galón: 38,1 × 2 ÷ 28 = 2,72 galones; con 5% de margen: 2,86 galones, así que compras 3 galones.</p></details>
+        <details class="opciones"><summary>❓ Preguntas frecuentes</summary><p><strong>¿Cuántas manos de pintura necesito?</strong><br>Casi siempre 2. Si pasas de un color oscuro a uno claro, o pintas una pared nueva o muy porosa, puede hacer falta una mano extra o una imprimación (mira las guías de abajo).</p><p><strong>¿Cuánto rinde un galón de pintura?</strong><br>Depende del producto: en muchas pinturas va de unos 20 a 40 m² por mano. Esta calculadora usa 28 m² por defecto; si tu etiqueta indica otro valor, cámbialo en Ajustes.</p><p><strong>¿Qué es una caneca de pintura?</strong><br>Es un envase de 5 galones. En muchas tiendas sale más económico por galón que comprar galones sueltos, pero conviene comparar precios.</p></details>
+        <div id="sug-pintura" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas y Soluciones:</div>
+          <div class="guias-grid">
+            <a href="#g-pintura-1" class="btn-guia-item" onclick="mostrarGuia('g-pintura-1', 'card-pintura')">🎨 Cubrir paredes oscuras con color claro <span>›</span></a>
+            <a href="#g-pintura-2" class="btn-guia-item" onclick="mostrarGuia('g-pintura-2', 'card-pintura')">⚠️ Diagnóstico y reparación de grietas <span>›</span></a>
+            <a href="#g-pintura-3" class="btn-guia-item" onclick="mostrarGuia('g-pintura-3', 'card-pintura')">💧 Humedad, moho y manchas activas <span>›</span></a>
+            <a href="#g-pintura-4" class="btn-guia-item" onclick="mostrarGuia('g-pintura-4', 'card-pintura')">🖌️ Elección de rodillos y evitar marcas <span>›</span></a>
+            <a href="#g-pintura-5" class="btn-guia-item" onclick="mostrarGuia('g-pintura-5', 'card-pintura')">🏠 Cómo pintar techos sin sombras <span>›</span></a>
+            <a href="#g-pintura-6" class="btn-guia-item" onclick="mostrarGuia('g-pintura-6', 'card-pintura')">🛡️ Seguridad, lijado y polvo tóxico <span>›</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guías Pintura Completas -->
+      <div id="g-pintura-1" class="guia-seccion">
+        <a href="#card-pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Cómo cubrir paredes oscuras sin capas infinitas</h2>
+        <div class="guia-meta">Nivel: Principiante | Opacidad y Rendimiento</div>
+        <p class="guia-p">Pintar sobre tonos saturados o muy oscuros (rojos, marrones o grises oscuros) utilizando únicamente pintura blanca estándar suele resultar en una pérdida considerable de dinero y tiempo. Sin el tratamiento adecuado, el pigmento antiguo se trasluce continuamente, requiriendo muchas manos extra para lograr un acabado aceptable.</p>
+        <div class="guia-sub">🛠️ Materiales Necesarios y Preparación:</div>
+        <ul class="guia-lista">
+          <li>Imprimación pigmentada multiusos o selladora sintética de base blanca/gris.</li>
+          <li>Lija de grano fino (P180 o P240) para matizar la superficie brillante previa.</li>
+          <li>Pintura plástica lavable de alta cubrición en acabado mate o satinado.</li>
+        </ul>
+        <div class="guia-sub">📝 Paso a Paso Recomendado:</div>
+        <p class="guia-p">Primero, limpia la pared de grasa o polvo acumulado. Aplica una capa uniforme de imprimación gris neutro. Este tono gris intermedio bloquea los pigmentos fuertes de forma más eficiente que el blanco puro, permitiendo que la capa posterior de pintura de acabado alcance su máximo rendimiento en solo dos aplicaciones.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Una mano de selladora o imprimación suele salir más barata que 2 o 3 manos extra de pintura de acabado, y deja un fondo uniforme que mejora la cubrición. La calculadora estima solo la pintura de acabado; para la imprimación usa el rendimiento que indique su etiqueta, con 1 mano.</div>
+      </div>
+
+      <div id="g-pintura-2" class="guia-seccion">
+        <a href="#card-pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Reparar Grietas y Fisuras Antes de Pintar</h2>
+        <div class="guia-meta">Nivel: Intermedio | Estabilidad del Soporte</div>
+        <p class="guia-p">Aplicar masilla o pintura directamente sobre una grieta abierta es una solución temporal que fallará en pocas semanas. Las contracciones térmicas y los pequeños asentamientos estructurales harán que la pintura seca se agriete nuevamente si no se trata el fondo de la brecha correctamente.</p>
+        <div class="guia-sub">🛠️ Herramientas y Preparación:</div>
+        <ul class="guia-lista">
+          <li>Espátula rígida, rascador en ángulo y masilla elástica o pasta de agarre.</li>
+          <li>Fijador acrílico o imprimación profunda para soportes porosos.</li>
+          <li>Malla de fibra de vidrio para fisuras dinámicas o de asentamiento.</li>
+        </ul>
+        <div class="guia-sub">📝 Procedimiento Correcto:</div>
+        <p class="guia-p">Usa la esquina de la espátula para abrir la grieta en forma de "V", eliminando partes sueltas. Elimina el polvo y aplica imprimación fijadora dentro de la fisura. Llena a presión con masilla en capas finas y coloca una banda de fibra si hay movimiento activo. Una vez seco, lija suavemente hasta dejar el plano uniforme con la pared.</p>
+        <div class="callout-alert">⚠️ <strong>Seguridad Estructural:</strong> Si la grieta supera los 3 mm de ancho, sigue creciendo con el tiempo, o transcurre en diagonal a 45° o en forma de escalera, detente. Podría indicar un fallo estructural que requiere la inspección de un arquitecto o técnico.</div>
+      </div>
+
+      <div id="g-pintura-3" class="guia-seccion">
+        <a href="#card-pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-3')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Humedad, Moho y Manchas Activas</h2>
+        <div class="guia-meta">Nivel: Avanzado | Patologías Constructivas</div>
+        <p class="guia-p">La aparición de manchas negras o eflorescencias salinas indica la presencia permanente de agua o falta de ventilación. Aplicar pintura estándar o incluso barniz antihumedad encima del hongo vivo únicamente atrapará la humedad dentro del muro, pudriendo el revoque interno.</p>
+        <div class="guia-sub">🛡️ Protocolo Técnico de Saneamiento:</div>
+        <ul class="guia-lista">
+          <li>Eliminar la causa raíz (fugas internas, puentes térmicos o filtraciones exteriores).</li>
+          <li>Limpiador biocida o agua lavandina diluida para erradicar las esporas vivas (nunca la mezcles con amoníaco ni con otros limpiadores).</li>
+          <li>Imprimación bloqueadora de manchas al disolvente para sellar nicotina o eflorescencias.</li>
+        </ul>
+        <div class="guia-sub">📝 Proceso de Recuperación:</div>
+        <p class="guia-p">Aplica el tratamiento fungicida sobre la superficie sin lijar en seco (para evitar dispersar esporas por el aire). Deja actuar el tiempo que indique el fabricante del producto y retira con trapo húmedo, trabajando con guantes, gafas y buena ventilación. Aplica sellador bloqueador sintético y finaliza con una pintura acrílica permeante al vapor de agua que permita "respirar" al muro.</p>
+        <div class="callout-alert">⚠️ <strong>Límite Profesional:</strong> Si la mancha de moho supera 1 m² continuo, reaparece o hay filtraciones directas de tuberías, busca ayuda profesional (por ejemplo, un fontanero) para encontrar y reparar la causa antes de cualquier trabajo cosmético.</div>
+      </div>
+
+      <div id="g-pintura-4" class="guia-seccion">
+        <a href="#card-pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-4')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Elección de Rodillos y Técnicas de Recorte</h2>
+        <div class="guia-meta">Nivel: Principiante | Acabado Estético</div>
+        <p class="guia-p">Uno de los errores más comunes en bricolaje es el efecto "marca de empalme" o la diferencia de textura entre las esquinas pintadas a brocha y los paños grandes a rodillo. Elegir la densidad del pelo correcta según la textura de la pared garantiza un reparto homogéneo de la micra de pintura.</p>
+        <div class="guia-sub">🖌️ Selección según la Superficie:</div>
+        <ul class="guia-lista">
+          <li><strong>Pelo corto (5-8 mm):</strong> Recomendado para pladur, placas de yeso liso y acabados finos.</li>
+          <li><strong>Pelo medio (9-12 mm):</strong> Uso estándar en paredes interiores de yeso tradicional.</li>
+          <li><strong>Pelo largo (15-20 mm):</strong> Recomendado para gotelé, bloques rugosos o fachadas exteriores.</li>
+        </ul>
+        <div class="guia-sub">📝 Técnica de Aplicación:</div>
+        <p class="guia-p">Recorta primero las esquinas con brocha biselada y pasa inmediatamente un rodillo pequeño de porosidad fina antes de que se seque. Para los paños grandes, carga el rodillo sin saturarlo y distribuye la masa dibujando una "W" imaginaria antes de peinar en vertical.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Mantén siempre la herramienta con carga uniforme y trabaja "borde sobre borde húmedo" para evitar cortes visibles.</div>
+      </div>
+
+      <div id="g-pintura-5" class="guia-seccion">
+        <a href="#card-pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-5')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Cómo Pintar Techos sin Sombras ni Rayas</h2>
+        <div class="guia-meta">Nivel: Intermedio | Ergonomía y Luz Rasante</div>
+        <p class="guia-p">Pintar el techo es la tarea más exigente debido a la entrada de luz rasante desde las ventanas, la cual resalta cualquier imperfección, falta de cubrición o pasada desigual. Conviene usar una pintura pensada para techos, con buena cubrición y tiempo de secado abierto prolongado.</p>
+        <div class="guia-sub">📝 Pasos Clave de Ejecución:</div>
+        <ul class="guia-lista">
+          <li>Utiliza pinturas ultra-mate específicas para techos que eviten los destellos de luz.</li>
+          <li>Trabaja la superficie utilizando una alargadera rígida desde el suelo para mantener la perspectiva visual.</li>
+          <li>Dirige la pasada final en la misma dirección de la fuente de luz natural principal.</li>
+        </ul>
+        <p class="guia-p">No intentes retocar áreas que hayan comenzado a morder o secarse. Si notas una falla, espera a que la superficie planche por completo y aplica una segunda mano ligera sobre todo el plano.</p>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Evita corrientes de aire fuertes durante la aplicación, porque aceleran el secado y levantan polvo; ventila bien la estancia una vez terminada.</div>
+      </div>
+
+      <div id="g-pintura-6" class="guia-seccion">
+        <a href="#card-pintura" class="btn-volver" onclick="ocultarGuia('card-pintura', 'g-pintura-6')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía de Seguridad: Lijado, Polvo y Ventilación</h2>
+        <div class="guia-meta">Nivel: Transversal | Salud y Prevención</div>
+        <p class="guia-p">El lijado de paredes preparadas con masillas de temple, yeso o pladur genera una suspensión de partículas microscópicas que flotan en el ambiente durante horas. Inhalar este polvo fino (que, según el material, puede contener sílice cristalina) irrita las vías respiratorias y, con exposiciones repetidas, puede dañar los pulmones.</p>
+        <div class="guia-sub">🛡️ Equipamiento Recomendado:</div>
+        <ul class="guia-lista">
+          <li>Mascarillas de protección con certificación FFP2/FFP3 (o N95 equivalente) bien ajustadas.</li>
+          <li>Gafas panorámicas cerradas para evitar arañazos en la córnea por partículas en vuelo.</li>
+          <li>Protección de suelos y sellado de puertas con plástico o cinta de carrocero.</li>
+          <li>Ventila la estancia mientras pintas y mientras seca, y guarda los envases bien cerrados y fuera del alcance de niños y mascotas.</li>
+        </ul>
+        <p class="guia-p">Tras completar el lijado, utiliza un aspirador provisto de filtro HEPA para limpiar la estancia antes de destapar botes de pintura. No utilices escobas tradicionales, ya que reintroducen el polvo en el aire.</p>
+        <div class="callout-alert">⚠️ <strong>Precaución Antigua:</strong> En construcciones antiguas (en muchos países se usó pintura con plomo hasta los años 80 o incluso después), las capas profundas pueden contener plomo. Si tienes dudas, analízala antes y evita el lijado mecánico agresivo sin equipos de aspiración activa al vacío.</div>
+      </div>
+        <div class="card trivia-card" id="trivia-card-pintura">
+          <!-- TRIVIA PINTURA -->
+          <div class="trivia-box" id="trivia-grupo-pintura">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Pintura:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Qué capa previa es ideal para cubrir una pared oscura sin gastar tantas manos?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-1', 'pintura')">A) Pintar directo con blanco puro 4 veces.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tp-1', 'pintura')">B) Aplicar imprimación o selladora gris neutro.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-1', 'pintura')">C) Echar agua y jabón antes de pintar.</button>
+              <div id="tp-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Cómo se debe abrir una grieta antes de aplicar masilla?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tp-2', 'pintura')">A) En forma de "V" con una espátula.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-2', 'pintura')">B) Pegando cinta adhesiva encima.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-2', 'pintura')">C) Solo pasando un trapo húmedo.</button>
+              <div id="tp-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué tipo de rodillo se recomienda para superficies lisas de pladur?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-3', 'pintura')">A) Pelo largo (20 mm).</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tp-3', 'pintura')">B) Pelo corto (5-8 mm).</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tp-3', 'pintura')">C) Un cepillo de cerdas de alambre.</button>
+              <div id="tp-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-pintura" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-pintura" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('pintura')">🔄 Reintentar Trivia</button>
+          </div>
+    </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="privacidad.html">Política de Privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="terminos.html">Términos y Condiciones</a>
+            <span class="footer-separator">|</span>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p class="footer-disclaimer">
+            <strong>Aviso importante:</strong> El contenido, cálculos y guías técnicas de este sitio web son puramente orientativos y basados en coeficientes estándar de rendimiento de materiales. No nos hacemos responsables por variaciones en el gasto real de materiales de obra, compras incorrectas o incidentes en reparaciones.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Calculadoras del Hogar. Todos los derechos reservados.</p>
+    </footer>
+
+  </div>
+
+  <script>
+/* Trivia de esta página (código idéntico en las 5 calculadoras). */
+const estadoTrivias = {
+  pintura: { respondidas: 0, correctas: 0, total: 3 },
+  cemento: { respondidas: 0, correctas: 0, total: 3 },
+  bloques: { respondidas: 0, correctas: 0, total: 3 },
+  ceramica: { respondidas: 0, correctas: 0, total: 3 },
+  agua: { respondidas: 0, correctas: 0, total: 3 }
+};
+
+function verificarTrivia(boton, esCorrecta, idFeedback, seccion) {
+  const tarjetaPregunta = boton.closest('.trivia-pregunta-card');
+  if (tarjetaPregunta.dataset.respondida === '1') return;
+  tarjetaPregunta.dataset.respondida = '1';
+  const opciones = tarjetaPregunta.querySelectorAll('.trivia-opcion');
+  const feedback = document.getElementById(idFeedback);
+
+  opciones.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+  if (esCorrecta) {
+    boton.classList.add('correcta');
+    feedback.innerHTML = "✅ ¡Exacto! ¡Le atinaste maestro!";
+    feedback.style.color = "#00f078";
+    estadoTrivias[seccion].correctas++;
+  } else {
+    boton.classList.add('incorrecta');
+    feedback.innerHTML = "❌ ¡Nel, revisa bien la guía técnica!";
+    feedback.style.color = "#ff4d4d";
+    opciones.forEach(opt => {
+      if (opt.getAttribute('onclick').includes('true')) {
+        opt.classList.add('correcta');
+      }
+    });
+  }
+  feedback.style.display = 'block';
+
+  estadoTrivias[seccion].respondidas++;
+
+  if (estadoTrivias[seccion].respondidas === estadoTrivias[seccion].total) {
+    mostrarResultadoFinal(seccion);
+  }
+}
+
+function mostrarResultadoFinal(seccion) {
+  const puntaje = estadoTrivias[seccion].correctas;
+  const total = estadoTrivias[seccion].total;
+  const resBox = document.getElementById(`resultado-final-${seccion}`);
+  const btnReinicio = document.getElementById(`btn-reinicio-${seccion}`);
+  
+  let mensajeBroma = "";
+  let colorBroma = "#ffffff";
+
+  if (puntaje === total) {
+    mensajeBroma = "🏆 ¡Perfecto (3/3)! ¡Ya estás listo para cobrar como maestro constructor profesional... o al menos para no romper las paredes de tu casa! 😎🔥";
+    colorBroma = "#00f078";
+  } else if (puntaje === 2) {
+    mensajeBroma = "⚠️ ¡Hiciste 2/3! Casi lo logras bro, por poquito y te salvas de que el maestro albañil te regañe. ¡Repasa la guía que te faltó una! 🛠️";
+    colorBroma = "#f1c40f";
+  } else if (puntaje === 1) {
+    mensajeBroma = "😅 ¡Apenas 1/3! Bro... ¿seguro que leíste las guías o nomás estabas picando botones por diversión? ¡A repasar se ha dicho! 📚🔨";
+    colorBroma = "#ff9800";
+  } else {
+    mensajeBroma = "💀 ¡0/3! ¡Pff, cero patatero! Si vas a construir así mejor contrata a alguien antes de que se te caiga el techo encima jajaja. ¡Dale a reintentar! 🚧💥";
+    colorBroma = "#ff4d4d";
+  }
+
+  resBox.innerHTML = `<strong>Puntaje: ${puntaje} / ${total}</strong><br><br>${mensajeBroma}`;
+  resBox.style.color = colorBroma;
+  resBox.style.display = 'block';
+  btnReinicio.style.display = 'block';
+}
+
+function reiniciarTrivia(seccion) {
+  estadoTrivias[seccion].respondidas = 0;
+  estadoTrivias[seccion].correctas = 0;
+
+  const contenedorGrupo = document.getElementById(`trivia-grupo-${seccion}`);
+  const opciones = contenedorGrupo.querySelectorAll('.trivia-opcion');
+  const feedbacks = contenedorGrupo.querySelectorAll('.trivia-feedback');
+
+  contenedorGrupo.querySelectorAll('.trivia-pregunta-card').forEach(c => {
+    delete c.dataset.respondida;
+  });
+  
+  opciones.forEach(opt => {
+    opt.style.pointerEvents = 'auto';
+    opt.classList.remove('correcta', 'incorrecta');
+  });
+
+  feedbacks.forEach(fb => {
+    fb.style.display = 'none';
+    fb.innerHTML = '';
+  });
+
+  document.getElementById(`resultado-final-${seccion}`).style.display = 'none';
+  document.getElementById(`btn-reinicio-${seccion}`).style.display = 'none';
+}
+  </script>
+  <script>
+/* Formulario de esta página (código idéntico en las 5 calculadoras): evita recargas y permite limpiar los campos. */
+function avisoFallo(id) {
+  var caja = document.getElementById('res-' + id), det = document.getElementById('det-' + id);
+  if (!caja || !det) return;
+  det.textContent = '⚠️ No se pudo calcular: no se cargó el archivo app.js. Usa la versión de la carpeta «autonomo» o abre la carpeta completa del proyecto. Tus datos siguen escritos en los campos.';
+  caja.className = caja.className.replace(/\berror\b/g, '') + ' error';
+  caja.style.display = 'block';
+}
+function limpiarCalculadora(id) {
+  var f = document.getElementById('form-' + id), caja = document.getElementById('res-' + id), det = document.getElementById('det-' + id);
+  if (f) f.reset();
+  if (det) det.innerHTML = '';
+  if (caja) { caja.style.display = 'none'; caja.classList.remove('error'); }
+  var p = document.getElementById('c-personal'), d = document.getElementById('c-dosif');
+  if (p && d) p.hidden = d.value !== 'custom';
+}
+  </script>
+  <script src="../app.js"></script>
+</body>
+</html>

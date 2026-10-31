@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <title>Calculadora de Bloques y Ladrillos | Calculadoras del Hogar</title>
+  <meta name="description" content="Estima cuántos bloques o ladrillos necesitas según el largo y alto de la pared, con 10% de merma. Incluye guías técnicas y trivia.">
+  <link rel="canonical" href="https://chris12345de.github.io/mis-herramientass/bloques.html">
+  <link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header-title" id="page-h1"><a href="index.html">🛠️ Calculadoras del Hogar</a></div>
+    <div class="nav-tabs">
+      <a href="pintura.html" class="tab-btn" id="tab-pintura">🎨 Pintura</a>
+      <a href="cemento.html" class="tab-btn" id="tab-cemento">🧱 Cemento/Solera</a>
+      <a href="bloques.html" class="tab-btn active" id="tab-bloques">🏗️ Bloques</a>
+      <a href="ceramica.html" class="tab-btn" id="tab-ceramica">🔲 Cerámica</a>
+      <a href="agua.html" class="tab-btn" id="tab-agua">💧 Agua/Tanques</a>
+    </div>
+
+    <div id="seccion-bloques" class="seccion-calculadora active">
+      <div id="card-bloques" class="card">
+        <h1 class="card-title">🏗️ Calculadora de Bloques y Ladrillos</h1>
+        <div class="info-box">📐 <strong>Tabiquería:</strong> estima cuántos bloques o ladrillos necesitas para una pared. Por defecto usa el bloque estándar de 40 × 20 cm.</div>
+        <form id="form-bloques" onsubmit="return false;" novalidate>
+          <div class="form-fila"><div class="form-group"><label for="b-largo">Largo de la pared (m)</label><input type="text" id="b-largo" inputmode="decimal" placeholder="Ej: 5" autocomplete="off"></div><div class="form-group"><label for="b-alto">Alto de la pared (m)</label><input type="text" id="b-alto" inputmode="decimal" placeholder="Ej: 2,6" autocomplete="off"></div></div><div class="form-group"><label for="b-paredes">Paredes iguales (cantidad)</label><input type="text" id="b-paredes" inputmode="numeric" placeholder="Ej: 1" value="1" aria-describedby="b-paredes-ay" autocomplete="off"><small class="ayuda" id="b-paredes-ay">Si tienes varias paredes del mismo tamaño, indica cuántas.</small></div><div class="form-group"><label for="b-descuento">Puertas y ventanas a descontar (m²)</label><input type="text" id="b-descuento" inputmode="decimal" placeholder="Ej: 1,9" value="0" aria-describedby="b-descuento-ay" autocomplete="off"><small class="ayuda" id="b-descuento-ay">Una puerta típica mide unos 1,9 m² (0,9 × 2,1 m).</small></div><details class="opciones"><summary>⚙️ Medidas del bloque y merma (opcional)</summary><div class="form-fila"><div class="form-group"><label for="b-mlargo">Largo del módulo (cm)</label><input type="text" id="b-mlargo" inputmode="decimal" placeholder="40" value="40" autocomplete="off"></div><div class="form-group"><label for="b-malto">Alto del módulo (cm)</label><input type="text" id="b-malto" inputmode="decimal" placeholder="20" value="20" autocomplete="off"></div></div><small class="ayuda" style="margin:-8px 0 12px">Módulo = bloque + junta (≈ 1 cm). Un bloque de 39 × 19 cm con junta de 1 cm es un módulo de 40 × 20 cm. Para ladrillo, usa su largo y alto más la junta.</small><div class="form-group"><label for="b-merma">Merma por cortes y roturas (%)</label><input type="text" id="b-merma" inputmode="decimal" placeholder="Ej: 10" value="10" aria-describedby="b-merma-ay" autocomplete="off"><small class="ayuda" id="b-merma-ay">Suele ir de 5% a 10%; sube si hay muchos cortes.</small></div></details>
+          <div class="form-botones">
+            <button type="submit" class="btn-calc" onclick="if (typeof calcularBloques === 'function') { calcularBloques(); } else { avisoFallo('bloques'); }">Calcular unidades</button>
+            <button type="button" class="btn-limpiar" onclick="limpiarCalculadora('bloques')">🧹 Limpiar campos</button>
+          </div>
+        </form>
+        <div class="subtext">* Estimación de unidades. No incluye mortero de pega, refuerzos ni cimentación.</div>
+        <div id="res-bloques" class="resultado-box" aria-live="polite"><div id="det-bloques"></div></div>
+        <details class="opciones"><summary>📖 Cómo se calcula y ejemplo</summary><p><strong>Fórmula:</strong> unidades por m² = 10.000 ÷ (largo del módulo en cm × alto del módulo en cm). Unidades = área neta × unidades por m² × (1 + merma).</p><p><strong>Supuestos:</strong> con el módulo de 40 × 20 cm salen 12,5 bloques por m². El resultado sirve para contar piezas, no para construir toda una pared: faltan mortero de pega, varillas de refuerzo, columnas y cimentación, que dependen del diseño y deben definirse con un maestro de obra o ingeniero.</p><p><strong>Ejemplo:</strong> pared de 5 m × 2,6 m (13 m²) con una puerta de 1,9 m²: área neta 11,1 m². 11,1 × 12,5 = 138,75 bloques; con 10% de merma: 152,6, así que compras 153.</p></details>
+        <details class="opciones"><summary>❓ Preguntas frecuentes</summary><p><strong>¿Cuántos bloques de 40 × 20 cm entran en 1 m²?</strong><br>Unos 12,5, contando la junta.</p><p><strong>¿Sirve para ladrillos u otras medidas?</strong><br>Sí. Abre «Medidas del bloque» y escribe el largo y alto de tu pieza más la junta.</p><p><strong>¿Cuánta merma debo calcular?</strong><br>Entre 5% y 10% es habitual. Si hay muchos cortes, vanos o diseños irregulares, usa más.</p></details>
+        <div id="sug-bloques" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas de Bloques:</div>
+          <div class="guias-grid">
+            <a href="#g-blo-1" class="btn-guia-item" onclick="mostrarGuia('g-blo-1', 'card-bloques')">🏗️ ¿Soportará el suelo una pared de ladrillo? <span>›</span></a>
+            <a href="#g-blo-2" class="btn-guia-item" onclick="mostrarGuia('g-blo-2', 'card-bloques')">⚓ Taladrar y fijar en ladrillo hueco <span>›</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div id="g-blo-1" class="guia-seccion">
+        <a href="#card-bloques" class="btn-volver" onclick="ocultarGuia('card-bloques', 'g-blo-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: ¿Puede mi piso soportar una pared de ladrillo?</h2>
+        <div class="guia-meta">Nivel: Intermedio | Estructural</div>
+        <p class="guia-p">Levantar una partición o tabique interior de ladrillo macizo o bloque de hormigón introduce una carga puntual muy elevada en la estructura del suelo (forjado). En viviendas viejas o reformadas con vigas de madera o viguetas pretensadas, añadir cientos de kilos por metro lineal genera flechas y fisuras en las plantas inferiores.</p>
+        <div class="guia-sub">🧱 Alternativas y Evaluación de Carga (pesos aproximados; varían con el espesor y el fabricante):</div>
+        <ul class="guia-lista">
+          <li><strong>Ladrillo Macizo/Bloque Hormigón:</strong> Peso elevado (~150-250 kg/m²; un bloque hueco de 40×20×20 cm pesa unos 12 kg y suma unos 160 kg/m² sin mortero ni revoque). Solo sobre forjados calculados.</li>
+          <li><strong>HCCA (Hormigón Celular Autoclavado):</strong> Muy ligero (~60 kg/m²) con alto aislamiento térmico.</li>
+          <li><strong>Tabiquería de Entramado Ligero (Pladur):</strong> Carga mínima (~25 kg/m²), ideal para reformas en pisos altos.</li>
+        </ul>
+        <div class="callout-alert">⚠️ <strong>Precaución:</strong> Nunca levantes mampostería pesada sobre forjados antiguos sin verificar la sobrecarga admisible con un especialista o arquitecto técnico.</div>
+      </div>
+
+      <div id="g-blo-2" class="guia-seccion">
+        <a href="#card-bloques" class="btn-volver" onclick="ocultarGuia('card-bloques', 'g-blo-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Tacos y Anclajes en Ladrillo Hueco</h2>
+        <div class="guia-meta">Nivel: Principiante | Bricolaje</div>
+        <p class="guia-p">Colgar muebles de cocina, soportes de televisión o elementos pesados en tabiques de ladrillo hueco requiere utilizar fijaciones diseñadas específicamente para transmitir la fuerza dentro de las celdas interiores, ya que la pared externa del ladrillo es muy delgada (a menudo de pocos milímetros).</p>
+        <div class="guia-sub">🛠️ Herramientas y Materiales Recomendados:</div>
+        <ul class="guia-lista">
+          <li>Taladro sin percusión (para no romper las paredes internas del ladrillo).</li>
+          <li>Tacos de expansión o de nudo, pensados para pared hueca, para cargas medias.</li>
+          <li>Resina de anclaje químico con tamiz de plástico para cargas pesadas (respeta siempre la carga máxima que indique el fabricante).</li>
+        </ul>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Desactiva siempre el martillo percutor del taladro; utiliza broca de widia a revoluciones medias para obtener un orificio cilíndrico perfecto.</div>
+      </div>
+        <div class="card trivia-card" id="trivia-card-bloques">
+          <!-- TRIVIA BLOQUES -->
+          <div class="trivia-box" id="trivia-grupo-bloques">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Bloques:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Cómo se debe perforar un tabique de ladrillo hueco?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tb-1', 'bloques')">A) Con taladro sin percusión y broca de widia.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-1', 'bloques')">B) Usando el martillo percutor al máximo.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-1', 'bloques')">C) Rompiendo el ladrillo con un cincel.</button>
+              <div id="tb-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Qué material de tabiquería ofrece una opción muy ligera (~60 kg/m²) con gran aislamiento?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-2', 'bloques')">A) Ladrillo macizo pesado.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tb-2', 'bloques')">B) HCCA (Hormigón Celular Autoclavado).</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-2', 'bloques')">C) Bloque de hormigón pesado.</button>
+              <div id="tb-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué fijación es recomendada para cargas pesadas en huecos?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-3', 'bloques')">A) Un clavo de acero común.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tb-3', 'bloques')">B) Resina de anclaje químico con tamiz.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tb-3', 'bloques')">C) Pegamento escolar.</button>
+              <div id="tb-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-bloques" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-bloques" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('bloques')">🔄 Reintentar Trivia</button>
+          </div>
+    </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="privacidad.html">Política de Privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="terminos.html">Términos y Condiciones</a>
+            <span class="footer-separator">|</span>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p class="footer-disclaimer">
+            <strong>Aviso importante:</strong> El contenido, cálculos y guías técnicas de este sitio web son puramente orientativos y basados en coeficientes estándar de rendimiento de materiales. No nos hacemos responsables por variaciones en el gasto real de materiales de obra, compras incorrectas o incidentes en reparaciones.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Calculadoras del Hogar. Todos los derechos reservados.</p>
+    </footer>
+
+  </div>
+
+  <script>
+/* Trivia de esta página (código idéntico en las 5 calculadoras). */
+const estadoTrivias = {
+  pintura: { respondidas: 0, correctas: 0, total: 3 },
+  cemento: { respondidas: 0, correctas: 0, total: 3 },
+  bloques: { respondidas: 0, correctas: 0, total: 3 },
+  ceramica: { respondidas: 0, correctas: 0, total: 3 },
+  agua: { respondidas: 0, correctas: 0, total: 3 }
+};
+
+function verificarTrivia(boton, esCorrecta, idFeedback, seccion) {
+  const tarjetaPregunta = boton.closest('.trivia-pregunta-card');
+  if (tarjetaPregunta.dataset.respondida === '1') return;
+  tarjetaPregunta.dataset.respondida = '1';
+  const opciones = tarjetaPregunta.querySelectorAll('.trivia-opcion');
+  const feedback = document.getElementById(idFeedback);
+
+  opciones.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+  if (esCorrecta) {
+    boton.classList.add('correcta');
+    feedback.innerHTML = "✅ ¡Exacto! ¡Le atinaste maestro!";
+    feedback.style.color = "#00f078";
+    estadoTrivias[seccion].correctas++;
+  } else {
+    boton.classList.add('incorrecta');
+    feedback.innerHTML = "❌ ¡Nel, revisa bien la guía técnica!";
+    feedback.style.color = "#ff4d4d";
+    opciones.forEach(opt => {
+      if (opt.getAttribute('onclick').includes('true')) {
+        opt.classList.add('correcta');
+      }
+    });
+  }
+  feedback.style.display = 'block';
+
+  estadoTrivias[seccion].respondidas++;
+
+  if (estadoTrivias[seccion].respondidas === estadoTrivias[seccion].total) {
+    mostrarResultadoFinal(seccion);
+  }
+}
+
+function mostrarResultadoFinal(seccion) {
+  const puntaje = estadoTrivias[seccion].correctas;
+  const total = estadoTrivias[seccion].total;
+  const resBox = document.getElementById(`resultado-final-${seccion}`);
+  const btnReinicio = document.getElementById(`btn-reinicio-${seccion}`);
+  
+  let mensajeBroma = "";
+  let colorBroma = "#ffffff";
+
+  if (puntaje === total) {
+    mensajeBroma = "🏆 ¡Perfecto (3/3)! ¡Ya estás listo para cobrar como maestro constructor profesional... o al menos para no romper las paredes de tu casa! 😎🔥";
+    colorBroma = "#00f078";
+  } else if (puntaje === 2) {
+    mensajeBroma = "⚠️ ¡Hiciste 2/3! Casi lo logras bro, por poquito y te salvas de que el maestro albañil te regañe. ¡Repasa la guía que te faltó una! 🛠️";
+    colorBroma = "#f1c40f";
+  } else if (puntaje === 1) {
+    mensajeBroma = "😅 ¡Apenas 1/3! Bro... ¿seguro que leíste las guías o nomás estabas picando botones por diversión? ¡A repasar se ha dicho! 📚🔨";
+    colorBroma = "#ff9800";
+  } else {
+    mensajeBroma = "💀 ¡0/3! ¡Pff, cero patatero! Si vas a construir así mejor contrata a alguien antes de que se te caiga el techo encima jajaja. ¡Dale a reintentar! 🚧💥";
+    colorBroma = "#ff4d4d";
+  }
+
+  resBox.innerHTML = `<strong>Puntaje: ${puntaje} / ${total}</strong><br><br>${mensajeBroma}`;
+  resBox.style.color = colorBroma;
+  resBox.style.display = 'block';
+  btnReinicio.style.display = 'block';
+}
+
+function reiniciarTrivia(seccion) {
+  estadoTrivias[seccion].respondidas = 0;
+  estadoTrivias[seccion].correctas = 0;
+
+  const contenedorGrupo = document.getElementById(`trivia-grupo-${seccion}`);
+  const opciones = contenedorGrupo.querySelectorAll('.trivia-opcion');
+  const feedbacks = contenedorGrupo.querySelectorAll('.trivia-feedback');
+
+  contenedorGrupo.querySelectorAll('.trivia-pregunta-card').forEach(c => {
+    delete c.dataset.respondida;
+  });
+  
+  opciones.forEach(opt => {
+    opt.style.pointerEvents = 'auto';
+    opt.classList.remove('correcta', 'incorrecta');
+  });
+
+  feedbacks.forEach(fb => {
+    fb.style.display = 'none';
+    fb.innerHTML = '';
+  });
+
+  document.getElementById(`resultado-final-${seccion}`).style.display = 'none';
+  document.getElementById(`btn-reinicio-${seccion}`).style.display = 'none';
+}
+  </script>
+  <script>
+/* Formulario de esta página (código idéntico en las 5 calculadoras): evita recargas y permite limpiar los campos. */
+function avisoFallo(id) {
+  var caja = document.getElementById('res-' + id), det = document.getElementById('det-' + id);
+  if (!caja || !det) return;
+  det.textContent = '⚠️ No se pudo calcular: no se cargó el archivo app.js. Usa la versión de la carpeta «autonomo» o abre la carpeta completa del proyecto. Tus datos siguen escritos en los campos.';
+  caja.className = caja.className.replace(/\berror\b/g, '') + ' error';
+  caja.style.display = 'block';
+}
+function limpiarCalculadora(id) {
+  var f = document.getElementById('form-' + id), caja = document.getElementById('res-' + id), det = document.getElementById('det-' + id);
+  if (f) f.reset();
+  if (det) det.innerHTML = '';
+  if (caja) { caja.style.display = 'none'; caja.classList.remove('error'); }
+  var p = document.getElementById('c-personal'), d = document.getElementById('c-dosif');
+  if (p && d) p.hidden = d.value !== 'custom';
+}
+  </script>
+  <script src="../app.js"></script>
+</body>
+</html>

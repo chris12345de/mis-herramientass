@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <title>Calculadora de Cerámica y Pisos | Calculadoras del Hogar</title>
+  <meta name="description" content="Calcula los metros cuadrados de cerámica con 10% de merma y los sacos de adhesivo C2 para tu piso. Incluye guías técnicas y trivia.">
+  <link rel="canonical" href="https://chris12345de.github.io/mis-herramientass/ceramica.html">
+  <link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header-title" id="page-h1"><a href="index.html">🛠️ Calculadoras del Hogar</a></div>
+    <div class="nav-tabs">
+      <a href="pintura.html" class="tab-btn" id="tab-pintura">🎨 Pintura</a>
+      <a href="cemento.html" class="tab-btn" id="tab-cemento">🧱 Cemento/Solera</a>
+      <a href="bloques.html" class="tab-btn" id="tab-bloques">🏗️ Bloques</a>
+      <a href="ceramica.html" class="tab-btn active" id="tab-ceramica">🔲 Cerámica</a>
+      <a href="agua.html" class="tab-btn" id="tab-agua">💧 Agua/Tanques</a>
+    </div>
+
+    <div id="seccion-ceramica" class="seccion-calculadora active">
+      <div id="card-ceramica" class="card">
+        <h1 class="card-title">🔲 Calculadora de Cerámica y Pisos</h1>
+        <div class="info-box">📐 <strong>Superficie:</strong> calcula los m² de cerámica a comprar (con desperdicio) y los sacos de adhesivo. Si indicas los m² de la caja, también las cajas completas.</div>
+        <form id="form-ceramica" onsubmit="return false;" novalidate>
+          <div class="form-fila"><div class="form-group"><label for="ce-largo">Largo del piso (m)</label><input type="text" id="ce-largo" inputmode="decimal" placeholder="Ej: 5" autocomplete="off"></div><div class="form-group"><label for="ce-ancho">Ancho del piso (m)</label><input type="text" id="ce-ancho" inputmode="decimal" placeholder="Ej: 4" autocomplete="off"></div></div><div class="form-group"><label for="ce-descuento">Área donde no irá cerámica (m²)</label><input type="text" id="ce-descuento" inputmode="decimal" placeholder="Ej: 0" value="0" aria-describedby="ce-descuento-ay" autocomplete="off"><small class="ayuda" id="ce-descuento-ay">Columnas, muebles fijos u otras zonas que no se cubren.</small></div><details class="opciones"><summary>⚙️ Desperdicio, cajas y adhesivo (opcional)</summary><div class="form-group"><label for="ce-desp">Desperdicio por cortes y roturas (%)</label><input type="text" id="ce-desp" inputmode="decimal" placeholder="Ej: 10" value="10" aria-describedby="ce-desp-ay" autocomplete="off"><small class="ayuda" id="ce-desp-ay">Más en diagonal o con piezas grandes; menos en colocación recta.</small></div><div class="form-group"><label for="ce-caja">m² por caja (opcional)</label><input type="text" id="ce-caja" inputmode="decimal" placeholder="Ej: 1,44" aria-describedby="ce-caja-ay" autocomplete="off"><small class="ayuda" id="ce-caja-ay">Está impreso en la caja. Si lo dejas vacío no se calculan cajas.</small></div><div class="form-group"><label for="ce-rend">Consumo de adhesivo (kg por m²)</label><input type="text" id="ce-rend" inputmode="decimal" placeholder="Ej: 4,5" value="4,5" aria-describedby="ce-rend-ay" autocomplete="off"><small class="ayuda" id="ce-rend-ay">Depende de la llana y del producto: mira la ficha técnica de tu adhesivo.</small></div><div class="form-group"><label for="ce-saco">Peso del saco de adhesivo</label><select id="ce-saco"><option value="25" selected>25 kg</option><option value="40">40 kg</option><option value="50">50 kg</option></select></div></details>
+          <div class="form-botones">
+            <button type="submit" class="btn-calc" onclick="if (typeof calcularCeramica === 'function') { calcularCeramica(); } else { avisoFallo('ceramica'); }">Calcular materiales</button>
+            <button type="button" class="btn-limpiar" onclick="limpiarCalculadora('ceramica')">🧹 Limpiar campos</button>
+          </div>
+        </form>
+        <div class="subtext">* Estimación. El desperdicio y el adhesivo cambian con el patrón de colocación y el producto.</div>
+        <div id="res-ceramica" class="resultado-box" aria-live="polite"><div id="det-ceramica"></div></div>
+        <details class="opciones"><summary>📖 Cómo se calcula y ejemplo</summary><p><strong>Fórmula:</strong> área neta = largo × ancho − zonas sin cerámica. A comprar = área neta × (1 + desperdicio). Cajas = m² a comprar ÷ m² por caja, redondeado hacia arriba. Adhesivo (kg) = área neta × consumo; sacos = kg ÷ peso del saco, redondeado hacia arriba.</p><p><strong>Supuestos:</strong> el desperdicio suele ir de 5% a 15%: la colocación en diagonal o en patrones desperdicia más que la recta. El consumo de adhesivo de 4,5 kg/m² corresponde a una llana de unos 8 mm; con llana de 6 mm baja a cerca de 3 kg/m², y en formato grande con doble encolado puede subir a 6–9 kg/m².</p><p><strong>Ejemplo:</strong> piso de 5 m × 4 m = 20 m². Con 10% de desperdicio: 22 m². Con cajas de 1,44 m²: 16 cajas (23,04 m²). Adhesivo: 20 × 4,5 = 90 kg, es decir 4 sacos de 25 kg.</p></details>
+        <details class="opciones"><summary>❓ Preguntas frecuentes</summary><p><strong>¿Cuánto desperdicio debo calcular en cerámica?</strong><br>Entre 5% y 15% según el patrón, el tamaño de la pieza y la cantidad de cortes. Con diagonales o habitaciones irregulares, usa más.</p><p><strong>¿Conviene comprar piezas extra?</strong><br>Sí, guarda algunas por si luego se rompe una: los tonos pueden variar entre lotes de fabricación.</p><p><strong>¿Cuánto adhesivo necesito por m²?</strong><br>Depende de la llana y del formato: de unos 3 a 9 kg/m². Revisa la ficha técnica del producto que compres.</p></details>
+        <div id="sug-ceramica" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas de Cerámica:</div>
+          <div class="guias-grid">
+            <a href="#g-cer-1" class="btn-guia-item" onclick="mostrarGuia('g-cer-1', 'card-ceramica')">🔲 Elección de Adhesivos C1/C2 y llana <span>›</span></a>
+            <a href="#g-cer-2" class="btn-guia-item" onclick="mostrarGuia('g-cer-2', 'card-ceramica')">📏 Replanteo para evitar cortes finos <span>›</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div id="g-cer-1" class="guia-seccion">
+        <a href="#card-ceramica" class="btn-volver" onclick="ocultarGuia('card-ceramica', 'g-cer-1')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía: Elección de Adhesivos (C1/C2) y Llanas</h2>
+        <div class="guia-meta">Nivel: Intermedio | Adherencia</div>
+        <p class="guia-p">Instalar azulejos o gres porcelánico utilizando un cemento cola inadecuado provocará que las baldosas se suelten o "suenen a hueco" tras el primer cambio de estación. El gres porcelánico moderno posee un grado de absorción de agua casi nulo (&lt; 0.5%), lo que impide el agarre mecánico del mortero tradicional.</p>
+        <div class="guia-sub">🔲 Clasificación Normativa de Adhesivos:</div>
+        <ul class="guia-lista">
+          <li><strong>Clase C1:</strong> Adhesivo cementoso estándar. Adecuado para azulejos porosos de pasta roja en interiores secos.</li>
+          <li><strong>Clase C2 (Recomendado para Porcelánico):</strong> Adhesivo mejorado con polímeros y resinas para baja absorción.</li>
+          <li><strong>Adhesivos Flexibles (S1/S2):</strong> Recomendados para suelo radiante, exteriores o formatos grandes (>60x60 cm).</li>
+          <li><strong>Llana dentada:</strong> 6 mm para piezas de hasta 30×30 cm, 8-10 mm para formatos medios y 10-12 mm para gran formato (con doble encolado). La calculadora usa por defecto 4,5 kg de adhesivo por m² (una llana de unos 8 mm); cámbialo en Ajustes si usas otra.</li>
+        </ul>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> En baldosas de más de 30x30 cm, aplica siempre la técnica del doble encolado (adhesivo en el soporte y en el reverso de la pieza).</div>
+      </div>
+
+      <div id="g-cer-2" class="guia-seccion">
+        <a href="#card-ceramica" class="btn-volver" onclick="ocultarGuia('card-ceramica', 'g-cer-2')">← Volver a la Calculadora</a>
+        <h2 class="guia-title">Guía de Replanteo Cerámico</h2>
+        <div class="guia-meta">Nivel: Principiante | Estética</div>
+        <p class="guia-p">Colocar la primera baldosa en una esquina al azar puede terminar en un resultado poco estético: tiras estrechas de azulejo roto de apenas 2 cm en el lado más visible de la habitación o desalineación de las juntas respecto a las paredes o puertas principales.</p>
+        <div class="guia-sub">📏 Pasos para un Replanteo Profesional:</div>
+        <ul class="guia-lista">
+          <li>Calcula el centro exacto de la estancia cruzando dos líneas con tiralíneas.</li>
+          <li>Haz una simulación "en seco" colocando una fila de baldosas con crucetas de junta hacia ambas paredes.</li>
+          <li>Si el espacio restante en la pared es menor a la mitad de una baldosa, desplaza el centro de inicio para equilibrar las piezas de remate en ambos lados.</li>
+          <li>Un buen replanteo reduce los cortes y, con ellos, el desperdicio: la calculadora usa 10% por defecto, y suele ir de 5% a 15% según el patrón y el tamaño de la pieza.</li>
+          <li>Al cortar cerámica o porcelanato usa gafas y mascarilla: el polvo de corte irrita ojos y vías respiratorias.</li>
+        </ul>
+        <div class="callout-expert">💡 <strong>Consejo Pro:</strong> Utiliza cuñas o sistemas de nivelación por rosca/brida para evitar los temidos "dientes" o desniveles entre piezas.</div>
+      </div>
+        <div class="card trivia-card" id="trivia-card-ceramica">
+          <!-- TRIVIA CERAMICA -->
+          <div class="trivia-box" id="trivia-grupo-ceramica">
+            <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Cerámica:</div>
+            
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">1. ¿Qué adhesivo se recomienda para gres porcelánico?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-1', 'ceramica')">A) Cemento cola básico Clase C1.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tce-1', 'ceramica')">B) Adhesivo mejorado con polímeros Clase C2.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-1', 'ceramica')">C) Yeso rápido.</button>
+              <div id="tce-1" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">2. ¿Dónde se recomienda iniciar la colocación de la primera baldosa?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-2', 'ceramica')">A) En una esquina al azar.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tce-2', 'ceramica')">B) Desde el centro exacto de la estancia para equilibrar recortes.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-2', 'ceramica')">C) Afuera de la casa.</button>
+              <div id="tce-2" class="trivia-feedback"></div>
+            </div>
+
+            <div class="trivia-pregunta-card">
+              <div class="trivia-pregunta">3. ¿Qué técnica se debe aplicar en baldosas de gran formato (>30x30 cm)?</div>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tce-3', 'ceramica')">A) Doble encolado (soporte y reverso de la pieza).</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-3', 'ceramica')">B) Poner una sola gota en el centro.</button>
+              <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tce-3', 'ceramica')">C) Pegarlas sin adhesivo.</button>
+              <div id="tce-3" class="trivia-feedback"></div>
+            </div>
+
+            <div id="resultado-final-ceramica" class="trivia-resultado-final"></div>
+            <button id="btn-reinicio-ceramica" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('ceramica')">🔄 Reintentar Trivia</button>
+          </div>
+    </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="privacidad.html">Política de Privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="terminos.html">Términos y Condiciones</a>
+            <span class="footer-separator">|</span>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p class="footer-disclaimer">
+            <strong>Aviso importante:</strong> El contenido, cálculos y guías técnicas de este sitio web son puramente orientativos y basados en coeficientes estándar de rendimiento de materiales. No nos hacemos responsables por variaciones en el gasto real de materiales de obra, compras incorrectas o incidentes en reparaciones.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Calculadoras del Hogar. Todos los derechos reservados.</p>
+    </footer>
+
+  </div>
+
+  <script>
+/* Trivia de esta página (código idéntico en las 5 calculadoras). */
+const estadoTrivias = {
+  pintura: { respondidas: 0, correctas: 0, total: 3 },
+  cemento: { respondidas: 0, correctas: 0, total: 3 },
+  bloques: { respondidas: 0, correctas: 0, total: 3 },
+  ceramica: { respondidas: 0, correctas: 0, total: 3 },
+  agua: { respondidas: 0, correctas: 0, total: 3 }
+};
+
+function verificarTrivia(boton, esCorrecta, idFeedback, seccion) {
+  const tarjetaPregunta = boton.closest('.trivia-pregunta-card');
+  if (tarjetaPregunta.dataset.respondida === '1') return;
+  tarjetaPregunta.dataset.respondida = '1';
+  const opciones = tarjetaPregunta.querySelectorAll('.trivia-opcion');
+  const feedback = document.getElementById(idFeedback);
+
+  opciones.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+  if (esCorrecta) {
+    boton.classList.add('correcta');
+    feedback.innerHTML = "✅ ¡Exacto! ¡Le atinaste maestro!";
+    feedback.style.color = "#00f078";
+    estadoTrivias[seccion].correctas++;
+  } else {
+    boton.classList.add('incorrecta');
+    feedback.innerHTML = "❌ ¡Nel, revisa bien la guía técnica!";
+    feedback.style.color = "#ff4d4d";
+    opciones.forEach(opt => {
+      if (opt.getAttribute('onclick').includes('true')) {
+        opt.classList.add('correcta');
+      }
+    });
+  }
+  feedback.style.display = 'block';
+
+  estadoTrivias[seccion].respondidas++;
+
+  if (estadoTrivias[seccion].respondidas === estadoTrivias[seccion].total) {
+    mostrarResultadoFinal(seccion);
+  }
+}
+
+function mostrarResultadoFinal(seccion) {
+  const puntaje = estadoTrivias[seccion].correctas;
+  const total = estadoTrivias[seccion].total;
+  const resBox = document.getElementById(`resultado-final-${seccion}`);
+  const btnReinicio = document.getElementById(`btn-reinicio-${seccion}`);
+  
+  let mensajeBroma = "";
+  let colorBroma = "#ffffff";
+
+  if (puntaje === total) {
+    mensajeBroma = "🏆 ¡Perfecto (3/3)! ¡Ya estás listo para cobrar como maestro constructor profesional... o al menos para no romper las paredes de tu casa! 😎🔥";
+    colorBroma = "#00f078";
+  } else if (puntaje === 2) {
+    mensajeBroma = "⚠️ ¡Hiciste 2/3! Casi lo logras bro, por poquito y te salvas de que el maestro albañil te regañe. ¡Repasa la guía que te faltó una! 🛠️";
+    colorBroma = "#f1c40f";
+  } else if (puntaje === 1) {
+    mensajeBroma = "😅 ¡Apenas 1/3! Bro... ¿seguro que leíste las guías o nomás estabas picando botones por diversión? ¡A repasar se ha dicho! 📚🔨";
+    colorBroma = "#ff9800";
+  } else {
+    mensajeBroma = "💀 ¡0/3! ¡Pff, cero patatero! Si vas a construir así mejor contrata a alguien antes de que se te caiga el techo encima jajaja. ¡Dale a reintentar! 🚧💥";
+    colorBroma = "#ff4d4d";
+  }
+
+  resBox.innerHTML = `<strong>Puntaje: ${puntaje} / ${total}</strong><br><br>${mensajeBroma}`;
+  resBox.style.color = colorBroma;
+  resBox.style.display = 'block';
+  btnReinicio.style.display = 'block';
+}
+
+function reiniciarTrivia(seccion) {
+  estadoTrivias[seccion].respondidas = 0;
+  estadoTrivias[seccion].correctas = 0;
+
+  const contenedorGrupo = document.getElementById(`trivia-grupo-${seccion}`);
+  const opciones = contenedorGrupo.querySelectorAll('.trivia-opcion');
+  const feedbacks = contenedorGrupo.querySelectorAll('.trivia-feedback');
+
+  contenedorGrupo.querySelectorAll('.trivia-pregunta-card').forEach(c => {
+    delete c.dataset.respondida;
+  });
+  
+  opciones.forEach(opt => {
+    opt.style.pointerEvents = 'auto';
+    opt.classList.remove('correcta', 'incorrecta');
+  });
+
+  feedbacks.forEach(fb => {
+    fb.style.display = 'none';
+    fb.innerHTML = '';
+  });
+
+  document.getElementById(`resultado-final-${seccion}`).style.display = 'none';
+  document.getElementById(`btn-reinicio-${seccion}`).style.display = 'none';
+}
+  </script>
+  <script>
+/* Formulario de esta página (código idéntico en las 5 calculadoras): evita recargas y permite limpiar los campos. */
+function avisoFallo(id) {
+  var caja = document.getElementById('res-' + id), det = document.getElementById('det-' + id);
+  if (!caja || !det) return;
+  det.textContent = '⚠️ No se pudo calcular: no se cargó el archivo app.js. Usa la versión de la carpeta «autonomo» o abre la carpeta completa del proyecto. Tus datos siguen escritos en los campos.';
+  caja.className = caja.className.replace(/\berror\b/g, '') + ' error';
+  caja.style.display = 'block';
+}
+function limpiarCalculadora(id) {
+  var f = document.getElementById('form-' + id), caja = document.getElementById('res-' + id), det = document.getElementById('det-' + id);
+  if (f) f.reset();
+  if (det) det.innerHTML = '';
+  if (caja) { caja.style.display = 'none'; caja.classList.remove('error'); }
+  var p = document.getElementById('c-personal'), d = document.getElementById('c-dosif');
+  if (p && d) p.hidden = d.value !== 'custom';
+}
+  </script>
+  <script src="../app.js"></script>
+</body>
+</html>

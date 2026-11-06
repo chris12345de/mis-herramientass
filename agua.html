@@ -58,9 +58,9 @@
       display: inline-block;
     }
     .tab-btn.active {
-      background-color: #3b82f6;
+      background-color: #2563eb;
       color: #ffffff;
-      border-color: #3b82f6;
+      border-color: #2563eb;
     }
     .card {
       background-color: #1a1f26;
@@ -329,7 +329,7 @@
       width: 100%;
       margin-top: 10px;
       padding: 10px;
-      background-color: #3b82f6;
+      background-color: #2563eb;
       color: #ffffff;
       border: none;
       border-radius: 6px;
@@ -361,19 +361,19 @@
         text-decoration: underline;
     }
     .footer-separator {
-        color: #2d3540;
+        color: #74839a;
         user-select: none;
     }
     .footer-disclaimer {
         font-size: 0.82rem;
-        color: #707e94;
+        color: #7b889d;
         max-width: 700px;
         margin: 0 auto 15px auto;
         line-height: 1.5;
     }
     .footer-copyright {
         font-size: 0.8rem;
-        color: #4a5568;
+        color: #7a879b;
         margin: 0;
     }
     @media (max-width: 480px) {
@@ -429,6 +429,16 @@
     .resultado-box.error .res-titulo { color: #ff9b9b; }
     .trivia-card { margin-top: 20px; }
     .trivia-card .trivia-box { margin-top: 0; }
+    /* V6.1: legibilidad (WCAG AA) y nuevas piezas */
+    input::placeholder { color: #8b98aa; opacity: 1; }
+    .lista-acciones { margin-top: 14px; padding-top: 12px; border-top: 1px solid #1f4a3a; }
+    .btn-lista { width: 100%; min-height: 46px; padding: 12px; background-color: #2563eb; color: #ffffff; border: 0; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    .btn-lista:disabled { background-color: #2d3b50; color: #d0d7de; cursor: default; }
+    .btn-lista:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }
+    .lista-msg { margin-top: 8px; font-size: 0.9rem; line-height: 1.4; color: #00f078; min-height: 1.3em; }
+    .lista-msg.aviso { color: #ff9b9b; }
+    .lista-msg a { color: #4a9eff; font-weight: 600; }
+    .relacionadas { margin-top: 15px; }
   </style>
 </head>
 <body>
@@ -442,7 +452,7 @@
       <a href="agua.html" class="tab-btn active" id="tab-agua">💧 Agua/Tanques</a>
     </div>
 
-    <div id="seccion-agua" class="seccion-calculadora active">
+    <main id="seccion-agua" class="seccion-calculadora active">
       <div id="card-agua" class="card">
         <h1 class="card-title">💧 Calculadora de Tanques y Autonomía</h1>
         <div class="info-box">📐 <strong>Tanque:</strong> calcula los litros y la autonomía de un tanque cilíndrico, o usa la capacidad que ya conoces. Para un tanque rectangular: largo × ancho × alto del agua, en metros, × 1.000 = litros.</div>
@@ -527,7 +537,7 @@
             <button id="btn-reinicio-agua" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('agua')">🔄 Reintentar Trivia</button>
           </div>
     </div>
-    </div>
+    </main>
 
     <footer class="site-footer">
         <div class="footer-links">
@@ -708,6 +718,13 @@ const Calc = (function () {
     if (Math.abs(n) >= 1000) p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return p.join(',');
   }
+  // Solo para MOSTRAR volúmenes en m³ (arena, grava, hormigón): redondeo convencional (mitad hacia arriba)
+  // que ignora el ruido de punto flotante (0,3 × 0,75 da 0.22499999999999998 y fmt() lo mostraba como 0,22).
+  // No altera el número original: devuelve uno nuevo que se pasa a fmt() para ponerle la coma y los miles.
+  function fmtVol(n, d) {
+    const k = Math.pow(10, d), a = Math.abs(n);
+    return fmt((n < 0 ? -1 : 1) * Math.round(Number((a * k).toPrecision(12))) / k, d);
+  }
   // Valida un número: > min (o >= min si incl), <= max, entero si ent
   function chk(v, n, min, max, incl, ent) {
     if (typeof v !== 'number' || !isFinite(v)) throw new Error('Escribe un número válido en «' + n + '» (solo cifras y una coma o un punto para los decimales).');
@@ -809,7 +826,7 @@ const Calc = (function () {
     return NaN;
   }
 
-  return { parseNumero: parseNumero, pintura: pintura, bloques: bloques, hormigon: hormigon, ceramica: ceramica, agua: agua, envasesPintura: envasesPintura, fmt: fmt, techo: techo, chk: chk, DOSIF: DOSIF };
+  return { parseNumero: parseNumero, pintura: pintura, bloques: bloques, hormigon: hormigon, ceramica: ceramica, agua: agua, envasesPintura: envasesPintura, fmt: fmt, fmtVol: fmtVol, techo: techo, chk: chk, DOSIF: DOSIF };
 })();
 if (typeof module !== 'undefined' && module.exports) module.exports = Calc;
 
@@ -819,7 +836,9 @@ function valOpc(id, miles) { const e = document.getElementById(id); return (!e |
 const TITULOS = { pintura: '📋 Resultado · Pintura', cemento: '📋 Resultado · Cemento, arena y grava', bloques: '📋 Resultado · Bloques o ladrillos', ceramica: '📋 Resultado · Cerámica y adhesivo', agua: '📋 Resultado · Tanque de agua' };
 function mostrar(id, html, error) {
   const caja = document.getElementById('res-' + id);
-  document.getElementById('det-' + id).innerHTML = '<div class="res-titulo">' + (error ? '⚠️ Revisa los datos' : TITULOS[id]) + '</div>' + html;
+  const accion = (!error && ULTIMO[id] && ULTIMO[id].some(itemValido))
+    ? '<div class="lista-acciones"><button type="button" class="btn-lista" id="lista-btn-' + id + '" onclick="clicAgregar(\'' + id + '\')">➕ Agregar a mi lista</button><div class="lista-msg" id="lista-msg-' + id + '" role="status" aria-live="polite"></div></div>' : '';
+  document.getElementById('det-' + id).innerHTML = '<div class="res-titulo">' + (error ? '⚠️ Revisa los datos' : TITULOS[id]) + '</div>' + html + accion;
   caja.classList.toggle('error', !!error);
   caja.style.display = 'block';
   try { // lleva la pantalla al resultado (en el móvil queda debajo del botón)
@@ -828,10 +847,51 @@ function mostrar(id, html, error) {
   } catch (e) { /* sin desplazamiento */ }
 }
 function ejecutar(id, fn) {
-  try { mostrar(id, fn(), false); } catch (e) { mostrar(id, e.message, true); }
+  ULTIMO[id] = null;
+  try { mostrar(id, fn(), false); } catch (e) { ULTIMO[id] = null; mostrar(id, e.message, true); }
 }
 function resumen(titulo, lineas, nota) {
   return '<div class="res-grande">' + titulo + '</div><ul class="res-lista"><li>' + lineas.join('</li><li>') + '</li></ul><p class="res-nota">' + nota + '</p>';
+}
+/* ==== MI LISTA DE MATERIALES ====
+   Misma clave y formato que mi-lista.html: { items: [{ n: nombre, c: cantidad, p: precio, u: unidad }], imp: % }.
+   Los datos se guardan solo en este navegador. */
+const LISTA_KEY = 'milista_v1';
+const ULTIMO = {};
+function red2(x) { return Math.round(Number((x * 100).toPrecision(12))) / 100; }
+function uni(c, s, p) { return c === 1 ? s : p; }
+function itemValido(i) { return !!i && typeof i.n === 'string' && i.n.trim() !== '' && typeof i.c === 'number' && isFinite(i.c) && i.c > 0 && typeof i.u === 'string'; }
+function registrarLista(id, items) { ULTIMO[id] = items.filter(itemValido); }
+function leerLista() {
+  const raw = localStorage.getItem(LISTA_KEY);
+  if (raw === null) return { items: [], imp: 0 };
+  const d = JSON.parse(raw); // si está dañada lanza un error y NO se sobrescribe
+  if (!d || !Array.isArray(d.items)) throw new Error('Formato de lista no válido');
+  return { items: d.items.filter(function (i) { return i && typeof i.n === 'string' && isFinite(i.c) && isFinite(i.p); }), imp: d.imp || 0 };
+}
+// Suma la cantidad si ya existe el mismo material con la misma unidad; si no, agrega una fila nueva (precio 0 hasta que el usuario lo escriba).
+function fusionarLista(actual, nuevos) {
+  const res = actual.map(function (i) { return { n: i.n, c: i.c, p: i.p, u: typeof i.u === 'string' ? i.u : '' }; });
+  nuevos.forEach(function (x) {
+    const e = res.find(function (i) { return i.n === x.n && i.u === x.u; });
+    if (e) e.c = red2(e.c + x.c); else res.push({ n: x.n.slice(0, 60), c: x.c, p: 0, u: x.u });
+  });
+  return res;
+}
+function clicAgregar(id) {
+  const msg = document.getElementById('lista-msg-' + id), btn = document.getElementById('lista-btn-' + id);
+  if (!msg || !btn) return; // el botón ya no está en pantalla (hubo un error o se limpió el formulario)
+  if (btn.disabled) return; // ya se agregó este resultado
+  const items = (ULTIMO[id] || []).filter(itemValido);
+  if (!items.length) { msg.className = 'lista-msg aviso'; msg.textContent = 'No hay un resultado válido para agregar. Calcula primero.'; return; }
+  let total;
+  try {
+    const l = leerLista(), nueva = fusionarLista(l.items, items);
+    localStorage.setItem(LISTA_KEY, JSON.stringify({ items: nueva, imp: l.imp })); total = nueva.length;
+  } catch (e) { msg.className = 'lista-msg aviso'; msg.textContent = 'No se pudo guardar en este navegador (modo privado o almacenamiento bloqueado). Tu lista no se modificó.'; return; }
+  btn.disabled = true; btn.textContent = '✓ Agregado a tu lista';
+  msg.className = 'lista-msg';
+  msg.innerHTML = '✓ ' + items.length + (items.length === 1 ? ' material agregado' : ' materiales agregados') + '. Tu lista tiene ' + total + ' ' + (total === 1 ? 'material' : 'materiales') + '. <a href="mi-lista.html">Ver mi lista →</a>';
 }
 function cambiarDosif() {
   document.getElementById('c-personal').hidden = document.getElementById('c-dosif').value !== 'custom';
@@ -846,6 +906,9 @@ function calcularPintura() {
     if (e.sueltos) partes.push(e.sueltos + (e.sueltos === 1 ? ' galón' : ' galones'));
     let compra = partes.join(' + ');
     if (e.cuartos) compra += ' (o ' + e.cuartos + (e.cuartos === 1 ? ' cuarto' : ' cuartos') + ' de galón, si tu tienda los vende)';
+    registrarLista('pintura', [
+      { n: 'Pintura (caneca de 5 galones)', c: e.canecas, u: uni(e.canecas, 'caneca', 'canecas') },
+      { n: 'Pintura (galón)', c: e.sueltos, u: uni(e.sueltos, 'galón', 'galones') }]);
     return resumen('🛒 Compra: <strong>' + compra + '</strong>', [
       '📐 Área a pintar: <strong>' + f(r.area, 1) + ' m²</strong> (paredes ' + f(r.bruta, 1) + ' m² − descuento ' + f(r.bruta - r.area, 1) + ' m²)',
       '💧 Pintura necesaria: <strong>' + f(r.galones, 2) + ' galones</strong> (≈ ' + f(r.litros, 1) + ' litros), con ' + f(r.margen, 0) + '% de margen',
@@ -858,6 +921,7 @@ function calcularBloques() {
   ejecutar('bloques', function () {
     const r = Calc.bloques({ largo: val('b-largo'), alto: val('b-alto'), paredes: val('b-paredes'), descuento: val('b-descuento'),
       mlargo: val('b-mlargo'), malto: val('b-malto'), merma: val('b-merma') }), f = Calc.fmt;
+    registrarLista('bloques', [{ n: 'Bloques o ladrillos (módulo ' + f(r.ml, 1) + ' × ' + f(r.ma, 1) + ' cm)', c: r.total, u: uni(r.total, 'unidad', 'unidades') }]);
     return resumen('🧱 Compra: <strong>' + f(r.total, 0) + ' unidades</strong>', [
       '📐 Área neta: <strong>' + f(r.area, 1) + ' m²</strong> (paredes ' + f(r.bruta, 1) + ' m² − descuento ' + f(r.bruta - r.area, 1) + ' m²)',
       '🔢 Con módulo de ' + f(r.ml, 1) + ' × ' + f(r.ma, 1) + ' cm: <strong>' + f(r.porM2, 2) + ' unidades por m²</strong>',
@@ -870,10 +934,13 @@ function calcularCemento() {
   ejecutar('cemento', function () {
     const r = Calc.hormigon({ largo: val('c-largo'), ancho: val('c-ancho'), espesor: val('c-espesor'), dosif: document.getElementById('c-dosif').value,
       desperdicio: val('c-desp'), saco: val('c-saco'), cem: val('c-cem'), arena: val('c-arena'), grava: val('c-grava') }), f = Calc.fmt;
+    registrarLista('cemento', [
+      { n: 'Cemento (saco de ' + f(r.saco, r.saco % 1 ? 1 : 0) + ' kg)', c: r.sacos, u: uni(r.sacos, 'saco', 'sacos') },
+      { n: 'Arena', c: red2(r.arena), u: 'm³' }, { n: 'Grava', c: red2(r.grava), u: 'm³' }]);
     return resumen('🛒 Cemento: <strong>' + f(r.sacos, 0) + (r.sacos === 1 ? ' saco' : ' sacos') + ' de ' + f(r.saco, r.saco % 1 ? 1 : 0) + ' kg</strong>', [
-      '🏖️ Arena: <strong>' + f(r.arena, 2) + ' m³</strong>',
-      '🪨 Grava: <strong>' + f(r.grava, 2) + ' m³</strong>',
-      '📦 Hormigón a preparar: ' + f(r.volT, 2) + ' m³ (' + f(r.vol, 2) + ' m³ + ' + f(r.desp, 0) + '% de desperdicio)',
+      '🏖️ Arena: <strong>' + Calc.fmtVol(r.arena, 2) + ' m³</strong>',
+      '🪨 Grava: <strong>' + Calc.fmtVol(r.grava, 2) + ' m³</strong>',
+      '📦 Hormigón a preparar: ' + Calc.fmtVol(r.volT, 2) + ' m³ (' + Calc.fmtVol(r.vol, 2) + ' m³ + ' + f(r.desp, 0) + '% de desperdicio)',
       '⚖️ Cemento exacto: ' + f(r.kg, 0) + ' kg (dosificación ' + r.dos.nombre + ': ' + r.dos.cem + ' kg por m³)'],
       'Estimación orientativa de materiales, no un diseño estructural ni una garantía de resistencia. El consumo real depende de los materiales, la humedad, la granulometría, la compactación y el diseño de mezcla. El mortero de pega o revoque lleva otras proporciones.');
   });
@@ -887,6 +954,9 @@ function calcularCeramica() {
     l.push('➕ Con ' + f(r.desp, 0) + '% de desperdicio: <strong>' + f(r.compra, 2) + ' m²</strong>');
     if (r.cajas !== null) l.push('📦 Cajas de ' + f(r.caja, 2) + ' m²: <strong>' + f(r.cajas, 0) + '</strong> (' + f(r.m2cajas, 2) + ' m² en total)');
     l.push('🧴 Adhesivo: ' + f(r.kg, 1) + ' kg → <strong>' + f(r.sacos, 0) + (r.sacos === 1 ? ' saco' : ' sacos') + ' de ' + f(r.saco, 0) + ' kg</strong>');
+    registrarLista('ceramica', [
+      r.cajas !== null ? { n: 'Cerámica (cajas de ' + f(r.caja, 2) + ' m²)', c: r.cajas, u: uni(r.cajas, 'caja', 'cajas') } : { n: 'Cerámica', c: red2(r.compra), u: 'm²' },
+      { n: 'Adhesivo para cerámica (saco de ' + f(r.saco, 0) + ' kg)', c: r.sacos, u: uni(r.sacos, 'saco', 'sacos') }]);
     return resumen('🛒 Compra: <strong>' + f(r.compra, 2) + ' m² de cerámica</strong>', l,
       'El desperdicio real depende del patrón (diagonal desperdicia más), los cortes y el tamaño de la pieza. El consumo de adhesivo depende de la llana y del producto: revisa su ficha técnica.');
   });
@@ -898,6 +968,7 @@ function calcularAgua() {
       consumo: val('a-consumo'), util: val('a-util') }), f = Calc.fmt;
     const usoCapacidad = valOpc('a-capacidad', true) !== null && (valOpc('a-diametro') !== null || valOpc('a-altura') !== null);
     const aut = r.dias < 1 ? '≈ ' + f(r.dias * 24, 1) + ' horas' : f(r.dias, 1) + ' días';
+    registrarLista('agua', [{ n: 'Tanque de agua de ' + f(r.total, 0) + ' litros', c: 1, u: 'unidad' }]);
     return resumen('⏱️ Autonomía estimada: <strong>' + aut + '</strong>', [
       '💧 Capacidad del tanque: <strong>' + f(r.total, 0) + ' litros</strong>',
       '✅ Volumen utilizable (' + f(r.util, 0) + '%): <strong>' + f(r.utilL, 0) + ' litros</strong>',

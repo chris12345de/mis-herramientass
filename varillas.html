@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Calculadora de Varillas de Hierro | Calculadoras del Hogar</title>
+  <meta name="description" content="Calcula cuántas varillas trae un quintal, el peso por varilla y cuántas comprar según el diámetro y los metros que necesitas.">
+  <link rel="canonical" href="https://chris12345de.github.io/mis-herramientass/varillas.html">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background-color: #121519;
+      color: #e0e6ed;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .tab-btn {
+      background-color: #1a1f26;
+      border: 1px solid #2d3540;
+      color: #9aa8ba;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .tab-btn.active {
+      background-color: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+    .card {
+      background-color: #1a1f26;
+      border: 1px solid #2d3540;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #4a9eff;
+      margin-bottom: 15px;
+    }
+    .info-box {
+      background-color: #14181f;
+      border-left: 3px solid #4a9eff;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 0.9rem;
+      color: #9aa8ba;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #d0d7de;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 12px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 1rem;
+      outline: none;
+    }
+    input[type="text"]:focus {
+      border-color: #4a9eff;
+    }
+    .btn-calc {
+      width: 100%;
+      padding: 14px;
+      background-color: #ffffff;
+      color: #0d1117;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .subtext {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #9aa8ba;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .resultado-box {
+      display: none;
+      background-color: #0f231d;
+      border-left: 4px solid #00d26a;
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 15px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+    .resultado-box strong {
+      color: #00f078;
+    }
+    .sugerencias-box {
+      display: block;
+      margin-top: 20px;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #f1c40f;
+      margin-bottom: 12px;
+    }
+    .guias-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-guia-item {
+      width: 100%;
+      padding: 14px;
+      background-color: #212936;
+      border: 1px solid #3a4a63;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+    }
+    .guia-seccion {
+      display: none;
+      background-color: #182232;
+      border: 1px solid #283850;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 50vh;
+    }
+    .btn-volver {
+      width: 100%;
+      padding: 12px;
+      background-color: #2d3b50;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 15px;
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+    }
+    .guia-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #4a9eff;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .guia-meta {
+      font-size: 0.85rem;
+      color: #a0aec0;
+      margin-bottom: 15px;
+    }
+    .guia-sub {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 15px 0 8px 0;
+    }
+    .guia-p {
+      font-size: 1rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .guia-lista {
+      list-style: none;
+      margin-bottom: 15px;
+    }
+    .guia-lista li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+    .guia-lista li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #4a9eff;
+      font-weight: bold;
+    }
+    .callout-alert {
+      background-color: #8b0000;
+      border-left: 4px solid #ff4d4d;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #ffffff !important;
+      line-height: 1.4;
+    }
+    .callout-expert {
+      background-color: #1c2d42;
+      border-left: 4px solid #3b82f6;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: #bfdbfe;
+      line-height: 1.4;
+    }
+
+    /* --- ESTILOS DE LA TRIVIA --- */
+    .trivia-box {
+      margin-top: 20px;
+      background-color: #141922;
+      border: 1px solid #2d3a4f;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .trivia-pregunta-card {
+      margin-bottom: 15px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #1f2937;
+    }
+    .trivia-pregunta-card:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .trivia-pregunta {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #f1c40f;
+      margin-bottom: 8px;
+    }
+    .trivia-opcion {
+      width: 100%;
+      background-color: #1f2937;
+      border: 1px solid #374151;
+      color: #e5e7eb;
+      padding: 9px 11px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      text-align: left;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+    .trivia-opcion:hover {
+      background-color: #374151;
+    }
+    .trivia-opcion.correcta {
+      background-color: #065f46 !important;
+      border-color: #059669 !important;
+      color: #d1fae5 !important;
+      font-weight: bold;
+    }
+    .trivia-opcion.incorrecta {
+      background-color: #7f1d1d !important;
+      border-color: #dc2626 !important;
+      color: #fee2e2 !important;
+    }
+    .trivia-feedback {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: none;
+    }
+    .trivia-resultado-final {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      background-color: #1a2332;
+      border: 1px solid #3b82f6;
+      font-size: 0.9rem;
+      text-align: center;
+      display: none;
+    }
+    .btn-reiniciar-trivia {
+      display: none;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    /* --- ESTILOS DEL PIE DE PÁGINA --- */
+    .site-footer {
+        margin-top: 40px;
+        padding: 30px 20px;
+        border-top: 1px solid #2d3540;
+        text-align: center;
+        background-color: #121519;
+    }
+    .footer-links {
+        margin-bottom: 20px;
+    }
+    .footer-links a {
+        color: #4a9eff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        display: inline-block;
+        padding: 5px 10px;
+    }
+    .footer-links a:hover {
+        text-decoration: underline;
+    }
+    .footer-separator {
+        color: #74839a;
+        user-select: none;
+    }
+    .footer-disclaimer {
+        font-size: 0.82rem;
+        color: #7b889d;
+        max-width: 700px;
+        margin: 0 auto 15px auto;
+        line-height: 1.5;
+    }
+    .footer-copyright {
+        font-size: 0.8rem;
+        color: #7a879b;
+        margin: 0;
+    }
+    @media (max-width: 480px) {
+        .footer-links a {
+            display: block;
+            margin: 5px 0;
+        }
+        .footer-separator {
+            display: none;
+        }
+    }
+
+    .seccion-calculadora {
+      display: none;
+    }
+    .seccion-calculadora.active {
+      display: block;
+    }
+  
+    .header-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+  
+    select { appearance: auto; }
+    input[type="text"], select, .btn-calc { min-height: 46px; }
+    .tab-btn { min-height: 44px; display: inline-flex; align-items: center; }
+    input:focus, select:focus, .btn-calc:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }
+    .form-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-fila .form-group { min-width: 0; }
+    .ayuda { display: block; margin-top: 5px; font-size: 0.8rem; line-height: 1.35; color: #9aa8ba; }
+    .opciones { background-color: #14181f; border: 1px solid #2d3540; border-radius: 8px; padding: 10px 12px; margin: 0 0 15px; font-size: 0.9rem; line-height: 1.45; color: #c9d1d9; }
+    .opciones summary { cursor: pointer; color: #4a9eff; font-weight: 600; min-height: 28px; padding: 11px 0; }
+    .opciones[open] summary { margin-bottom: 10px; }
+    .opciones p { margin-bottom: 10px; }
+    .res-grande { font-size: 1.15rem; margin-bottom: 10px; line-height: 1.35; }
+    .res-lista { list-style: none; line-height: 1.5; }
+    .res-lista li { margin-bottom: 6px; }
+    .res-nota { margin-top: 10px; font-size: 0.8rem; color: #9aa8ba; line-height: 1.4; }
+    .resultado-box.error { background-color: #2a1414; border-left-color: #ff6b6b; }
+    .resultado-box + .opciones { margin-top: 15px; }
+    .faq-titulo { font-size: 1rem; color: #ffffff; margin: 5px 0 8px; }
+    @media (max-width: 360px) { .form-fila { grid-template-columns: 1fr; } }
+  
+    .trivia-opcion { min-height: 44px; }
+    .footer-links a { display: inline-block; padding: 12px 6px; }
+    .resultado-box { scroll-margin-top: 12px; }
+    .form-botones { display: grid; gap: 10px; margin-top: 5px; }
+    .form-botones .btn-calc { margin-top: 0; }
+    .btn-limpiar { width: 100%; min-height: 46px; padding: 12px; background-color: transparent; color: #9aa8ba; border: 1px solid #30363d; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
+    .btn-limpiar:hover { border-color: #4a9eff; color: #ffffff; }
+    .res-titulo { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #9aa8ba; margin-bottom: 8px; }
+    .resultado-box.error .res-titulo { color: #ff9b9b; }
+    .trivia-card { margin-top: 20px; }
+    .trivia-card .trivia-box { margin-top: 0; }
+    /* V6.1: legibilidad (WCAG AA) y nuevas piezas */
+    input::placeholder { color: #8b98aa; opacity: 1; }
+    .lista-acciones { margin-top: 14px; padding-top: 12px; border-top: 1px solid #1f4a3a; }
+    .btn-lista { width: 100%; min-height: 46px; padding: 12px; background-color: #2563eb; color: #ffffff; border: 0; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    .btn-lista:disabled { background-color: #2d3b50; color: #d0d7de; cursor: default; }
+    .btn-lista:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }
+    .lista-msg { margin-top: 8px; font-size: 0.9rem; line-height: 1.4; color: #00f078; min-height: 1.3em; }
+    .lista-msg.aviso { color: #ff9b9b; }
+    .lista-msg a { color: #4a9eff; font-weight: 600; }
+    .relacionadas { margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-title" id="page-h1"><a href="index.html">🛠️ Calculadoras del Hogar</a></div>
+    <div class="nav-tabs"><a href="pintura.html" class="tab-btn" id="tab-pintura">🎨 Pintura</a><a href="cemento.html" class="tab-btn" id="tab-cemento">🧱 Cemento/Solera</a><a href="bloques.html" class="tab-btn" id="tab-bloques">🏗️ Bloques</a><a href="ceramica.html" class="tab-btn" id="tab-ceramica">🔲 Cerámica</a><a href="agua.html" class="tab-btn" id="tab-agua">💧 Agua/Tanques</a><a href="varillas.html" class="tab-btn active" id="tab-varillas">🔩 Varillas</a><a href="hormigon-elementos.html" class="tab-btn" id="tab-hormigon-elementos">🏛️ Hormigón</a><a href="enlucido.html" class="tab-btn" id="tab-enlucido">🖌️ Enlucido</a></div>
+    <main id="seccion-varillas" class="seccion-calculadora active">
+      <div class="card">
+        <h1 class="card-title">🔩 Calculadora de Varillas de Hierro</h1>
+        <div class="info-box">📐 <strong>Acero de refuerzo:</strong> averigua cuántas varillas trae un quintal, cuánto pesa cada una y cuántas necesitas comprar.</div>
+        <form id="form-varillas" onsubmit="return false;" novalidate>
+<div class="form-fila"><div class="form-group"><label for="diam">Diámetro</label><select id="diam" aria-describedby="diam-ay"><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="14">14 mm</option><option value="16">16 mm</option><option value="18">18 mm</option><option value="20">20 mm</option><option value="22">22 mm</option><option value="25">25 mm</option><option value="28">28 mm</option><option value="32">32 mm</option></select></div><div class="form-group"><label for="largo">Largo de la varilla</label><select id="largo"><option value="12" selected>12 m</option><option value="9">9 m</option><option value="6">6 m</option></select></div></div><small class="ayuda" id="diam-ay">Algunas ferreterías llaman «de 1/2» a la varilla de 12 mm. Confirma el diámetro en la etiqueta antes de comprar.</small><div class="form-group"><label for="metros">Metros de varilla que necesitas (opcional)</label><input type="text" id="metros" inputmode="decimal" placeholder="Ej: 120" autocomplete="off"><small class="ayuda" id="metros-ay">Déjalo vacío si solo quieres saber cuántas varillas trae un quintal.</small></div><details class="opciones"><summary>⚙️ Desperdicio (opcional)</summary><div class="form-group"><label for="desp">Desperdicio (%)</label><input type="text" id="desp" inputmode="decimal" placeholder="Ej: 10" value="10" autocomplete="off"><small class="ayuda" id="desp-ay">Cubre cortes, dobleces y traslapes. Los traslapes exactos los define el plano estructural.</small></div></details>
+          <div class="form-botones">
+            <button type="submit" class="btn-calc" onclick="calcularVarillas()">Calcular</button>
+            <button type="button" class="btn-limpiar" onclick="limpiar('varillas')">🧹 Limpiar campos</button>
+          </div>
+        </form>
+        <div class="subtext">* Estimación con pesos nominales de catálogo. No reemplaza el diseño estructural ni el plano.</div>
+        <div id="res-varillas" class="resultado-box" aria-live="polite"><div id="det-varillas"></div></div>
+<details class="opciones"><summary>📖 Cómo se calcula y ejemplo</summary><p><strong>Fórmula:</strong> varillas por quintal = 45,36 kg ÷ peso de una varilla. El peso de una varilla es el peso por metro × su largo. <strong>Ejemplo:</strong> una varilla de 12 mm × 12 m pesa 0,888 × 12 = 10,656 kg, así que en un quintal entran 45,36 ÷ 10,656 ≈ 4,26 varillas.</p></details><details class="opciones"><summary>📊 Tabla de pesos y áreas por diámetro</summary><table style="width:100%;border-collapse:collapse;font-size:.9rem"><tr><th style="text-align:left">Diámetro</th><th>kg por metro</th><th>Área (cm²)</th></tr><tr><td>8 mm</td><td style="text-align:center">0,395</td><td style="text-align:center">0,503</td></tr><tr><td>10 mm</td><td style="text-align:center">0,617</td><td style="text-align:center">0,786</td></tr><tr><td>12 mm</td><td style="text-align:center">0,888</td><td style="text-align:center">1,131</td></tr><tr><td>14 mm</td><td style="text-align:center">1,208</td><td style="text-align:center">1,539</td></tr><tr><td>16 mm</td><td style="text-align:center">1,578</td><td style="text-align:center">2,011</td></tr><tr><td>18 mm</td><td style="text-align:center">1,998</td><td style="text-align:center">2,545</td></tr><tr><td>20 mm</td><td style="text-align:center">2,466</td><td style="text-align:center">3,142</td></tr><tr><td>22 mm</td><td style="text-align:center">2,984</td><td style="text-align:center">3,801</td></tr><tr><td>25 mm</td><td style="text-align:center">3,853</td><td style="text-align:center">4,909</td></tr><tr><td>28 mm</td><td style="text-align:center">4,834</td><td style="text-align:center">6,158</td></tr><tr><td>32 mm</td><td style="text-align:center">6,313</td><td style="text-align:center">8,043</td></tr></table><p class="res-nota">Valores nominales de varilla corrugada según catálogo técnico de Novacero (norma NTE INEN 2167).</p></details>
+        <div id="sug-varillas" class="sugerencias-box">
+          <div class="section-subtitle">📚 Guías Técnicas de Varillas:</div>
+          <div class="guias-grid">
+            <a href="guia-varillas-diametro.html" class="btn-guia-item">🔩 Elegir el Diámetro y Leer sus Datos <span>›</span></a>
+            <a href="guia-varillas-seguridad.html" class="btn-guia-item">🛡️ Seguridad: Cortar, Doblar y Almacenar <span>›</span></a>
+          </div>
+        </div>
+        <div class="sugerencias-box relacionadas">
+          <div class="section-subtitle">🔗 También te puede servir:</div>
+          <div class="guias-grid">
+            <a href="hormigon-elementos.html" class="btn-guia-item">🏛️ Hormigón para columnas, vigas y zapatas <span>›</span></a>
+            <a href="cemento.html" class="btn-guia-item">🧱 Cemento y solera (losas y contrapisos) <span>›</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="card trivia-card" id="trivia-card-varillas">
+        <!-- TRIVIA VARILLAS -->
+        <div class="trivia-box" id="trivia-grupo-varillas">
+          <div class="section-subtitle" style="margin-bottom: 10px;">🧠 Trivia de Varillas:</div>
+        <div class="trivia-pregunta-card">
+          <div class="trivia-pregunta">1. ¿Qué conviene pedir siempre al comprar varillas?</div>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tv-1', 'varillas')">A) Solo el color de la varilla.</button>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tv-1', 'varillas')">B) El diámetro en milímetros y el largo de cada varilla.</button>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tv-1', 'varillas')">C) Únicamente el nombre del fabricante.</button>
+          <div id="tv-1" class="trivia-feedback"></div>
+        </div>
+        <div class="trivia-pregunta-card">
+          <div class="trivia-pregunta">2. ¿Cómo conviene almacenar las varillas en la obra?</div>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tv-2', 'varillas')">A) Ordenadas por diámetro y sobre tarimas, no directamente sobre el suelo.</button>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tv-2', 'varillas')">B) Tiradas en el suelo, donde estorben menos.</button>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tv-2', 'varillas')">C) Mezcladas todas y a la intemperie.</button>
+          <div id="tv-2" class="trivia-feedback"></div>
+        </div>
+        <div class="trivia-pregunta-card">
+          <div class="trivia-pregunta">3. Una varilla de 12 mm × 12 m pesa unos 10,66 kg. ¿Cuántas entran más o menos en un quintal de 45,36 kg?</div>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tv-3', 'varillas')">A) Unas 2.</button>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, false, 'tv-3', 'varillas')">B) Unas 10.</button>
+          <button class="trivia-opcion" onclick="verificarTrivia(this, true, 'tv-3', 'varillas')">C) Unas 4.</button>
+          <div id="tv-3" class="trivia-feedback"></div>
+        </div>
+          <div id="resultado-final-varillas" class="trivia-resultado-final"></div>
+          <button id="btn-reinicio-varillas" class="btn-reiniciar-trivia" onclick="reiniciarTrivia('varillas')">🔄 Reintentar Trivia</button>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="privacidad.html">Política de Privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="terminos.html">Términos y Condiciones</a>
+            <span class="footer-separator">|</span>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p class="footer-disclaimer">
+            <strong>Aviso importante:</strong> El contenido, cálculos y guías técnicas de este sitio web son puramente orientativos y basados en coeficientes estándar de rendimiento de materiales. No nos hacemos responsables por variaciones en el gasto real de materiales de obra, compras incorrectas o incidentes en reparaciones.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Calculadoras del Hogar. Todos los derechos reservados.</p>
+    </footer>
+  </div>
+  <script>
+var U = (function () {
+  function num(t) { t = String(t === null || t === undefined ? '' : t).trim().replace(/\s/g, ''); if (t === '') return NaN; if (/^\d{1,3}(\.\d{3})+$/.test(t)) t = t.replace(/\./g, ''); if (/^-?(\d+([.,]\d+)?|[.,]\d+)$/.test(t)) return Number(t.replace(',', '.')); return NaN; }
+  function fmt(n, d) { var k = Math.pow(10, d), s = (Math.round((n + Number.EPSILON) * k) / k).toFixed(d).split('.'), e = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.'); return d ? e + ',' + s[1] : e; }
+  function chk(v, nombre, min, max, exMin) {
+    if (isNaN(v)) throw new Error('Escribe un número válido en «' + nombre + '».');
+    if (exMin ? v <= min : v < min) throw new Error('«' + nombre + '» debe ser ' + (exMin ? 'mayor que ' : 'al menos ') + fmt(min, min % 1 ? 1 : 0) + '.');
+    if (v > max) throw new Error('«' + nombre + '» no puede pasar de ' + fmt(max, 0) + '.');
+    return v;
+  }
+  function techo(x) { return Math.ceil(x - 1e-9); }
+  return { num: num, fmt: fmt, chk: chk, techo: techo };
+})();
+function val(id) { var e = document.getElementById(id); return U.num(e ? e.value : ''); }
+function valOpc(id) { var e = document.getElementById(id); return (!e || String(e.value).trim() === '') ? null : val(id); }
+function mostrar(id, titulo, html, error) {
+  var caja = document.getElementById('res-' + id);
+  document.getElementById('det-' + id).innerHTML = '<div class="res-titulo">' + (error ? '⚠️ Revisa los datos' : titulo) + '</div>' + html;
+  caja.classList.toggle('error', !!error); caja.style.display = 'block';
+  try { var r = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; caja.scrollIntoView({ behavior: r ? 'auto' : 'smooth', block: 'start' }); } catch (e) {}
+}
+function ejecutar(id, titulo, fn) { try { mostrar(id, titulo, fn(), false); } catch (e) { mostrar(id, titulo, e.message, true); } }
+function resumen(grande, lineas, nota) { return '<div class="res-grande">' + grande + '</div><ul class="res-lista"><li>' + lineas.join('</li><li>') + '</li></ul><p class="res-nota">' + nota + '</p>'; }
+function limpiar(id) { var f = document.getElementById('form-' + id); if (f) f.reset(); document.getElementById('res-' + id).style.display = 'none'; var p = document.getElementById('personal'); if (p) p.hidden = true; }
+function centrarPestana() {
+  var a = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.nav-tabs .tab-btn.active') : null, c = a && a.parentNode;
+  if (!a || !c || !c.getBoundingClientRect) return;
+  var ra = a.getBoundingClientRect(), rc = c.getBoundingClientRect();
+  c.scrollLeft += (ra.left - rc.left) - (rc.width - ra.width) / 2;
+}
+function cambiarMezcla() { var p = document.getElementById('personal'); if (p) p.hidden = document.getElementById('mezcla').value !== 'custom'; }
+centrarPestana();
+var VAR = {8:[0.395,0.503],10:[0.617,0.786],12:[0.888,1.131],14:[1.208,1.539],16:[1.578,2.011],18:[1.998,2.545],20:[2.466,3.142],22:[2.984,3.801],25:[3.853,4.909],28:[4.834,6.158],32:[6.313,8.043]};
+var QUINTAL = 45.36;
+function varillas(o) {
+  var d = VAR[o.diam]; if (!d) throw new Error('Elige un diámetro.');
+  var largo = U.chk(o.largo, 'Largo de la varilla (m)', 0, 12, true), kgV = d[0] * largo, r = { diam: o.diam, largo: largo, kgm: d[0], kgV: kgV, porQQ: QUINTAL / kgV, area: d[1] };
+  if (o.metros !== null) {
+    var m = U.chk(o.metros, 'Metros de varilla que necesitas', 0, 100000, true), desp = U.chk(o.desp, 'Desperdicio (%)', 0, 100);
+    r.m = m; r.desp = desp; r.compra = U.techo(m * (1 + desp / 100) / largo); r.kg = r.compra * kgV; r.qq = r.kg / QUINTAL;
+  }
+  return r;
+}
+function calcularVarillas() {
+  ejecutar('varillas', '📋 Resultado · Varillas', function () {
+    var r = varillas({ diam: parseInt(document.getElementById('diam').value, 10), largo: parseFloat(document.getElementById('largo').value), metros: valOpc('metros'), desp: val('desp') }), f = U.fmt, l = [];
+    var pie = 'Un quintal = 45,36 kg (100 libras). Pesos y áreas nominales de catálogo; el peso real varía un poco según el fabricante.';
+    var base = 'Varilla de ' + r.diam + ' mm × ' + f(r.largo, 0) + ' m: ' + f(r.kgV, 2) + ' kg (' + f(r.kgm, 3) + ' kg/m)';
+    l.push('⚖️ ' + base); l.push('📐 Área de la sección: ' + f(r.area, 3) + ' cm²');
+    if (r.compra !== undefined) {
+      l.push('📦 Peso total: ' + f(r.kg, 1) + ' kg (≈ ' + f(r.qq, 2) + ' quintales)'); l.push('📏 Necesitas ' + f(r.m, 1) + ' m más ' + f(r.desp, 0) + '% de desperdicio');
+      l.push('🧮 En un quintal entran ≈ ' + f(r.porQQ, 2) + ' varillas de este largo');
+      return resumen('🛒 Comprar: <strong>' + f(r.compra, 0) + (r.compra === 1 ? ' varilla' : ' varillas') + '</strong>', l, pie);
+    }
+    return resumen('🛒 Un quintal trae ≈ <strong>' + f(r.porQQ, 2) + ' varillas</strong>', l, pie);
+  });
+}
+if (typeof module !== 'undefined') module.exports = { varillas: varillas, U: U };
+/* Trivia de esta página (mismo código que las trivias de las demás calculadoras). */
+const estadoTrivias = {
+  varillas: { respondidas: 0, correctas: 0, total: 3 }
+};
+
+function verificarTrivia(boton, esCorrecta, idFeedback, seccion) {
+  const tarjetaPregunta = boton.closest('.trivia-pregunta-card');
+  if (tarjetaPregunta.dataset.respondida === '1') return;
+  tarjetaPregunta.dataset.respondida = '1';
+  const opciones = tarjetaPregunta.querySelectorAll('.trivia-opcion');
+  const feedback = document.getElementById(idFeedback);
+
+  opciones.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+  if (esCorrecta) {
+    boton.classList.add('correcta');
+    feedback.innerHTML = "✅ ¡Exacto! ¡Le atinaste maestro!";
+    feedback.style.color = "#00f078";
+    estadoTrivias[seccion].correctas++;
+  } else {
+    boton.classList.add('incorrecta');
+    feedback.innerHTML = "❌ ¡Nel, revisa bien la guía técnica!";
+    feedback.style.color = "#ff4d4d";
+    opciones.forEach(opt => {
+      if (opt.getAttribute('onclick').includes('true')) {
+        opt.classList.add('correcta');
+      }
+    });
+  }
+  feedback.style.display = 'block';
+
+  estadoTrivias[seccion].respondidas++;
+
+  if (estadoTrivias[seccion].respondidas === estadoTrivias[seccion].total) {
+    mostrarResultadoFinal(seccion);
+  }
+}
+
+function mostrarResultadoFinal(seccion) {
+  const puntaje = estadoTrivias[seccion].correctas;
+  const total = estadoTrivias[seccion].total;
+  const resBox = document.getElementById(`resultado-final-${seccion}`);
+  const btnReinicio = document.getElementById(`btn-reinicio-${seccion}`);
+  
+  let mensajeBroma = "";
+  let colorBroma = "#ffffff";
+
+  if (puntaje === total) {
+    mensajeBroma = "🏆 ¡Perfecto (3/3)! ¡Ya estás listo para cobrar como maestro constructor profesional... o al menos para no romper las paredes de tu casa! 😎🔥";
+    colorBroma = "#00f078";
+  } else if (puntaje === 2) {
+    mensajeBroma = "⚠️ ¡Hiciste 2/3! Casi lo logras bro, por poquito y te salvas de que el maestro albañil te regañe. ¡Repasa la guía que te faltó una! 🛠️";
+    colorBroma = "#f1c40f";
+  } else if (puntaje === 1) {
+    mensajeBroma = "😅 ¡Apenas 1/3! Bro... ¿seguro que leíste las guías o nomás estabas picando botones por diversión? ¡A repasar se ha dicho! 📚🔨";
+    colorBroma = "#ff9800";
+  } else {
+    mensajeBroma = "💀 ¡0/3! ¡Pff, cero patatero! Si vas a construir así mejor contrata a alguien antes de que se te caiga el techo encima jajaja. ¡Dale a reintentar! 🚧💥";
+    colorBroma = "#ff4d4d";
+  }
+
+  resBox.innerHTML = `<strong>Puntaje: ${puntaje} / ${total}</strong><br><br>${mensajeBroma}`;
+  resBox.style.color = colorBroma;
+  resBox.style.display = 'block';
+  btnReinicio.style.display = 'block';
+}
+
+function reiniciarTrivia(seccion) {
+  estadoTrivias[seccion].respondidas = 0;
+  estadoTrivias[seccion].correctas = 0;
+
+  const contenedorGrupo = document.getElementById(`trivia-grupo-${seccion}`);
+  const opciones = contenedorGrupo.querySelectorAll('.trivia-opcion');
+  const feedbacks = contenedorGrupo.querySelectorAll('.trivia-feedback');
+
+  contenedorGrupo.querySelectorAll('.trivia-pregunta-card').forEach(c => {
+    delete c.dataset.respondida;
+  });
+  
+  opciones.forEach(opt => {
+    opt.style.pointerEvents = 'auto';
+    opt.classList.remove('correcta', 'incorrecta');
+  });
+
+  feedbacks.forEach(fb => {
+    fb.style.display = 'none';
+    fb.innerHTML = '';
+  });
+
+  document.getElementById(`resultado-final-${seccion}`).style.display = 'none';
+  document.getElementById(`btn-reinicio-${seccion}`).style.display = 'none';
+}
+  </script>
+</body>
+</html>

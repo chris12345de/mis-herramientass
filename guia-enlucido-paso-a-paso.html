@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Guía: Cómo Enlucir una Pared Paso a Paso | Calculadoras del Hogar</title>
+  <meta name="description" content="Paso a paso para enlucir una pared: preparación, humedecer, maestras, regleado, fratasado y curado, con un ejemplo de cuánto cemento y arena necesitas.">
+  <link rel="canonical" href="https://chris12345de.github.io/mis-herramientass/guia-enlucido-paso-a-paso.html">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background-color: #121519;
+      color: #e0e6ed;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .tab-btn {
+      background-color: #1a1f26;
+      border: 1px solid #2d3540;
+      color: #9aa8ba;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .tab-btn.active {
+      background-color: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+    .card {
+      background-color: #1a1f26;
+      border: 1px solid #2d3540;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #4a9eff;
+      margin-bottom: 15px;
+    }
+    .info-box {
+      background-color: #14181f;
+      border-left: 3px solid #4a9eff;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 0.9rem;
+      color: #9aa8ba;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #d0d7de;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 12px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 1rem;
+      outline: none;
+    }
+    input[type="text"]:focus {
+      border-color: #4a9eff;
+    }
+    .btn-calc {
+      width: 100%;
+      padding: 14px;
+      background-color: #ffffff;
+      color: #0d1117;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .subtext {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #9aa8ba;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .resultado-box {
+      display: none;
+      background-color: #0f231d;
+      border-left: 4px solid #00d26a;
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 15px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+    .resultado-box strong {
+      color: #00f078;
+    }
+    .sugerencias-box {
+      display: block;
+      margin-top: 20px;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #f1c40f;
+      margin-bottom: 12px;
+    }
+    .guias-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-guia-item {
+      width: 100%;
+      padding: 14px;
+      background-color: #212936;
+      border: 1px solid #3a4a63;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+    }
+    .guia-seccion {
+      display: none;
+      background-color: #182232;
+      border: 1px solid #283850;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 50vh;
+    }
+    .btn-volver {
+      width: 100%;
+      padding: 12px;
+      background-color: #2d3b50;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 15px;
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+    }
+    .guia-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #4a9eff;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .guia-meta {
+      font-size: 0.85rem;
+      color: #a0aec0;
+      margin-bottom: 15px;
+    }
+    .guia-sub {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 15px 0 8px 0;
+    }
+    .guia-p {
+      font-size: 1rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .guia-lista {
+      list-style: none;
+      margin-bottom: 15px;
+    }
+    .guia-lista li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+    .guia-lista li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #4a9eff;
+      font-weight: bold;
+    }
+    .callout-alert {
+      background-color: #8b0000;
+      border-left: 4px solid #ff4d4d;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #ffffff !important;
+      line-height: 1.4;
+    }
+    .callout-expert {
+      background-color: #1c2d42;
+      border-left: 4px solid #3b82f6;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: #bfdbfe;
+      line-height: 1.4;
+    }
+
+    /* --- ESTILOS DE LA TRIVIA --- */
+    .trivia-box {
+      margin-top: 20px;
+      background-color: #141922;
+      border: 1px solid #2d3a4f;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .trivia-pregunta-card {
+      margin-bottom: 15px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #1f2937;
+    }
+    .trivia-pregunta-card:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .trivia-pregunta {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #f1c40f;
+      margin-bottom: 8px;
+    }
+    .trivia-opcion {
+      width: 100%;
+      background-color: #1f2937;
+      border: 1px solid #374151;
+      color: #e5e7eb;
+      padding: 9px 11px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      text-align: left;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+    .trivia-opcion:hover {
+      background-color: #374151;
+    }
+    .trivia-opcion.correcta {
+      background-color: #065f46 !important;
+      border-color: #059669 !important;
+      color: #d1fae5 !important;
+      font-weight: bold;
+    }
+    .trivia-opcion.incorrecta {
+      background-color: #7f1d1d !important;
+      border-color: #dc2626 !important;
+      color: #fee2e2 !important;
+    }
+    .trivia-feedback {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: none;
+    }
+    .trivia-resultado-final {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      background-color: #1a2332;
+      border: 1px solid #3b82f6;
+      font-size: 0.9rem;
+      text-align: center;
+      display: none;
+    }
+    .btn-reiniciar-trivia {
+      display: none;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    /* --- ESTILOS DEL PIE DE PÁGINA --- */
+    .site-footer {
+        margin-top: 40px;
+        padding: 30px 20px;
+        border-top: 1px solid #2d3540;
+        text-align: center;
+        background-color: #121519;
+    }
+    .footer-links {
+        margin-bottom: 20px;
+    }
+    .footer-links a {
+        color: #4a9eff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        display: inline-block;
+        padding: 5px 10px;
+    }
+    .footer-links a:hover {
+        text-decoration: underline;
+    }
+    .footer-separator {
+        color: #74839a;
+        user-select: none;
+    }
+    .footer-disclaimer {
+        font-size: 0.82rem;
+        color: #7b889d;
+        max-width: 700px;
+        margin: 0 auto 15px auto;
+        line-height: 1.5;
+    }
+    .footer-copyright {
+        font-size: 0.8rem;
+        color: #7a879b;
+        margin: 0;
+    }
+    @media (max-width: 480px) {
+        .footer-links a {
+            display: block;
+            margin: 5px 0;
+        }
+        .footer-separator {
+            display: none;
+        }
+    }
+
+    .seccion-calculadora {
+      display: none;
+    }
+    .seccion-calculadora.active {
+      display: block;
+    }
+  
+    .header-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+  
+    select { appearance: auto; }
+    input[type="text"], select, .btn-calc { min-height: 46px; }
+    .tab-btn { min-height: 44px; display: inline-flex; align-items: center; }
+    input:focus, select:focus, .btn-calc:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }
+    .form-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-fila .form-group { min-width: 0; }
+    .ayuda { display: block; margin-top: 5px; font-size: 0.8rem; line-height: 1.35; color: #9aa8ba; }
+    .opciones { background-color: #14181f; border: 1px solid #2d3540; border-radius: 8px; padding: 10px 12px; margin: 0 0 15px; font-size: 0.9rem; line-height: 1.45; color: #c9d1d9; }
+    .opciones summary { cursor: pointer; color: #4a9eff; font-weight: 600; min-height: 28px; padding: 11px 0; }
+    .opciones[open] summary { margin-bottom: 10px; }
+    .opciones p { margin-bottom: 10px; }
+    .res-grande { font-size: 1.15rem; margin-bottom: 10px; line-height: 1.35; }
+    .res-lista { list-style: none; line-height: 1.5; }
+    .res-lista li { margin-bottom: 6px; }
+    .res-nota { margin-top: 10px; font-size: 0.8rem; color: #9aa8ba; line-height: 1.4; }
+    .resultado-box.error { background-color: #2a1414; border-left-color: #ff6b6b; }
+    .resultado-box + .opciones { margin-top: 15px; }
+    .faq-titulo { font-size: 1rem; color: #ffffff; margin: 5px 0 8px; }
+    @media (max-width: 360px) { .form-fila { grid-template-columns: 1fr; } }
+  
+    .trivia-opcion { min-height: 44px; }
+    .footer-links a { display: inline-block; padding: 12px 6px; }
+    .resultado-box { scroll-margin-top: 12px; }
+    .form-botones { display: grid; gap: 10px; margin-top: 5px; }
+    .form-botones .btn-calc { margin-top: 0; }
+    .btn-limpiar { width: 100%; min-height: 46px; padding: 12px; background-color: transparent; color: #9aa8ba; border: 1px solid #30363d; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
+    .btn-limpiar:hover { border-color: #4a9eff; color: #ffffff; }
+    .res-titulo { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #9aa8ba; margin-bottom: 8px; }
+    .resultado-box.error .res-titulo { color: #ff9b9b; }
+    .trivia-card { margin-top: 20px; }
+    .trivia-card .trivia-box { margin-top: 0; }
+    /* V6.1: legibilidad (WCAG AA) y nuevas piezas */
+    input::placeholder { color: #8b98aa; opacity: 1; }
+    .lista-acciones { margin-top: 14px; padding-top: 12px; border-top: 1px solid #1f4a3a; }
+    .btn-lista { width: 100%; min-height: 46px; padding: 12px; background-color: #2563eb; color: #ffffff; border: 0; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    .btn-lista:disabled { background-color: #2d3b50; color: #d0d7de; cursor: default; }
+    .btn-lista:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }
+    .lista-msg { margin-top: 8px; font-size: 0.9rem; line-height: 1.4; color: #00f078; min-height: 1.3em; }
+    .lista-msg.aviso { color: #ff9b9b; }
+    .lista-msg a { color: #4a9eff; font-weight: 600; }
+    .relacionadas { margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-title" id="page-h1"><a href="index.html">🛠️ Calculadoras del Hogar</a></div>
+    <div class="nav-tabs"><a href="pintura.html" class="tab-btn" id="tab-pintura">🎨 Pintura</a><a href="cemento.html" class="tab-btn" id="tab-cemento">🧱 Cemento/Solera</a><a href="bloques.html" class="tab-btn" id="tab-bloques">🏗️ Bloques</a><a href="ceramica.html" class="tab-btn" id="tab-ceramica">🔲 Cerámica</a><a href="agua.html" class="tab-btn" id="tab-agua">💧 Agua/Tanques</a><a href="varillas.html" class="tab-btn" id="tab-varillas">🔩 Varillas</a><a href="hormigon-elementos.html" class="tab-btn" id="tab-hormigon-elementos">🏛️ Hormigón</a><a href="enlucido.html" class="tab-btn active" id="tab-enlucido">🖌️ Enlucido</a></div>
+    <main>
+      <div class="guia-seccion" style="display: block;">
+        <a href="enlucido.html" class="btn-volver">← Volver a la Calculadora</a>
+        <h1 class="guia-title">Guía: Cómo Enlucir una Pared Paso a Paso</h1>
+        <div class="guia-meta">Nivel: Principiante | Acabados de Pared</div>
+        <p class="guia-p">El enlucido es la capa de mortero (cemento, arena y agua) que alisa y protege la pared antes de pintar. El resultado depende más de la preparación y del curado que de la fuerza al aplicar.</p>
+        <div class="guia-sub">🧱 Paso a paso:</div>
+        <ul class="guia-lista"><li><strong>Prepara la pared:</strong> retira polvo, restos sueltos y pintura floja, y rellena los huecos grandes.</li><li><strong>Humedece</strong> la superficie de forma ligera y uniforme, sin dejar charcos: una pared seca le roba el agua al mortero.</li><li><strong>Coloca las maestras o guías:</strong> tiras de mortero o listones verticales, a plomo, que marcan el espesor.</li><li><strong>Aplica el mortero</strong> entre las guías con la cuchara y presiónalo contra la pared.</li><li><strong>Nivela con la regla</strong> apoyada en las guías (regleado), quitando el sobrante y rellenando los huecos.</li><li><strong>Alisa con la llana</strong> (fratasado) cuando el mortero ya haya tomado firmeza y no se pegue a la herramienta.</li><li><strong>Cura:</strong> humedece suavemente la superficie los primeros días; según el producto y el clima, entre 3 y 7.</li></ul>
+        <div class="guia-sub">📝 Ejemplo práctico:</div>
+        <p class="guia-p">Una pared de 5 m × 2,6 m con una puerta de 1,9 m²: área neta = 13 − 1,9 = 11,1 m². Con 2 cm de espesor: 11,1 × 0,02 = 0,222 m³ de mortero, y con 10 % de desperdicio, unos 0,244 m³. Con mezcla 1:3 (unos 480 kg de cemento por m³) son cerca de 117 kg de cemento, es decir, <strong>3 sacos de 50 kg</strong>, y unos 0,26 m³ de arena.</p>
+        <div class="guia-sub">✅ Cuidados importantes:</div>
+        <ul class="guia-lista"><li>No enlucir solo la mitad de una pared: hazlo por paños completos para que todo cure parejo.</li><li>Con calor o viento seco, humedece antes y después de aplicar.</li><li>Si necesitas más de 2 cm de espesor, consulta con un maestro: suele aplicarse por capas.</li><li>Usa gafas y guantes: el mortero fresco es alcalino como el hormigón. Si trabajas en altura, usa andamios o escaleras estables.</li></ul>
+        <div class="callout-alert">⚠️ <strong>Límite Profesional:</strong> Si la pared tiene humedad ascendente, salitre o grietas que se abren con el tiempo, trátalo antes. Un enlucido encima solo oculta el problema y se vuelve a dañar. Consulta a un profesional.</div>
+        <div class="sugerencias-box relacionadas">
+          <div class="section-subtitle">🔗 Sigue aprendiendo:</div>
+          <div class="guias-grid">
+            <a href="guia-enlucido-problemas.html" class="btn-guia-item">🔍 Guía: Grietas, Huecos y Humedad en el Enlucido <span>›</span></a>
+            <a href="guia-hormigon-seguridad.html" class="btn-guia-item">🛡️ Guía de Seguridad: Cemento, Encofrado y Vibrado <span>›</span></a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="privacidad.html">Política de Privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="terminos.html">Términos y Condiciones</a>
+            <span class="footer-separator">|</span>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p class="footer-disclaimer">
+            <strong>Aviso importante:</strong> El contenido, cálculos y guías técnicas de este sitio web son puramente orientativos y basados en coeficientes estándar de rendimiento de materiales. No nos hacemos responsables por variaciones en el gasto real de materiales de obra, compras incorrectas o incidentes en reparaciones.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Calculadoras del Hogar. Todos los derechos reservados.</p>
+    </footer>
+  </div>
+  <script>
+function centrarPestana() {
+  var a = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.nav-tabs .tab-btn.active') : null, c = a && a.parentNode;
+  if (!a || !c || !c.getBoundingClientRect) return;
+  var ra = a.getBoundingClientRect(), rc = c.getBoundingClientRect();
+  c.scrollLeft += (ra.left - rc.left) - (rc.width - ra.width) / 2;
+}
+centrarPestana();
+  </script>
+</body>
+</html>
